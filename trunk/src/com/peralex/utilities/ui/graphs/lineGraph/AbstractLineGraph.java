@@ -1,0 +1,91 @@
+package com.peralex.utilities.ui.graphs.lineGraph;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenuItem;
+import javax.swing.Timer;
+
+import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+
+/**
+ * Contains code common to the line-graph subclasses.
+ * 
+ * @author Noel Grandin
+ */
+public abstract class AbstractLineGraph extends GraphBase
+{
+	/**
+	 * A Timer that will limit the repainting of this graph
+	 */
+	private final Timer oFrameRepaintTimer;
+	
+	/**
+	 * True if frame limiting has been set activated.
+	 */
+	protected boolean bFrameRepaintLimited = false;
+	
+	/**
+	 * scale the graph so that it just fits the displayed data.
+	 */
+  private final JMenuItem oAutoScaleMenuItem;
+  
+	/**
+	 * Creates a new instance of cLineGraph
+	 */
+  protected AbstractLineGraph()
+	{
+    // Add the Reset zoom item to the PopUpMenu.
+    oAutoScaleMenuItem = new JMenuItem(textRes.getString("Auto_scale"));
+    oPopupMenu.add(oAutoScaleMenuItem);  
+    oAutoScaleMenuItem.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        autoScaleGraph();
+      }
+    });
+    
+		// Create the repaint timer but don't start it
+		oFrameRepaintTimer = new Timer(20, new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				repaint();
+			}
+		});
+	}
+	
+	/**
+	 * Start a Timer that will limit the repainting of this graph.
+	 *
+	 * @param bEnabled True if frame limiting should be performed.
+	 * @param iFramePeriod_ms how often repaint will be called on this component.
+	 */
+	public void setFrameLimitingEnabled(boolean bEnabled, int iFramePeriod_ms)
+	{
+		bFrameRepaintLimited = bEnabled;
+		if (bEnabled)
+		{
+			oFrameRepaintTimer.setDelay(iFramePeriod_ms);
+			oFrameRepaintTimer.start();
+		}
+		else
+		{
+			oFrameRepaintTimer.stop();
+		}
+	}
+	
+	/**
+	 * scale the graph so that it just fits the displayed data.
+	 */
+	protected abstract void autoScaleGraph();
+	
+	@Override
+	protected void localeChanged()
+	{
+		super.localeChanged();
+		oAutoScaleMenuItem.setText(textRes.getString("Auto_scale"));
+	}
+	
+}
