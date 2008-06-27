@@ -32,7 +32,7 @@ public class GraphsDemo
 		final JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Multiple Line Graph", new GraphWithMultipleLines());
 		tabbedPane.addTab("Scrolling Line Graph", new GraphWithScrollingLines());
-		tabbedPane.addTab("Waterfall Graphh", new WaterfallGraphDemo());
+		tabbedPane.addTab("Waterfall Graph", new WaterfallGraphDemo());
 
 		final JFrame frame = new JFrame("Graphs Demo");
 		frame.getContentPane().add(tabbedPane);

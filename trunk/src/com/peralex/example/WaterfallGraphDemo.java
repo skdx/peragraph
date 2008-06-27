@@ -24,8 +24,8 @@ public class WaterfallGraphDemo extends javax.swing.JPanel {
     
     lineGraph = new IntensityWaterfallGraph();
     lineGraph.setGridXMinMax(0, 100);
-    lineGraph.setThresholdLimits(-20, 20);
-    lineGraph.setThresholdValues(-10, 10);
+    lineGraph.setThresholdLimits(0, 100);
+    lineGraph.setThresholdValues(10, 90);
 		lineGraph.setGridVisible(true);
 		lineGraph.setZoomEnabled(true);
 		
@@ -46,8 +46,11 @@ public class WaterfallGraphDemo extends javax.swing.JPanel {
     	{
     		final float [] data = new float[WATERFALL_WIDTH];
     		for (int i=0; i<WATERFALL_WIDTH; i++) {
-    			data[i] = (float) ((Math.random() * 40) - 20);
+    			data[i] = (float) (Math.random() * 50);
     		}
+    		data[(int)Math.round(WATERFALL_WIDTH * 0.4)] += 40;
+    		data[(int)Math.round(WATERFALL_WIDTH * 0.6)] += 40;
+    		
     		lineGraph.setAmplitudeData(new TimeStamp(), data);
     	}
     }).start();
