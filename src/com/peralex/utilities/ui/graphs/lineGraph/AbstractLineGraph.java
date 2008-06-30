@@ -17,6 +17,7 @@ public abstract class AbstractLineGraph extends GraphBase
 {
 	/**
 	 * A Timer that will limit the repainting of this graph
+	 * FIXME this should not run continuously, rather trigger make it 1-shot
 	 */
 	private final Timer oFrameRepaintTimer;
 	
