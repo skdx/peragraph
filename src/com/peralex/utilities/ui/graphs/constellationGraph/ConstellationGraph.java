@@ -41,7 +41,7 @@ public class ConstellationGraph extends GraphBase
    * This will set the data that must be drawn.
    */
 	@Override
-	public void drawGraph(Graphics2D g)
+	protected void drawGraph(Graphics2D g)
 	{
 		if (afXValues != null && afYValues != null)
 		{

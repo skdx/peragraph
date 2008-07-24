@@ -111,7 +111,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
    * This will paint the grid.
    */
 	@Override
-  public void paint(Graphics g, int iDrawSurfaceID)
+	protected void paint(Graphics g, int iDrawSurfaceID)
   {
 		if (GRID_DRAWSURFACE != iDrawSurfaceID)
 		{

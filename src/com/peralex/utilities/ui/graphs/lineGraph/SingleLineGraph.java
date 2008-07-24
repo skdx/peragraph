@@ -90,7 +90,7 @@ public class SingleLineGraph extends AbstractLineGraph
 	 * This will draw the Graph
 	 */
 	@Override
-	public void drawGraph(Graphics2D g)
+	protected void drawGraph(Graphics2D g)
 	{
 		if (oLineData == null)
 		{

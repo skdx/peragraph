@@ -78,7 +78,7 @@ public abstract class DrawSurface extends JComponent implements ILocaleListener
 	/**
 	 * This will draw the DrawSurface with the given ID.
 	 */
-	public abstract void paint(Graphics g, int iDrawSurfaceID);
+	protected abstract void paint(Graphics g, int iDrawSurfaceID);
 
 	/**
 	 * This method will set the Drawing order of the graph.

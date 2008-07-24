@@ -49,7 +49,7 @@ public class AmplitudeDetectionWaterfallGraph extends WaterfallGraph
 	 * This will draw the Graph
 	 */
   @Override
-  public void drawGraph(Graphics2D g)
+  protected void drawGraph(Graphics2D g)
   {		
   	super.drawGraph(g);
   	
