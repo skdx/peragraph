@@ -64,7 +64,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
    * Paints all the cursors.
    */
 	@Override
-  public void paint(Graphics g, int iDrawSurfaceID)
+	protected void paint(Graphics g, int iDrawSurfaceID)
   {    
 		if (RANGE_CURSOR_DRAWSURFACE == iDrawSurfaceID)
 		{

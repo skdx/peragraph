@@ -40,7 +40,7 @@ public class ScrollingLineGraph extends GraphBase implements ILocaleListener
 	 * Updates the straight line graph
 	 */
 	@Override
-	public void drawGraph(Graphics2D g)
+	protected void drawGraph(Graphics2D g)
 	{
 		final int currentHeight_pixels = getSize().height;
 

@@ -85,7 +85,7 @@ public class WaterfallGraph extends GraphBase
 	 * This will draw the Graph
 	 */
   @Override
-  public void drawGraph(Graphics2D g)
+  protected void drawGraph(Graphics2D g)
   {		
 		final AffineTransform prevTransform = g.getTransform();
 

@@ -25,7 +25,7 @@ public class SingleScrollingLineGraph extends GraphBase implements ILocaleListen
 	 * Updates the straight line graph
 	 */
 	@Override
-	public void drawGraph(Graphics2D g)
+	protected void drawGraph(Graphics2D g)
 	{
 		final int currentHeight_pixels = getSize().height;
 

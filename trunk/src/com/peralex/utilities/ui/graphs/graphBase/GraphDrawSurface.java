@@ -18,7 +18,7 @@ public abstract class GraphDrawSurface extends RangeCursorDrawSurface
   }
   
 	@Override
-  public void paint(Graphics g, int iDrawSurfaceID)
+	protected void paint(Graphics g, int iDrawSurfaceID)
   {
 		if (GRAPH_DRAWSURFACE == iDrawSurfaceID)
 		{
@@ -35,7 +35,7 @@ public abstract class GraphDrawSurface extends RangeCursorDrawSurface
    *
    * @param g
    */
-	public abstract void drawGraph(Graphics2D g);
+	protected abstract void drawGraph(Graphics2D g);
 	
 	/**
 	 * This method will cause the display to clear.
