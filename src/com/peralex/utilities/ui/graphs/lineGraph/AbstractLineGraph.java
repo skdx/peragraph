@@ -48,13 +48,44 @@ public abstract class AbstractLineGraph extends GraphBase
     });
     
 		// Create the repaint timer but don't start it
-		oFrameRepaintTimer = new Timer(20, new ActionListener()
+		oFrameRepaintTimer = new Timer(50, new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				repaint();
 			}
 		});
+	}
+	
+	/**
+	 * Start a Timer that will limit the repainting of this graph.
+	 * The timer will use a default period of 50ms.
+	 *
+	 * @param bEnabled True if frame limiting should be performed.
+	 */
+	public void setFrameLimitingEnabled(boolean bEnabled)
+	{
+		setFrameLimitingEnabled(bEnabled, 50);
+	}
+	
+	public boolean isFrameLimitingEnabled()
+	{
+		return bFrameRepaintLimited;
+	}
+
+	/**
+	 * Set the period of the repaint-limiting timer
+	 *
+	 * @param iFramePeriod_ms how often repaint will be called on this component.
+	 */
+	public void setFrameLimitingPeriod(int iFramePeriod_ms)
+	{
+		setFrameLimitingEnabled(bFrameRepaintLimited, iFramePeriod_ms);
+	}
+	
+	public int getFrameLimitingPeriod()
+	{
+		return oFrameRepaintTimer.getDelay();
 	}
 	
 	/**
