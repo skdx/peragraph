@@ -9,6 +9,7 @@ import java.util.Map;
 import com.peralex.utilities.locale.ILocaleListener;
 import com.peralex.utilities.objectpool.GraphObjectPool;
 import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.lineGraph.AbstractLineGraph;
 import com.peralex.utilities.ui.graphs.lineGraph.MultiLineGraph;
 
 /**
@@ -17,7 +18,7 @@ import com.peralex.utilities.ui.graphs.lineGraph.MultiLineGraph;
  * @author Roy Emmerich
  * @author Noel Grandin
  */
-public class ScrollingLineGraph extends GraphBase implements ILocaleListener
+public class ScrollingLineGraph extends AbstractLineGraph implements ILocaleListener
 {
 
 	static final class LineState
@@ -226,5 +227,41 @@ public class ScrollingLineGraph extends GraphBase implements ILocaleListener
 				lineMap.get(key).color = MultiLineGraph.allocateLineColor(lineMap.size());
 			}
 		}
+	}
+	
+	@Override
+	protected void autoScaleGraph()
+	{
+		float minX = Float.MAX_VALUE;
+		float maxX = -Float.MAX_VALUE;
+		float minY = Float.MAX_VALUE;
+		float maxY = -Float.MAX_VALUE;
+		
+		synchronized (lineMap)
+		{
+			if (lineMap.isEmpty()) 
+			{
+				resetZoom();
+				return;
+			}
+			for (LineState lineState : lineMap.values())
+			{
+				final LinkedList<Float> oLineData = lineState.data; 
+				final int numPoints = oLineData.size();
+				if (numPoints>0)
+				{
+					minX = Math.min(minX, oLineData.getFirst());
+					maxX = Math.max(maxX, oLineData.getLast());
+					for (Float f : oLineData)
+					{
+						minY = Math.min(minY, f);
+						maxY = Math.max(maxY, f);
+					}
+				}
+			}
+		}
+		
+    zoomIn(minX, maxX, minY, maxY);
+		
 	}
 }
