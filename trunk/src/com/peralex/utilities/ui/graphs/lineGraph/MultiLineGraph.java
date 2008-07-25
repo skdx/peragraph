@@ -366,17 +366,6 @@ public class MultiLineGraph extends AbstractLineGraph
 	}
 	
 	/**
-	 * Start a Timer that will limit the repainting of this graph.
-	 * The timer will use a default period of 50ms.
-	 *
-	 * @param bEnabled True if frame limiting should be performed.
-	 */
-	public void setFrameLimitingEnabled(boolean bEnabled)
-	{
-		setFrameLimitingEnabled(bEnabled, 50);
-	}
-
-	/**
 	 * Sets the color of a line.
 	 */
 	public void setLineColor(Object key, Color color)
