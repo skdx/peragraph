@@ -11,13 +11,13 @@ import javax.swing.JPanel;
  *
  * @author  Andre
  */
-public class oProbabilityFactorColorPanel extends JPanel
+public class ProbabilityFactorColorPanel extends JPanel
 {
   
   /** 
    * Creates new form oProbabilityFactorColorPanel 
    */
-  public oProbabilityFactorColorPanel()
+  public ProbabilityFactorColorPanel()
   {
     initComponents();
   }

@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
-import com.peralex.utilities.ui.graphs.graphBase.AxisScale;
+import com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale;
 
 /**
  * An axis component that displays a rainbow gradient for use with direction data.
  * 
  * @author Pieter de Vos
  */
-public class DirectionAxis extends AxisScale
+public class DirectionAxis extends NumberAxisScale
 {
 	private static final float [] DEGREES_LABELS = { 
 		180f, 120, 60f, 0f, 300f, 240f, 180f };
@@ -51,7 +51,7 @@ public class DirectionAxis extends AxisScale
 		});
 
 		// set up defaults
-		setLabelColor(Color.BLACK);
+		setForeground(Color.BLACK);
 		setBorder(new LineBorder(Color.BLACK));
 	}
 

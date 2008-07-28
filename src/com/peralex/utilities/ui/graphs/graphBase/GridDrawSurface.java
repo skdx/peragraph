@@ -8,6 +8,10 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JCheckBoxMenuItem;
 
+import com.peralex.utilities.ui.graphs.axisscale.AbstractAxisScale;
+import com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale;
+import com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale;
+
 /**
  * This is the draw surface for a graph.
  *
@@ -21,12 +25,12 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	/** 
    * Maintains a handle on the X Axis 
    */
-	private final AxisScale oXAxis = new AxisScale(AxisScale.X_AXIS);
+	private AbstractAxisScale oXAxis = new NumberAxisScale(AbstractDefaultAxisScale.X_AXIS);
 
 	/**
    * Maintains a handle on the Y Axis
    */
-	private final AxisScale oYAxis = new AxisScale(AxisScale.Y_AXIS);
+	private AbstractAxisScale oYAxis = new NumberAxisScale(AbstractDefaultAxisScale.Y_AXIS);
 	
 	/** 
    * Default unit range values for the Y Axis.
@@ -185,7 +189,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
    *                       this must be false (Inversely proportional: units get smaller as pixels get bigger)
    * @return int array containing the grid steps
    */
-  private static int [] calculateGridAndAxis(int iAxisLength_px, int iGridSpacing, float fMinimum, float fMaximum, AxisScale oAxis, long lScalingFactor, boolean bProportional)
+  private static int [] calculateGridAndAxis(int iAxisLength_px, int iGridSpacing, float fMinimum, float fMaximum, AbstractAxisScale oAxis, long lScalingFactor, boolean bProportional)
   {
     // The step size between the vertical gridlines on the x axis 
     final double dStepSize_Hz = calculateStepSize(iAxisLength_px / iGridSpacing, fMinimum, fMaximum);
@@ -505,17 +509,29 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * This will return the X Axis.
    */
-  public AxisScale getXAxisScale()
+  public AbstractAxisScale getXAxisScale()
   {
     return oXAxis;
+  }
+  
+  public void setXAxisScale(AbstractAxisScale scale)
+  {
+    this.oXAxis = scale;
+    repaint();
   }
 
   /**
    * This will return the Y Axis.
    */
-  public AxisScale getYAxisScale()
+  public AbstractAxisScale getYAxisScale()
   {
     return oYAxis;
+  }
+  
+  public void setYAxisScale(AbstractAxisScale scale)
+  {
+    this.oYAxis = scale;
+    repaint();
   }
   
   /**

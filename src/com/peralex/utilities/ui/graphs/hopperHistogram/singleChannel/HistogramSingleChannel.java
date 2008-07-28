@@ -115,8 +115,8 @@ public class HistogramSingleChannel extends JPanel implements IHopperHistogram, 
     oDrawSurfacePanel = new javax.swing.JPanel();
     oYAxisPanel = new javax.swing.JPanel();
     yAxisLabel = new com.peralex.utilities.ui.graphs.graphBase.YAxisLabel();
-    yAxis = new com.peralex.utilities.ui.graphs.graphBase.AxisScale();
-    xAxis = new com.peralex.utilities.ui.graphs.graphBase.AxisScale();
+    yAxis = new com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale();
+    xAxis = new com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale();
     oXAxisLabel = new javax.swing.JLabel();
     oTopPanel = new javax.swing.JPanel();
     jPanel2 = new javax.swing.JPanel();
@@ -165,7 +165,7 @@ public class HistogramSingleChannel extends JPanel implements IHopperHistogram, 
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     add(oYAxisPanel, gridBagConstraints);
 
-    xAxis.setOrientation(com.peralex.utilities.ui.graphs.graphBase.AxisScale.X_AXIS);
+    xAxis.setOrientation(com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale.X_AXIS);
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 2;
@@ -549,8 +549,8 @@ public class HistogramSingleChannel extends JPanel implements IHopperHistogram, 
   private javax.swing.JLabel oXCoordinateValue;
   private javax.swing.JPanel oYAxisPanel;
   private javax.swing.JLabel oYCoordinateValue;
-  private com.peralex.utilities.ui.graphs.graphBase.AxisScale xAxis;
-  private com.peralex.utilities.ui.graphs.graphBase.AxisScale yAxis;
+  private com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale xAxis;
+  private com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale yAxis;
   private com.peralex.utilities.ui.graphs.graphBase.YAxisLabel yAxisLabel;
   // End of variables declaration//GEN-END:variables
 }
