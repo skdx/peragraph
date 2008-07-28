@@ -32,6 +32,8 @@ import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
+import com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale;
+
 /**
  * An axis component that draws a gradient-shaded background to indicate the "intensity" of the value
  * at that point.
@@ -108,7 +110,7 @@ public class SliderAxis extends JComponent
 		axis.setLayout(null);
 		axis.setOpaque(false);
 		// the number format is used to size the width, so make it shorter to reduce the width
-		axis.setNumberFormat(new DecimalFormat("0"));
+		axis.setFormat(new DecimalFormat("0"));
 		
 		this.add(axis, BorderLayout.CENTER);
 		
@@ -128,9 +130,9 @@ public class SliderAxis extends JComponent
 		// set up some defaults.
 		setBackground(Color.WHITE);
 		setForeground(DEFAULT_LABEL_COLOR);
-		axis.setLabelColor(DEFAULT_LABEL_COLOR);
+		axis.setForeground(DEFAULT_LABEL_COLOR);
 		setBorder(new LineBorder(Color.BLACK));
-		axis.setLabelFont(axis.getLabelFont().deriveFont(Font.BOLD));
+		axis.setFont(axis.getFont().deriveFont(Font.BOLD));
 	}
 
 	@Override
@@ -333,12 +335,12 @@ public class SliderAxis extends JComponent
 		if (bLabelsVisible)
 		{
 			// reset the axis number format to default.
-			axis.setNumberFormat(null);
+			axis.setFormat(null);
 		}
 		else
 		{
 			// the number format is used to size the width, so make it shorter to reduce the width
-			axis.setNumberFormat(new DecimalFormat("0"));
+			axis.setFormat(new DecimalFormat("0"));
 		}
 		calculateLabels();
 		repaint();
@@ -434,7 +436,7 @@ public class SliderAxis extends JComponent
 	}
 	//////////////////////////////////////////////////////////////////////////////
 
-	private final class MyAxis extends AxisScale
+	private final class MyAxis extends NumberAxisScale
 	{
 		
 		/**

@@ -1,27 +1,24 @@
-package com.peralex.utilities.ui.graphs.graphBase;
+package com.peralex.utilities.ui.graphs.axisscale;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
-import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.swing.JPanel;
-
 /**
+ * A base class for providing axis-scale implementations.
+ * 
+ * FIXME paint() should be using font-relative values and not hard-coded pixel offsets.
+ * 
  * FIXME: I should be using strings as labels, and letting the clients worry about formatting.
  * 
- * FIXME: switch to using a float value between 0 and 1 as the position value, so that clients
+ * FIXME: switch to using a double value between 0 and 1 as the position value, so that clients
  *  don't know or worry about insets/borders/component_pixel_width/etc.
- *  
- * FIXME: dump getLabelFont()/setLabelFont(). Just use the value stored in setFont()/getFont()
  *  
  * @author Roy Emmerich, Noel Grandin
  */
-public class AxisScale extends JPanel
+public abstract class AbstractDefaultAxisScale extends AbstractAxisScale
 {
 	
 	/**
@@ -35,17 +32,9 @@ public class AxisScale extends JPanel
 	private int iAxisOrientation;
 	
 	/**
-	 * DecimalFormat used for drawing the labels.
+	 * Map of pixel_position->label_value
 	 */
-	private DecimalFormat oNumberFormat;
-	
-	/**
-	 * LinkedHashMap that stores all the Labels.
-	 */
-	private final Map<Integer, Float> oLabelsHashMap = new LinkedHashMap<Integer, Float>();
-	
-	private Color oLabelColor = Color.BLACK;
-	private Font oLabelFont;
+	private final Map<Integer, Double> oLabelsHashMap = new LinkedHashMap<Integer, Double>();
 	
 	private boolean offsetFirstLabel = false;
 	/**
@@ -55,59 +44,16 @@ public class AxisScale extends JPanel
 	 */
 	private boolean bDrawLabels = true;
 	
-	/**
-	 * Creates new form Axis.
-	 */
-	public AxisScale()
+	public AbstractDefaultAxisScale(int iAxisType)
 	{
-		this(Y_AXIS);
-		oLabelFont = getFont();
-	}
-	
-	/**
-	 * Create an axis of your choice.
-	 */
-	public AxisScale(int iAxisType)
-	{
-		oLabelFont = getFont();
 		setOrientation(iAxisType);
 	}
 	
-	/**
-	 * set the number format. Setting it to null will reset to the default.
-	 * @param df
-	 */
-	public void setNumberFormat(DecimalFormat df)
+	public AbstractDefaultAxisScale()
 	{
-		if (df==null)
-		{
-			oNumberFormat = defaultNumberFormat(iAxisOrientation);
-		}
-		else
-		{
-			this.oNumberFormat = df;
-		}
+		this(Y_AXIS);
 	}
 	
-	public void setLabelColor(Color oColor)
-	{
-		this.oLabelColor = oColor;
-	}
-	
-	public Color getLabelColor()
-	{
-		return this.oLabelColor;
-	}
-	
-	public void setLabelFont(Font oFont)
-	{
-		this.oLabelFont = oFont;
-	}
-	
-	public Font getLabelFont()
-	{
-		return this.oLabelFont;
-	}
 	
 	/**
 	 * calculate my preferred size based on the font used
@@ -118,18 +64,23 @@ public class AxisScale extends JPanel
 		if (iAxisOrientation == X_AXIS)
 		{
 			// multiple by 1.2 to give a little extra space
-			final int fontHeight = (int) (getFontMetrics(oLabelFont).getHeight() * 1.2);
+			final int fontHeight = (int) (getFontMetrics(getFont()).getHeight() * 1.2);
 			// only the height matters - my container should resize my width to fit the graph
 			return new Dimension(1, fontHeight);
 		}
 		else
 		{
 			// base the width on the width of the format used
-			final Rectangle2D rect = getFontMetrics(oLabelFont).getStringBounds("-" + oNumberFormat.toPattern(), getGraphics());
+			final Rectangle2D rect = getFontMetrics(getFont()).getStringBounds(getSampleForPreferredSizing(), getGraphics());
 			// only the width matters - my container should resize my height to fit the graph
 			return new Dimension((int) (rect.getWidth() * 1.1), 1);
 		}
 	}
+
+	/** 
+	 * provide a default value for generating the preferred size
+	 */
+	protected abstract String getSampleForPreferredSizing();
 	
 	/**
 	 * When any changes are made to the customisable axis this <code>paintComponent</code> method is called.
@@ -147,8 +98,8 @@ public class AxisScale extends JPanel
 		}
 		
 		// Set the tick and label color
-		g.setColor(oLabelColor);
-		g.setFont(oLabelFont);
+		g.setColor(getForeground());
+		g.setFont(getFont());
 		
 		// the distance from the top of the component to the baseline of the x-axis labels.
 		final int xAxisVertical = g.getFontMetrics().getAscent() + g.getFontMetrics().getLeading();
@@ -159,8 +110,8 @@ public class AxisScale extends JPanel
 			for (final Integer oPosition : oLabelsHashMap.keySet())
 			{
 				final int iPosition = oPosition.intValue();
-				final float fLabelValue = oLabelsHashMap.get(oPosition).floatValue();
-				final String sLabel = oNumberFormat.format(fLabelValue);
+				final double fLabelValue = oLabelsHashMap.get(oPosition);
+				final String sLabel = formatValueAsLabel(fLabelValue);
 				final Rectangle2D stringBounds = g.getFontMetrics().getStringBounds(sLabel, g);
 				final int stringWidth = (int) stringBounds.getWidth();
 				
@@ -217,15 +168,14 @@ public class AxisScale extends JPanel
 	/**
 	 * format a value the same way a label is formatted.
 	 */
-	public String formatValueAsLabel(float fVal)
-	{
-		return oNumberFormat.format(fVal);
-	}
+	@Override
+	public abstract String formatValueAsLabel(double fVal);
 	
 	/**
-	 * this mode is only meant to be turned on when cAxis is used with cGraphWrapper.
+	 * this mode is only meant to be turned on when AbstractDefaultAxisScale is used with GraphWrapper.
 	 * It only applies to the x-axis.
 	 */
+	@Override
 	public void setOffsetFirstLabel(boolean b)
 	{
 		this.offsetFirstLabel = b;
@@ -239,17 +189,19 @@ public class AxisScale extends JPanel
 	/**
 	 * Adds the label value and its x position.
 	 */
-	public void addLabel(int iPosition, float fLabelValue)
+	@Override
+	public void addLabel(int iPosition, double fLabelValue)
 	{
 		synchronized (oLabelsHashMap)
 		{
-			oLabelsHashMap.put(Integer.valueOf(iPosition), new Float(fLabelValue));
+			oLabelsHashMap.put(Integer.valueOf(iPosition), fLabelValue);
 		}
 	}
 	
 	/**
 	 * Clear the current collection of labels.
 	 */
+	@Override
 	public void clear()
 	{
 		synchronized (oLabelsHashMap)
@@ -272,13 +224,14 @@ public class AxisScale extends JPanel
 	 * Add a label that will be draw at the end of the axis.
 	 * This calculates the necessary pixel offset so that the label is visible.
 	 */
-	public void addLabelAtEnd(float fLabelValue)
+	@Override
+	public void addLabelAtEnd(double fLabelValue)
 	{
-		final String sLabel = oNumberFormat.format(fLabelValue).trim();
+		final String sLabel = formatValueAsLabel(fLabelValue).trim();
 		final int iPos;
 		if (iAxisOrientation==X_AXIS)
 		{
-			Rectangle2D rect = getFontMetrics(oLabelFont).getStringBounds(sLabel, getGraphics());
+			Rectangle2D rect = getFontMetrics(getFont()).getStringBounds(sLabel, getGraphics());
 			// note: the /2 factor compensates for adjustments the painting method makes.
 			iPos = (int) (getWidth() - (rect.getWidth()/2));
 		}
@@ -293,24 +246,9 @@ public class AxisScale extends JPanel
 	 * 
 	 * @param iAxisType Y_AXIS or X_AXIS
 	 */
-	public final void setOrientation(int iAxisType)
+	public void setOrientation(int iAxisType)
 	{
 		this.iAxisOrientation = iAxisType;
-
-		oNumberFormat = defaultNumberFormat(iAxisType);
-	}
-
-	private static DecimalFormat defaultNumberFormat(int iAxisType)
-	{
-		if (iAxisType==X_AXIS)
-		{
-			return new DecimalFormat("###0.###");
-		}
-		else
-		{
-			// most of the time, the Y-axis is decibels, and we only need a range of 0.0-140.0
-			return new DecimalFormat("##0.#");
-		}
 	}
 
 	/**

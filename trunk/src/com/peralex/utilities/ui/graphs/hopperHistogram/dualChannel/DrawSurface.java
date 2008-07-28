@@ -8,10 +8,13 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
+import com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale;
 import com.peralex.utilities.ui.graphs.graphBase.PixelUnitConverter;
-import com.peralex.utilities.ui.graphs.graphBase.AxisScale;
 
 /**
+ * FIXME this should probably be a subclass of GridDrawSurface. We should probably move
+ *  the logarithmic feature into there.
+ * 
  * @author Andre
  */
 abstract class DrawSurface extends JPanel
@@ -26,7 +29,7 @@ abstract class DrawSurface extends JPanel
   /**
    * These are the handles on the Axis.
    */
-  private AxisScale xAxis, yAxis;
+  private AbstractDefaultAxisScale xAxis, yAxis;
   
   /** 
    * The step size between the vertical gridlines on the x axis.
@@ -54,7 +57,7 @@ abstract class DrawSurface extends JPanel
   private boolean bShowGrid = true;
   
   /**
-   * Indicates whether the X-Axis has a logarithmoc scale.
+   * Indicates whether the X-Axis has a logarithmic scale.
    */  
   private boolean bXAxisLogarithmic = true;
 
@@ -312,7 +315,7 @@ abstract class DrawSurface extends JPanel
    * @param xAxis The axis to be displayed in the conventional x position (horizontal, bottom).
    * @param yAxis The axis to be displayed in the conventional y position (vertical, left).
    */
-  public void setAxes(AxisScale xAxis, AxisScale yAxis)
+  public void setAxes(AbstractDefaultAxisScale xAxis, AbstractDefaultAxisScale yAxis)
   {
     this.xAxis = xAxis;
     this.yAxis = yAxis;

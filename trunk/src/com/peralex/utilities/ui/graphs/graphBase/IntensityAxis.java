@@ -31,6 +31,7 @@ import javax.swing.border.LineBorder;
 
 import com.peralex.utilities.locale.ILocaleListener;
 import com.peralex.utilities.locale.PeralexLibsBundle;
+import com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale;
 import com.peralex.utilities.ui.images.IconManager;
 
 /**
@@ -118,7 +119,7 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 
 		axis.setOpaque(false);
 		// the number format is used to size the width, so make it shorter to reduce the width
-		axis.setNumberFormat(new DecimalFormat("0"));
+		axis.setFormat(new DecimalFormat("0"));
 		
 		this.add(oWaterfallOnOffButton, BorderLayout.NORTH);
 		this.add(axis, BorderLayout.CENTER);
@@ -171,10 +172,10 @@ public class IntensityAxis extends JPanel implements ILocaleListener
     });
     
 		// set up some defaults.
-		axis.setLabelColor(DEFAULT_FOREGROUND_COLOR);
+		axis.setForeground(DEFAULT_FOREGROUND_COLOR);
 		setMonochromeGradientColors(new Color(240, 240, 240), new Color(25, 25, 25));
 		setBorder(new LineBorder(Color.BLACK));
-		axis.setLabelFont(axis.getLabelFont().deriveFont(Font.BOLD));
+		axis.setFont(axis.getFont().deriveFont(Font.BOLD));
 	}
 
 	/** when doing auto-scaling, this resets the thresholds to the default limits */
@@ -412,12 +413,12 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 		if (bSelfMaintained)
 		{
 			// reset the axis number format to default.
-			axis.setNumberFormat(null);
+			axis.setFormat(null);
 		}
 		else
 		{
 			// the number format is used to size the width, so make it shorter to reduce the width
-			axis.setNumberFormat(new DecimalFormat("0"));
+			axis.setFormat(new DecimalFormat("0"));
 		}
 		repaint();
 	}
@@ -526,7 +527,7 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 	}
 	//////////////////////////////////////////////////////////////////////////////
 
-	private final class MyAxis extends AxisScale
+	private final class MyAxis extends NumberAxisScale
 	{
 		
 		/**
