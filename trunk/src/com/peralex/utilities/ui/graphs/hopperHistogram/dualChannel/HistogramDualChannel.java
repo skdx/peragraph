@@ -73,7 +73,7 @@ public class HistogramDualChannel extends JPanel implements IHopperHistogram, IL
       @Override
       public void mouseMoved(MouseEvent e)
       {
-        oXCoordinateValue.setText(oCoordinatesFormat.format(oDrawSurface.getLogXPixelToUnit(e.getX())));
+        oXCoordinateValue.setText(oCoordinatesFormat.format(oDrawSurface.logXPixelToUnit(e.getX())));
         double unit = (PixelUnitConverter.pixelToUnit(false, e.getY(), 0, oDrawSurface.getHeight(), oDrawSurface.getYAxisMinimum(), oDrawSurface.getYAxisMaximum()));
         oYCoordinateValue.setText(oCoordinatesFormat.format(unit));
       }
@@ -315,7 +315,7 @@ public class HistogramDualChannel extends JPanel implements IHopperHistogram, IL
       setXAxisLogarithmic(abIsLogarithmic[0]);
     }    
     
-    // Convert the float array into a 2 dimentional array
+    // Convert the float array into a 2 dimensional array
     float[][] afNewHistogramData = new float[awNumPoints[1]][awNumPoints[0]];
     for (int i=0; i<awNumPoints[1]; i++)
     {

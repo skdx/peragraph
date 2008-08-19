@@ -12,9 +12,9 @@ import com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale;
 import com.peralex.utilities.ui.graphs.graphBase.PixelUnitConverter;
 
 /**
- * FIXME this should probably be a subclass of GridDrawSurface. We should probably move
- *  the logarithmic feature into there.
- *  
+ * FIXME this should probably be a subclass of GridDrawSurface. We should probably move the logarithmic feature into
+ * there.
+ * 
  * @author Andre
  */
 class DrawSurface extends JPanel
@@ -53,17 +53,17 @@ class DrawSurface extends JPanel
 	/**
 	 * This flag indicates whether the Grid must be drawn or not.
 	 */
-	private boolean bShowGrid = true;
+	private boolean bGridVisible = true;
 
 	/**
-	 * Indicates whether the X-Axis has a logarithmoc scale.
+	 * Indicates whether the X-Axis has a logarithmic scale.
 	 */
 	private boolean bXAxisLogarithmic = true;
 
 	/**
 	 * The default constructor for DrawSurface.
 	 */
-	public DrawSurface()
+	protected DrawSurface()
 	{
 		addComponentListener(new ComponentAdapter()
 		{
@@ -85,37 +85,36 @@ class DrawSurface extends JPanel
 	 */
 	public void drawHorizontalGrid(Graphics2D g2d)
 	{
-		if (yAxis != null)
+		if (yAxis == null)
+			return;
+
+		yAxis.clear();
+		final double firstValue_Hz = dMinY
+				+ ((dMinY % yStepSize_Hz) < 0 ? (Math.abs(dMinY % yStepSize_Hz)) : (dMinY % yStepSize_Hz));
+		final int numYSteps = (int) ((dMaxY - firstValue_Hz) / yStepSize_Hz);
+
+		g2d.setColor(oGridColor);
+		int y1 = PixelUnitConverter.unitToPixel(false, firstValue_Hz, 0, getHeight(), dMinY, dMaxY);
+		int y2 = y1;
+		final int x1 = 0;
+		final int x2 = getWidth();
+
+		for (int i = 0; i < numYSteps + 1; i++)
 		{
-			yAxis.clear();
-			final double firstValue_Hz = dMinY
-					+ ((dMinY % yStepSize_Hz) < 0 ? (Math.abs(dMinY % yStepSize_Hz)) : (dMinY % yStepSize_Hz));
-			final int numYSteps = (int) ((dMaxY - firstValue_Hz) / yStepSize_Hz);
+			final double dYLabel = firstValue_Hz + (i * yStepSize_Hz);
+			yAxis.addLabel(y1 + 5, (float) dYLabel);
 
-			g2d.setColor(oGridColor);
-			int y1 = PixelUnitConverter.unitToPixel(false, firstValue_Hz, 0, getHeight(), dMinY, dMaxY);
-			int y2 = y1;
-			int x1 = 0;
-			int x2 = getWidth();
-			double dYLabel;
-
-			for (int i = 0; i < numYSteps + 1; i++)
+			// Draw the Grid Line, if it is enabled.
+			if (bGridVisible)
 			{
-				dYLabel = firstValue_Hz + (i * yStepSize_Hz);
-				yAxis.addLabel(y1 + 5, (float) dYLabel);
-
-				// Draw the Grid Line, if it is enabled.
-				if (bShowGrid)
-				{
-					g2d.drawLine(x1, y1, x2, y2);
-				}
-
-				y1 = y2 = PixelUnitConverter.unitToPixel(false, firstValue_Hz + ((i + 1) * yStepSize_Hz),
-						0, getHeight(), dMinY, dMaxY);
+				g2d.drawLine(x1, y1, x2, y2);
 			}
 
-			yAxis.repaint();
+			y1 = y2 = PixelUnitConverter.unitToPixel(false, firstValue_Hz + ((i + 1) * yStepSize_Hz), 0,
+					getHeight(), dMinY, dMaxY);
 		}
+
+		yAxis.repaint();
 	}
 
 	/**
@@ -133,18 +132,15 @@ class DrawSurface extends JPanel
 			xAxis.clear();
 			g2d.setColor(oGridColor);
 
-			int iPowerMax = 0, iPowerMin = 0, iNumberOfGridLines = 0, iXCoordinate = 0;
-			double dXLabel = 0, dGridStepSize = 0;
-
-			iPowerMax = (int) (Math.log10(dMaxX) + 0.5);
-			iPowerMin = (int) (Math.log10(dMinX) + 0.5);
-			iNumberOfGridLines = iPowerMax - iPowerMin;
-			dGridStepSize = ((dMaxX - dMinX) / iNumberOfGridLines);
+			final int iPowerMax = (int) (Math.log10(dMaxX) + 0.5);
+			final int iPowerMin = (int) (Math.log10(dMinX) + 0.5);
+			final int iNumberOfGridLines = iPowerMax - iPowerMin;
+			final double dGridStepSize = ((dMaxX - dMinX) / iNumberOfGridLines);
 
 			for (int i = iPowerMin; i <= iPowerMax; i++)
 			{
-				dXLabel = Math.ceil((Math.pow(10, i)));
-				iXCoordinate = PixelUnitConverter.unitToPixel(true, dMinX
+				final double dXLabel = Math.ceil((Math.pow(10, i)));
+				final int iXCoordinate = PixelUnitConverter.unitToPixel(true, dMinX
 						+ (dGridStepSize * (i - iPowerMin)), 0, getWidth(), dMinX, dMaxX);
 
 				if (i == iPowerMin)
@@ -165,15 +161,14 @@ class DrawSurface extends JPanel
 
 				if (i < iPowerMax)
 				{
-					double dStartValue = (dMinX + (dGridStepSize * (i - iPowerMin)));
-					double dLineScaleFactor = 0;
+					final double dStartValue = (dMinX + (dGridStepSize * (i - iPowerMin)));
 
 					for (int a = 1; a < 10; a++)
 					{
-						dLineScaleFactor = Math.log10((Math.pow(10, i)) * a);
-						iXCoordinate = PixelUnitConverter.unitToPixel(true, dStartValue
+						final double dLineScaleFactor = Math.log10((Math.pow(10, i)) * a);
+						final int iXCoordinate2 = PixelUnitConverter.unitToPixel(true, dStartValue
 								+ (dGridStepSize * (dLineScaleFactor - i)), 0, getWidth(), dMinX, dMaxX);
-						g2d.drawLine(iXCoordinate, 0, iXCoordinate, getHeight());
+						g2d.drawLine(iXCoordinate2, 0, iXCoordinate2, getHeight());
 					}
 				}
 			}
@@ -197,12 +192,12 @@ class DrawSurface extends JPanel
 			{
 				final double dXLabel = firstValue_Hz + (i * xStepSize_Hz);
 
-				if ((dXLabel % 1) == 0)
+				if (dXLabel % 1 == 0)
 				{
 					xAxis.addLabel(x1 + 35, (float) dXLabel);
 
 					// Draw the Grid Line, if it is enabled.
-					if (bShowGrid)
+					if (bGridVisible)
 					{
 						g2d.drawLine(x1, y1, x2, y2);
 					}
@@ -218,12 +213,8 @@ class DrawSurface extends JPanel
 
 	/**
 	 * This will convert the given value to a pixel value on the graph's X-Axis.
-	 * 
-	 * @param dValue
-	 * @param dMinimumValue
-	 * @param dMaximumValue
 	 */
-	public int getLogUnitToPixel(double dValue, double dMinimumValue, double dMaximumValue)
+	public int logUnitToPixel(double dValue, double dMinimumValue, double dMaximumValue)
 	{
 		double dPowerMin = Math.log10(dMinimumValue);
 		double dPowerMax = Math.log10(dMaximumValue) - dPowerMin;
@@ -234,10 +225,8 @@ class DrawSurface extends JPanel
 
 	/**
 	 * This will convert the given pixel value to a value on the graph's X-Axis.
-	 * 
-	 * @param dValue
 	 */
-	public double getLogXPixelToUnit(double dValue)
+	public double logXPixelToUnit(double dValue)
 	{
 		double dPowerMin = Math.log10(dMinX);
 		double dPowerMax = Math.log10(dMaxX);
@@ -417,9 +406,9 @@ class DrawSurface extends JPanel
 	/**
 	 * This method sets whether the grid must be drawn or not.
 	 */
-	public void showGrid(boolean _bShowGrid)
+	public void setGridVisible(boolean _bShowGrid)
 	{
-		this.bShowGrid = _bShowGrid;
+		this.bGridVisible = _bShowGrid;
 		repaint();
 	}
 
