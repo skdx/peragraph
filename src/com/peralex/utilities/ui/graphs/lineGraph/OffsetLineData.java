@@ -14,11 +14,11 @@ public class OffsetLineData extends GeneratedLineData
 	public OffsetLineData() {
 	}
 	
-	public OffsetLineData(float startX, float endX, int cntX, float[] afYValues) {
+	public OffsetLineData(double startX, double endX, int cntX, float[] afYValues) {
 		super(startX, endX, cntX, afYValues);
 	}
 
-	public OffsetLineData(float startX, float endX, float[] afYValues) {
+	public OffsetLineData(double startX, double endX, float[] afYValues) {
 		super(startX, endX, afYValues);
 	}
 	

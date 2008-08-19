@@ -12,7 +12,7 @@ public interface IGraphBaseListener
   /**
    * This is called every time the coordinates of the mouse has changed.
    */
-  void mouseCoordinatesChanged(float fXValue, float fYValue);
+  void mouseCoordinatesChanged(double fXValue, double fYValue);
 	
   /**
    * This is called every time the ScalingFactor of the graph has changed.

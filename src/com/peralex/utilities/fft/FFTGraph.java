@@ -147,7 +147,7 @@ public class FFTGraph extends SingleLineGraph
 
 	private void doFFT(final int currentResolution)
 	{
-		final float fullScaleAmplitude_dBm = getMaximumYZoomLimit();
+		final double fullScaleAmplitude_dBm = getMaximumYZoomLimit();
 		final double preFFTScalingFactor = Math.pow(10.0, fullScaleAmplitude_dBm / 20.0)
 				/ ((long) Short.MAX_VALUE * currentResolution);
 
@@ -165,8 +165,8 @@ public class FFTGraph extends SingleLineGraph
 		 */
 		final double[] dMagnitude = oFFT.calculate(preFFTScalingFactor, postFFTScalingFactor, lostEnergy);
 
-		final float bandwidth_Hz = getMaximumXZoomLimit() - getMinimumXZoomLimit();
-		final float centreFrequency_Hz = getMinimumXZoomLimit() + (bandwidth_Hz/2f);
+		final double bandwidth_Hz = getMaximumXZoomLimit() - getMinimumXZoomLimit();
+		final double centreFrequency_Hz = getMinimumXZoomLimit() + (bandwidth_Hz/2f);
 		setGraphData(centreFrequency_Hz - (bandwidth_Hz / 2), centreFrequency_Hz + (bandwidth_Hz / 2),
 				convertToDoubleArray(dMagnitude));
 	}

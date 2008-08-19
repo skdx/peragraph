@@ -404,8 +404,8 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
 					if (oCursor.getKeyBinding() == iCurrentKeyDown 
 							&& (oCursor.isHorizontalCursorEnabled() || oCursor.isVerticalCursorEnabled()))
 					{
-						final float fXValue = pixelToUnitX(iMouseReleasedX);
-						final float fYValue = pixelToUnitY(iMouseReleasedY);
+						final double fXValue = pixelToUnitX(iMouseReleasedX);
+						final double fYValue = pixelToUnitY(iMouseReleasedY);
 						oCursor.setValue(fXValue, fYValue);
 
 						doCalculateCursors();
@@ -515,7 +515,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
    * Set the maximum and minimum on the Axis.
    */
 	@Override
-  public void setGridMinMax(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+  public void setGridMinMax(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
   {
     super.setGridMinMax(fMinimumX, fMaximumX, fMinimumY, fMaximumY);
 		
@@ -526,7 +526,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
    * Set the maximum and minimum on the X Axis.
    */
 	@Override
-  public void setGridXMinMax(float fMinimumX, float fMaximumX)
+  public void setGridXMinMax(double fMinimumX, double fMaximumX)
   {
 		super.setGridXMinMax(fMinimumX, fMaximumX);
 		
@@ -537,7 +537,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
    * Set the maximum and minimum on the Y Axis.
    */
 	@Override
-  public void setGridYMinMax(float fMinimumY, float fMaximumY)
+  public void setGridYMinMax(double fMinimumY, double fMaximumY)
   {
 		super.setGridYMinMax(fMinimumY, fMaximumY);
 		

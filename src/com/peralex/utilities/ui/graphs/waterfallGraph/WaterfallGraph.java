@@ -68,14 +68,14 @@ public class WaterfallGraph extends GraphBase
   }
   
   @Override
-  public void setGridYMinMax(float fMinimumY, float fMaximumY)
+  public void setGridYMinMax(double fMinimumY, double fMaximumY)
   {
   	// don't mess with this because it upsets cursor position calculations
   	throw new IllegalStateException("you may not mess with a waterfall's grid Y min/max. You should probably be calling setAmplitudeValueRange()");
   }
   
   @Override
-  public void setGridMinMax(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+  public void setGridMinMax(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
   {
   	// don't mess with this because it upsets cursor position calculations
   	throw new IllegalStateException("you may not mess with a waterfall's grid Y min/max");
@@ -97,11 +97,11 @@ public class WaterfallGraph extends GraphBase
 			 * (2) We are only transforming along the x-axis
 			 */
 			
-			final float min = getMinimumX();
-			final float max = getMaximumX();
-			final float minZoomLimit = getMinimumXZoomLimit();
-			final float maxZoomLimit = getMaximumXZoomLimit();
-			final float totalXRange = maxZoomLimit - minZoomLimit;
+			final double min = getMinimumX();
+			final double max = getMaximumX();
+			final double minZoomLimit = getMinimumXZoomLimit();
+			final double maxZoomLimit = getMaximumXZoomLimit();
+			final double totalXRange = maxZoomLimit - minZoomLimit;
 			
 			final float imageWidth_px = oImage.getWidth();
 			final float displayWidth_px = getWidth();
@@ -298,11 +298,11 @@ public class WaterfallGraph extends GraphBase
 	}
 
 	private final int frequencyHzToX(long lFrequency_Hz) {
-		return Math.round((lFrequency_Hz - getMinimumXZoomLimit()) / (getMaximumXZoomLimit() - getMinimumXZoomLimit()) * oImage.getWidth());
+		return (int) Math.round((lFrequency_Hz - getMinimumXZoomLimit()) / (getMaximumXZoomLimit() - getMinimumXZoomLimit()) * oImage.getWidth());
 	}
 	
 	@Override
-	public void setGridXMinMax(float fMinimumX, float fMaximumX)
+	public void setGridXMinMax(double fMinimumX, double fMaximumX)
 	{
 		final boolean bNeedToClear = getMinimumXZoomLimit()!=fMinimumX || getMaximumXZoomLimit()!=fMaximumX;
 		super.setGridXMinMax(fMinimumX, fMaximumX);

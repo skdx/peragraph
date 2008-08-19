@@ -21,8 +21,8 @@ public class CoordinatesPanel extends javax.swing.JPanel
    */
 	private final Timer oCoordinateLabelTimer;
 
-	private float fXVal;
-	private float fYVal;
+	private double fXVal;
+	private double fYVal;
 	
   /** Creates new form cCoordinatesPanel */
   public CoordinatesPanel()
@@ -98,20 +98,20 @@ public class CoordinatesPanel extends javax.swing.JPanel
   	oYCoordinateValue.setSuffix(ySuffix);
   }
   
-  public void setCoordinates(float fXVal, float fYVal)
+  public void setCoordinates(double fXVal, double fYVal)
   {
 		this.fXVal = fXVal;
 		this.fYVal = fYVal;
 		oCoordinateLabelTimer.start();
   }
   
-  public void setXCoordinate(float fXVal)
+  public void setXCoordinate(double fXVal)
   {
 		this.fXVal = fXVal;
 		oCoordinateLabelTimer.start();
   }
   
-  public void setYCoordinate(float fYVal)
+  public void setYCoordinate(double fYVal)
   {
 		this.fYVal = fYVal;
 		oCoordinateLabelTimer.start();

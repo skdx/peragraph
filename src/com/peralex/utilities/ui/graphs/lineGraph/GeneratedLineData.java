@@ -15,7 +15,7 @@ public class GeneratedLineData extends LineDataY {
 		this(0, 0, 0, new float[0]);
 	}
 	
-	public GeneratedLineData(float startX, float endX, int cntX, float[] afYValues) {
+	public GeneratedLineData(double startX, double endX, int cntX, float[] afYValues) {
 		super(afYValues);
 		if (afYValues.length!=cntX) {
 			throw new IllegalArgumentException("afYValues length must be same as afXValues length, " + afYValues.length + "!=" + cntX);
@@ -25,7 +25,7 @@ public class GeneratedLineData extends LineDataY {
 		this.rangeX = endX - startX;
 	}
 
-	public GeneratedLineData(float startX, float endX, float[] afYValues) {
+	public GeneratedLineData(double startX, double endX, float[] afYValues) {
 		super(afYValues);
 		this.startX = startX;
 		this.cntX = afYValues.length;

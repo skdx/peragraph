@@ -66,22 +66,22 @@ public class MultiLineGraph extends AbstractLineGraph
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMinX = -1;
+	private double iCachedMinX = -1;
 	
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMaxX = -1;
+	private double iCachedMaxX = -1;
 	
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMinY = -1;
+	private double iCachedMinY = -1;
 	
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMaxY = -1;
+	private double iCachedMaxY = -1;
 	
 	/**
 	 * active optimised drawing mode
@@ -99,7 +99,7 @@ public class MultiLineGraph extends AbstractLineGraph
 		addZoomListener(new ZoomAdapter()
 		{
 			@Override
-			public void graphZoomChanged(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+			public void graphZoomChanged(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
 			{
 				graphDataChanged();
 			}
@@ -470,8 +470,8 @@ public class MultiLineGraph extends AbstractLineGraph
 			resetZoom();
 			return;
 		}
-		float minX = Float.MAX_VALUE;
-		float maxX = -Float.MAX_VALUE;
+		double minX = Double.MAX_VALUE;
+		double maxX = -Double.MAX_VALUE;
 		float minY = Float.MAX_VALUE;
 		float maxY = -Float.MAX_VALUE;
 		for (LineState lineState : aoLineData.values())

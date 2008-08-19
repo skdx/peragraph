@@ -52,22 +52,22 @@ public class SingleLineGraph extends AbstractLineGraph
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMinX = -1;
+	private double iCachedMinX = -1;
 	
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMaxX = -1;
+	private double iCachedMaxX = -1;
 	
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMinY = -1;
+	private double iCachedMinY = -1;
 	
 	/**
 	 * the height of the component when the coordinate cache data was created
 	 */
-	private float iCachedMaxY = -1;
+	private double iCachedMaxY = -1;
 	
 	/**
 	 * Creates a new instance of cLineGraph
@@ -79,7 +79,7 @@ public class SingleLineGraph extends AbstractLineGraph
 		addZoomListener(new ZoomAdapter()
 		{
 			@Override
-			public void graphZoomChanged(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+			public void graphZoomChanged(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
 			{
 				graphDataChanged();
 			}
@@ -218,7 +218,7 @@ public class SingleLineGraph extends AbstractLineGraph
 	/**
 	 * This will set the data for one line that must be drawn.
 	 */
-	public void setGraphData(float startX, float endX, float [] afYValues)
+	public void setGraphData(double startX, double endX, float [] afYValues)
 	{
 		setGraphData(new GeneratedLineData(startX, endX, afYValues.length, afYValues));
 	}
@@ -250,8 +250,8 @@ public class SingleLineGraph extends AbstractLineGraph
 			resetZoom();
 			return;
 		}
-		final float minX = oLineData.getXValue(0);
-		final float maxX = oLineData.getXValue(oLineData.getNumberOfPoints()-1);
+		final double minX = oLineData.getXValueDouble(0);
+		final double maxX = oLineData.getXValueDouble(oLineData.getNumberOfPoints()-1);
 		final float [] yValues = oLineData.getYValues();
 		float minY = Float.MAX_VALUE;
 		float maxY = -Float.MAX_VALUE;

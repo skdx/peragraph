@@ -1,7 +1,7 @@
 package com.peralex.utilities.ui.graphs.lineGraph;
 
 /**
- * Acts as a base class for cLineData and cGeneratedLineData
+ * Acts as a base class for LineData and GeneratedLineData
  * 
  * @author Noel Grandin
  */

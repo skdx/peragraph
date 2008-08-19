@@ -262,7 +262,7 @@ public class MultiGraphWrapper implements ILocaleListener
 
   private final IGraphBaseListener graphListener = new IGraphBaseListener()
 	{
-		public void mouseCoordinatesChanged(final float fXValue, final float fYValue)
+		public void mouseCoordinatesChanged(final double fXValue, final double fYValue)
 		{
       getInternalCoordinatesPanel().setCoordinates(fXValue / oGraph.getXScalingFactor(), fYValue / oGraph.getYScalingFactor());
 		}

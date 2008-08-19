@@ -29,8 +29,8 @@ final class CoordinateCacheValue {
 						final PixelUnitConverter.UnitToPixel xUnitToPixel, 
 						final PixelUnitConverter.UnitToPixel yUnitToPixel, 
 						AbstractLineData oLineData,
-						float fMinX,
-						float fMaxX,
+						double fMinX,
+						double fMaxX,
 						boolean bCalculateX,
 						boolean bCalculateY)
 	{

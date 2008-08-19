@@ -13,7 +13,7 @@ public interface IZoomListener
   /**
    * This is called whenever the zoom of the graph changes.
    */
-  void graphZoomChanged(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY);
+  void graphZoomChanged(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY);
   
   /**
    * This is called whenever the zoom status of the graph changes.
@@ -23,5 +23,5 @@ public interface IZoomListener
   /**
    * Called when we start animating the zoom - these values are the values we will zoom TO.
    */
-  void zoomAnimationStart(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY);
+  void zoomAnimationStart(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY);
 }

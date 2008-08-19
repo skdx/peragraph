@@ -186,8 +186,8 @@ public class VerticalBarGraph extends GraphBase
    * @param fMaximumY
    */
 	@Override
-	public void setGridMinMax(float fMinimumX, float fMaximumX, float fMinimumY,
-			float fMaximumY)
+	public void setGridMinMax(double fMinimumX, double fMaximumX, double fMinimumY,
+			double fMaximumY)
 	{
 		super.setGridMinMax(0, fMaximumX, fMinimumY, fMaximumY);
 	}

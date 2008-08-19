@@ -36,7 +36,7 @@ class WaterfallDetectionsLayer
 	 * Draw the image to a graphics context.
 	 */
 	public void drawImageTo(Graphics2D g, ImageObserver observer, boolean isZoomed,
-			float min, float max, float minZoomLimit, float maxZoomLimit,
+			double min, double max, double minZoomLimit, double maxZoomLimit,
 			int displayWidth)
 	{
 		if (!displayedImage.isImageCreated()) {
@@ -58,7 +58,7 @@ class WaterfallDetectionsLayer
 			 * (2) We are only transforming along the x-axis
 			 */
 			
-			final float totalXRange = maxZoomLimit - minZoomLimit;
+			final double totalXRange = maxZoomLimit - minZoomLimit;
 			final float imageWidth_px = displayedImage.getWidth();
 			// note: we adjust by half a bin width so that the points on the FFT line up nicely with the
 			// centre of bins on the waterfall when zooming.
