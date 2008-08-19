@@ -24,7 +24,7 @@ import com.peralex.utilities.ui.SwingLib;
  * FIXME: we should remove x- and y-axis from the cGraphBase class and move it here.
  *    X and Y axes should be linked to the cGraphBase code using listeners.
  *    
- * FIXME: we have the names of some methods confused. e.g. setXAxisVisible() should be scalled setXAxisScaleVisible()
+ * FIXME: we have the names of some methods confused. e.g. setXAxisVisible() should be called setXAxisScaleVisible()
  *   and setXAxisScaleVisible() should be called setXAxisPanelVisible().
  *   
  * FIXME: de-couple the relationship between this and cGraphBase by using an interface.
