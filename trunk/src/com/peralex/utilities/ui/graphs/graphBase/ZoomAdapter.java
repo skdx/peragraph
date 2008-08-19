@@ -8,7 +8,7 @@ package com.peralex.utilities.ui.graphs.graphBase;
 public class ZoomAdapter implements IZoomListener
 {
 
-	public void graphZoomChanged(float minimumX, float maximumX, float minimumY, float maximumY)
+	public void graphZoomChanged(double minimumX, double maximumX, double minimumY, double maximumY)
 	{
 	}
 
@@ -16,7 +16,7 @@ public class ZoomAdapter implements IZoomListener
 	{
 	}
 
-	public void zoomAnimationStart(float minimumX, float maximumX, float minimumY, float maximumY)
+	public void zoomAnimationStart(double minimumX, double maximumX, double minimumY, double maximumY)
 	{
 	}
 

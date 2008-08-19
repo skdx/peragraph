@@ -25,12 +25,12 @@ public class RangeCursor
 	/**
 	 * Stores the current value of the RangeCursor.
 	 */
-	private float fValue;
+	private double fValue;
 	
 	/**
 	 * Stores the width of the RangeCursor.
 	 */
-	private float fWidth;
+	private double fWidth;
 	
 	/**
 	 * Stores the current Coordinate of the RangeCursor.
@@ -71,7 +71,7 @@ public class RangeCursor
 	/**
 	 * Create a new RangeCursor
 	 */
-	public RangeCursor(String sRangeCursorID, Color oColor, float fResolution, float fWidth, float fValue)
+	public RangeCursor(String sRangeCursorID, Color oColor, float fResolution, double fWidth, double fValue)
 	{
 		this.sRangeCursorID = sRangeCursorID;
 		this.fWidth = fWidth;
@@ -90,7 +90,7 @@ public class RangeCursor
 		if (fResolution!=1.0) {
 			// note: cannot use Math.round here because round() returns a long, and a long may not
 			// have sufficient range for fValue.
-			this.fValue = (float) (Math.floor(fValue / fResolution) * fResolution);
+			this.fValue = Math.floor(fValue / fResolution) * fResolution;
 		}
 	}
 	
@@ -105,7 +105,7 @@ public class RangeCursor
 	/**
 	 * Sets the new value of the RangeCursor.
 	 */
-	public void setValue(float fValue)
+	public void setValue(double fValue)
 	{
 		this.fValue = fValue;
 		
@@ -116,17 +116,17 @@ public class RangeCursor
 	/**
 	 * Returns the current Value.
 	 */
-	public float getValue()
+	public double getValue()
 	{
 		return fValue;
 	}
 	
-	public void setWidth(float fWidth)
+	public void setWidth(double fWidth)
 	{
 		this.fWidth = fWidth;
 	}
 	
-	public float getWidth()
+	public double getWidth()
 	{
 		return fWidth;
 	}

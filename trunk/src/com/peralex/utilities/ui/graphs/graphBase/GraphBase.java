@@ -65,8 +65,8 @@ public abstract class GraphBase extends ZoomDrawSurface
   {
     super.mouseDragged(e);
     
-    final float fMouseXValue = pixelToUnitX(e.getX());
-    final float fMouseYValue = pixelToUnitY(e.getY());
+    final double fMouseXValue = pixelToUnitX(e.getX());
+    final double fMouseYValue = pixelToUnitY(e.getY());
     fireMouseCoordinatesListeners(fMouseXValue, fMouseYValue);
   }
   
@@ -78,8 +78,8 @@ public abstract class GraphBase extends ZoomDrawSurface
   {
     super.mouseMoved(e);
     
-    final float fMouseXValue = pixelToUnitX(e.getX());
-    final float fMouseYValue = pixelToUnitY(e.getY());
+    final double fMouseXValue = pixelToUnitX(e.getX());
+    final double fMouseYValue = pixelToUnitY(e.getY());
     fireMouseCoordinatesListeners(fMouseXValue, fMouseYValue);
   }
 

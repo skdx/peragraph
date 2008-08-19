@@ -35,12 +35,12 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	/** 
    * Default unit range values for the Y Axis.
    */
-	private float fMinimumY = -20, fMaximumY = 20;
+	private double fMinimumY = -20, fMaximumY = 20;
   
 	/** 
    * Default unit range values for the X Axis.
    */
-	private float fMinimumX = 0, fMaximumX = 10000000;
+	private double fMinimumX = 0, fMaximumX = 10000000;
 
 	/**
 	 * This Flag determines whether the Grid must be shown or not.
@@ -189,12 +189,12 @@ public class GridDrawSurface extends PopupMenuDrawSurface
    *                       this must be false (Inversely proportional: units get smaller as pixels get bigger)
    * @return int array containing the grid steps
    */
-  private static int [] calculateGridAndAxis(int iAxisLength_px, int iGridSpacing, float fMinimum, float fMaximum, AbstractAxisScale oAxis, long lScalingFactor, boolean bProportional)
+  private static int [] calculateGridAndAxis(int iAxisLength_px, int iGridSpacing, double fMinimum, double fMaximum, AbstractAxisScale oAxis, long lScalingFactor, boolean bProportional)
   {
     // The step size between the vertical gridlines on the x axis 
     final double dStepSize_Hz = calculateStepSize(iAxisLength_px / iGridSpacing, fMinimum, fMaximum);
     // The first unit value on an axis 
-    final float fFirstGridValue = (float)(Math.floor(fMinimum/dStepSize_Hz) * dStepSize_Hz);
+    final double fFirstGridValue = Math.floor(fMinimum/dStepSize_Hz) * dStepSize_Hz;
     // The number of steps along the x axis 
     final int iNumSteps = (int)((fMaximum - fFirstGridValue)/dStepSize_Hz) + 1;
    
@@ -206,7 +206,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	    {
 	    	final double val = fFirstGridValue + (i * dStepSize_Hz);
 	      aiGridSteps[i] = PixelUnitConverter.unitToPixel(bProportional, val, 0, iAxisLength_px, fMinimum, fMaximum);
-      	oAxis.addLabel(aiGridSteps[i], (float)(val / lScalingFactor));
+      	oAxis.addLabel(aiGridSteps[i], val / lScalingFactor);
 	    }
     }
     else if (iNumSteps==3)
@@ -216,7 +216,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	    aiGridSteps = new int[1];
 	    final double val = (fMinimum+fMaximum)/2;
       aiGridSteps[0] = PixelUnitConverter.unitToPixel(bProportional, val, 0, iAxisLength_px, fMinimum, fMaximum);
-      oAxis.addLabel(aiGridSteps[0], (float)(val / lScalingFactor)); 
+      oAxis.addLabel(aiGridSteps[0], val / lScalingFactor); 
       if (bProportional)
       {
 	      oAxis.addLabel(0, fMinimum / lScalingFactor);
@@ -263,7 +263,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * format a value the same way an X-axis label is formatted
    */
-  public String formatXAxisLabel(float fVal)
+  public String formatXAxisLabel(double fVal)
   {
   	return getXAxisScale().formatValueAsLabel(fVal / lXScalingFactor);
   }
@@ -321,7 +321,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * This methods sets the maximum and minimum on the Axis.
    */
-  public void setGridMinMax(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+  public void setGridMinMax(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
   {
     _setGridMinMax(fMinimumX, fMaximumX, fMinimumY, fMaximumY);
     repaint(); 
@@ -330,7 +330,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * private copy that can't be overridden so I can safely call it from the constructor
    */
-  private void _setGridMinMax(float _fMinimumX, float _fMaximumX, float _fMinimumY, float _fMaximumY)
+  private void _setGridMinMax(double _fMinimumX, double _fMaximumX, double _fMinimumY, double _fMaximumY)
   {
   	if (_fMinimumX > _fMaximumX) throw new IllegalStateException("minX>maxX " + _fMinimumX + " " + _fMaximumX);
   	if (_fMinimumY > _fMaximumY) throw new IllegalStateException("minY>maxY " + _fMinimumY + " " + _fMaximumY);
@@ -348,7 +348,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * This methods sets the maximum and minimum on the X Axis.
    */
-  public void setGridXMinMax(float _fMinimumX, float _fMaximumX)
+  public void setGridXMinMax(double _fMinimumX, double _fMaximumX)
   {
   	if (_fMinimumX > _fMaximumX) throw new IllegalStateException("minX>maxX " + _fMinimumX + " " + _fMaximumX);
     this.fMinimumX = _fMinimumX;
@@ -362,7 +362,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * This methods sets the maximum and minimum on the Y Axis.
    */
-  public void setGridYMinMax(float _fMinimumY, float _fMaximumY)
+  public void setGridYMinMax(double _fMinimumY, double _fMaximumY)
   {
   	if (_fMinimumY > _fMaximumY) throw new IllegalStateException("minY>maxY " + _fMinimumY + " " + _fMaximumY);
     this.fMinimumY = _fMinimumY;
@@ -376,7 +376,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * Get the max X value.
    */
-  public float getMaximumX()
+  public double getMaximumX()
   {
     return fMaximumX;
   }
@@ -384,7 +384,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * Get the min X value.
    */
-  public float getMinimumX()
+  public double getMinimumX()
   {
     return fMinimumX;
   }
@@ -392,7 +392,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * Get the max Y value.
    */
-  public float getMaximumY()
+  public double getMaximumY()
   {
     return fMaximumY;
   }
@@ -400,7 +400,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * Get the min Y value.
    */
-  public float getMinimumY()
+  public double getMinimumY()
   {
     return fMinimumY;
   }  
@@ -421,7 +421,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
 	 * Compute the corresponding SI prefix for values
 	 */
-	private static String computeUnitPrefix(boolean bDecimalUnitLabels, float fUnitDivisor)
+	private static String computeUnitPrefix(boolean bDecimalUnitLabels, double fUnitDivisor)
 	{
 		if (bDecimalUnitLabels)
 		{
@@ -485,7 +485,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	 */
   private void calculateXAxisScalingFactor()
   {
-    final float fUnitDivisor = (float)(Math.pow(10, (Math.floor(Math.floor((Math.log10(fMaximumX)) / 3)) * 3)));
+    final double fUnitDivisor = Math.pow(10, (Math.floor(Math.floor((Math.log10(fMaximumX)) / 3)) * 3));
     sXScaleUnit = computeUnitPrefix(bXDecimalUnitLabels, fUnitDivisor);
     lXScalingFactor = (long)fUnitDivisor;		
 		if (lXScalingFactor < 1) { lXScalingFactor = 1; }
@@ -498,7 +498,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
    */
   private void calculateYAxisScalingFactor()
   {
-    final float fUnitDivisor = (float)(Math.pow(10, (Math.floor(Math.floor((Math.log10(fMaximumY)) / 3)) * 3)));
+    final double fUnitDivisor = Math.pow(10, (Math.floor(Math.floor((Math.log10(fMaximumY)) / 3)) * 3));
     sYScaleUnit = computeUnitPrefix(bYDecimalUnitLabels, fUnitDivisor);
     lYScalingFactor = (long)fUnitDivisor;		
 		if (lYScalingFactor < 1) { lYScalingFactor = 1; }
@@ -683,17 +683,17 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   /**
    * Utility function for converting X from pixel value to unit value
    */
-  public final float pixelToUnitX(int pixelValue)
+  public final double pixelToUnitX(int pixelValue)
   {
-    return (float)PixelUnitConverter.pixelToUnit(true, pixelValue, 0, getWidth(), getMinimumX(), getMaximumX());            
+    return PixelUnitConverter.pixelToUnit(true, pixelValue, 0, getWidth(), getMinimumX(), getMaximumX());            
   }
   
   /**
    * Utility function for converting X from pixel value to unit value
    */
-  public final float pixelToUnitY(int pixelValue)
+  public final double pixelToUnitY(int pixelValue)
   {
-    return (float) PixelUnitConverter.pixelToUnit(false, pixelValue, 0, getHeight(), getMinimumY(), getMaximumY());
+    return PixelUnitConverter.pixelToUnit(false, pixelValue, 0, getHeight(), getMinimumY(), getMaximumY());
   }
 
   @Override

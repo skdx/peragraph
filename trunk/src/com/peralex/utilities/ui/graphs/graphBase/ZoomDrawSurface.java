@@ -32,12 +32,12 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
 	/** 
    * Default unit range values for the X Axis.
    */
-	private float fMinimumXZoomLimit = getMinimumX(), fMaximumXZoomLimit = getMaximumX();
+	private double fMinimumXZoomLimit = getMinimumX(), fMaximumXZoomLimit = getMaximumX();
   
 	/** 
    * Default unit range values for the Y Axis.
    */
-	private float fMinimumYZoomLimit = getMinimumY(), fMaximumYZoomLimit = getMaximumY();
+	private double fMinimumYZoomLimit = getMinimumY(), fMaximumYZoomLimit = getMaximumY();
     
   /**
    * This is the rectangle that gets drawn.
@@ -47,7 +47,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   /**
    * This Stack stores all the Zooms that the user has made, excluding the current one.
    */
-  private final Stack<float []> oZoomStack = new Stack<float []>();
+  private final Stack<double []> oZoomStack = new Stack<double []>();
 	
 	/**
 	 * This is the Timer that will repaint the rectangle while dragged.
@@ -174,15 +174,15 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   /**
    * This method is used for zooming IN.
    */
-  private void internalZoomIn(float fZoomMinimumX, float fZoomMaximumX, float fZoomMinimumY, float fZoomMaximumY)
+  private void internalZoomIn(double fZoomMinimumX, double fZoomMaximumX, double fZoomMinimumY, double fZoomMaximumY)
   {
   	// clamp the values to prevent the user zooming in too far.
   	if (fMinimumXZoomResolution!=-1)
   	{
-	  	final float fMinimumXZoomRange = getWidth() * fMinimumXZoomResolution;
+	  	final double fMinimumXZoomRange = getWidth() * fMinimumXZoomResolution;
 	  	if (Math.abs(fZoomMinimumX - fZoomMaximumX) < fMinimumXZoomRange)
 	  	{
-	  		float midPoint = fZoomMinimumX + (fZoomMaximumX - fZoomMinimumX) / 2f;
+	  		double midPoint = fZoomMinimumX + (fZoomMaximumX - fZoomMinimumX) / 2f;
 	  		fZoomMinimumX = midPoint - (fMinimumXZoomRange)/2;
 	  		fZoomMaximumX = midPoint + (fMinimumXZoomRange)/2;
 	  	}
@@ -211,7 +211,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   	if (fZoomMinimumY != fZoomMaximumY && fZoomMinimumX != fZoomMaximumX)
 		{
 			// Store the current display settings
-			final float[] afZoomValues = new float[4];
+			final double[] afZoomValues = new double[4];
 			afZoomValues[0] = getMinimumX();
 			afZoomValues[1] = getMaximumX();
 			afZoomValues[2] = getMinimumY();
@@ -242,7 +242,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   {
     if (!oZoomStack.isEmpty())
     {      
-      float[] afZoomValues = oZoomStack.pop();
+    	double[] afZoomValues = oZoomStack.pop();
       oAnimationTimer.start(afZoomValues[0], afZoomValues[1], afZoomValues[2], afZoomValues[3]);
     }
     else if (getMinimumX() != fMinimumXZoomLimit || getMaximumX() != fMaximumXZoomLimit
@@ -274,7 +274,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
     if (oAnimationTimer.fMinimumY!=fMinimumYZoomLimit || oAnimationTimer.fMaximumY!=fMaximumYZoomLimit)
     {
   		// Store the current display settings
-			final float[] afZoomValues = new float[4];
+			final double[] afZoomValues = new double[4];
 			afZoomValues[0] = fMinimumXZoomLimit;
 			afZoomValues[1] = fMaximumXZoomLimit;
 			afZoomValues[2] = oAnimationTimer.fMinimumY;
@@ -316,7 +316,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
    * This methods sets the maximum and minimum on the Axis.
    */
 	@Override
-  public void setGridMinMax(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+  public void setGridMinMax(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
   {
   	final boolean bXChanged = fMinimumXZoomLimit!=fMinimumX || fMaximumXZoomLimit!=fMaximumX;
   	final boolean bYChanged = fMinimumYZoomLimit!=fMinimumY || fMaximumYZoomLimit!=fMaximumY;
@@ -345,7 +345,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
    * This methods sets the maximum and minimum on the X Axis.
    */
 	@Override
-  public void setGridXMinMax(float fMinimumX, float fMaximumX)
+  public void setGridXMinMax(double fMinimumX, double fMaximumX)
   {
   	final boolean bChanged = fMinimumXZoomLimit!=fMinimumX || fMaximumXZoomLimit!=fMaximumX;
   	if (!bChanged) return;
@@ -363,7 +363,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
    * This methods sets the maximum and minimum on the Y Axis.
    */
 	@Override
-  public void setGridYMinMax(float fMinimumY, float fMaximumY)
+  public void setGridYMinMax(double fMinimumY, double fMaximumY)
   {
   	final boolean bChanged = fMinimumYZoomLimit!=fMinimumY || fMaximumYZoomLimit!=fMaximumY;
   	if (!bChanged) return;
@@ -392,8 +392,8 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
    */
   public void zoomAlongX(int xCoord)
   {
-    final float fXval = pixelToUnitX(xCoord);
-    final float fWidth = (oAnimationTimer.fMinimumX - oAnimationTimer.fMaximumX) / 4;
+    final double fXval = pixelToUnitX(xCoord);
+    final double fWidth = (oAnimationTimer.fMinimumX - oAnimationTimer.fMaximumX) / 4;
 
     zoomXRange(fXval - fWidth, fXval + fWidth);
   }
@@ -404,7 +404,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
    * @param fXval1 the start of the range to zoom to, in units
    * @param fXval2 the end of the range to zoom to, in units
    */
-  public void zoomXRange(float fXval1, float fXval2)
+  public void zoomXRange(double fXval1, double fXval2)
   {
     internalZoomIn(fXval1, fXval2, oAnimationTimer.fMinimumY, oAnimationTimer.fMaximumY);
   }
@@ -415,7 +415,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
    * @param fYval1 the start of the range to zoom to, in units
    * @param fYval2 the end of the range to zoom to, in units
    */
-  public void zoomYRange(float fYval1, float fYval2)
+  public void zoomYRange(double fYval1, double fYval2)
   {
     internalZoomIn(oAnimationTimer.fMinimumX, oAnimationTimer.fMaximumX, fYval1, fYval2);
   }
@@ -423,7 +423,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   /**
    * Zoom the graph.
    */
-  public void zoomIn(float fMinX, float fMaxX, float fMinY, float fMaxY)
+  public void zoomIn(double fMinX, double fMaxX, double fMinY, double fMaxY)
   {
     internalZoomIn(fMinX, fMaxX, fMinY, fMaxY);
   }
@@ -474,22 +474,22 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
       oRepaintTimer.stop();
       if (Math.abs(iMousePressedX - iMouseReleasedX) > 10 || Math.abs(iMousePressedY - iMouseReleasedY) > 10)
       {
-        final float fX1 = pixelToUnitX(iMousePressedX);
-        final float fX2 = pixelToUnitX(iMouseReleasedX);
+        final double fX1 = pixelToUnitX(iMousePressedX);
+        final double fX2 = pixelToUnitX(iMouseReleasedX);
 
-        final float fY1 = pixelToUnitY(iMousePressedY);
-        final float fY2 = pixelToUnitY(iMouseReleasedY);
+        final double fY1 = pixelToUnitY(iMousePressedY);
+        final double fY2 = pixelToUnitY(iMouseReleasedY);
 
         /* The previous code has an assumption that the user will selected from 
          * the left top corner to the right bottom corner. However, a user can select 
          * in another 3 direction and this can cause the code to throw exceptions.
          * Now the following code will swap values to fit the assumption. */ 
         
-        final float fMinimumX = Math.min(fX1, fX2);
-        final float fMaximumX = Math.max(fX1, fX2);
+        final double fMinimumX = Math.min(fX1, fX2);
+        final double fMaximumX = Math.max(fX1, fX2);
 
-        final float fMinimumY = Math.min(fY1, fY2);
-        final float fMaximumY = Math.max(fY1, fY2);
+        final double fMinimumY = Math.min(fY1, fY2);
+        final double fMaximumY = Math.max(fY1, fY2);
         
         internalZoomIn(fMinimumX, fMaximumX, fMinimumY, fMaximumY);
       }
@@ -544,26 +544,26 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
 			{
 				if (bSquareZoomEnabled)
 				{
-          final float fMouseXValue = pixelToUnitX(e.getX());            
-          final float fMouseYValue = pixelToUnitY(e.getY());           
-          final float fZoomMinimumX = fMouseXValue - ((fMouseXValue - getMinimumX()) * VERTICAL_WHEEL_ZOOM);
-          final float fZoomMaximumX = fMouseXValue + ((getMaximumX() - fMouseXValue) * VERTICAL_WHEEL_ZOOM);
-          final float fZoomMinimumY = fMouseYValue - ((fMouseYValue - getMinimumY()) * VERTICAL_WHEEL_ZOOM);
-          final float fZoomMaximumY = fMouseYValue + ((getMaximumY() - fMouseYValue) * VERTICAL_WHEEL_ZOOM);
+          final double fMouseXValue = pixelToUnitX(e.getX());            
+          final double fMouseYValue = pixelToUnitY(e.getY());           
+          final double fZoomMinimumX = fMouseXValue - ((fMouseXValue - getMinimumX()) * VERTICAL_WHEEL_ZOOM);
+          final double fZoomMaximumX = fMouseXValue + ((getMaximumX() - fMouseXValue) * VERTICAL_WHEEL_ZOOM);
+          final double fZoomMinimumY = fMouseYValue - ((fMouseYValue - getMinimumY()) * VERTICAL_WHEEL_ZOOM);
+          final double fZoomMaximumY = fMouseYValue + ((getMaximumY() - fMouseYValue) * VERTICAL_WHEEL_ZOOM);
           internalZoomIn(fZoomMinimumX, fZoomMaximumX, fZoomMinimumY, fZoomMaximumY);           
 				}
 				else if ((bMouseWheelsZoomsVertical && !bShiftDown) || (!bMouseWheelsZoomsVertical && bShiftDown))
 				{
-          final float fMouseYValue = pixelToUnitY(e.getY());           
-          final float fZoomMinimumY = fMouseYValue - ((fMouseYValue - getMinimumY()) * VERTICAL_WHEEL_ZOOM);
-          final float fZoomMaximumY = fMouseYValue + ((getMaximumY() - fMouseYValue) * VERTICAL_WHEEL_ZOOM);
+          final double fMouseYValue = pixelToUnitY(e.getY());           
+          final double fZoomMinimumY = fMouseYValue - ((fMouseYValue - getMinimumY()) * VERTICAL_WHEEL_ZOOM);
+          final double fZoomMaximumY = fMouseYValue + ((getMaximumY() - fMouseYValue) * VERTICAL_WHEEL_ZOOM);
           internalZoomIn(getMinimumX(), getMaximumX(), fZoomMinimumY, fZoomMaximumY);
 				}
         else // zoom horizontal
         {
-          final float fMouseXValue = pixelToUnitX(e.getX());            
-          final float fZoomMinimumX = fMouseXValue - ((fMouseXValue - getMinimumX()) * HORIZONTAL_WHEEL_ZOOM);
-          final float fZoomMaximumX = fMouseXValue + ((getMaximumX() - fMouseXValue) * HORIZONTAL_WHEEL_ZOOM);
+          final double fMouseXValue = pixelToUnitX(e.getX());            
+          final double fZoomMinimumX = fMouseXValue - ((fMouseXValue - getMinimumX()) * HORIZONTAL_WHEEL_ZOOM);
+          final double fZoomMaximumX = fMouseXValue + ((getMaximumX() - fMouseXValue) * HORIZONTAL_WHEEL_ZOOM);
           internalZoomIn(fZoomMinimumX, fZoomMaximumX, getMinimumY(), getMaximumY());
         }
 			}
@@ -580,9 +580,9 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
       || getMinimumX() != fMinimumXZoomLimit || getMaximumX() != fMaximumXZoomLimit)
     {
       // this is the inverse of the zoomIn calculations
-      final float fMouseXValue = pixelToUnitX(xCoord);
-      final float fZoomMinimumX = Math.max(fMouseXValue + (getMinimumX() - fMouseXValue) / HORIZONTAL_WHEEL_ZOOM, fMinimumXZoomLimit);
-      final float fZoomMaximumX = Math.min(fMouseXValue + (getMaximumX() - fMouseXValue) / HORIZONTAL_WHEEL_ZOOM, fMaximumXZoomLimit);
+      final double fMouseXValue = pixelToUnitX(xCoord);
+      final double fZoomMinimumX = Math.max(fMouseXValue + (getMinimumX() - fMouseXValue) / HORIZONTAL_WHEEL_ZOOM, fMinimumXZoomLimit);
+      final double fZoomMaximumX = Math.min(fMouseXValue + (getMaximumX() - fMouseXValue) / HORIZONTAL_WHEEL_ZOOM, fMaximumXZoomLimit);
       
       oAnimationTimer.start(fZoomMinimumX, fZoomMaximumX, getMinimumY(), getMaximumY());
     }
@@ -616,19 +616,19 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
     }   
   }
 
-  public float getMaximumXZoomLimit() {
+  public double getMaximumXZoomLimit() {
     return fMaximumXZoomLimit;
   }
 
-  public float getMinimumXZoomLimit() {
+  public double getMinimumXZoomLimit() {
     return fMinimumXZoomLimit;
   }
 
-  public float getMaximumYZoomLimit() {
+  public double getMaximumYZoomLimit() {
     return fMaximumYZoomLimit;
   }
 
-  public float getMinimumYZoomLimit() {
+  public double getMinimumYZoomLimit() {
     return fMinimumYZoomLimit;
   }
   
@@ -686,7 +686,8 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   private class AnimationTimer {
   	
   	private final javax.swing.Timer timer;
-  	public float fMinimumX = getMinimumX(), fMaximumX=getMaximumX(), fMinimumY=getMinimumY(), fMaximumY=getMaximumY();
+  	public double fMinimumX = getMinimumX(), fMaximumX=getMaximumX();
+  	public double fMinimumY=getMinimumY(), fMaximumY=getMaximumY();
   	private int iStepCounter = 0;
   	
   	public AnimationTimer()
@@ -700,7 +701,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   		timer.setRepeats(true);
   	}
   	
-    public synchronized void start(float _fMinimumX, float _fMaximumX, float _fMinimumY, float _fMaximumY)
+    public synchronized void start(double _fMinimumX, double _fMaximumX, double _fMinimumY, double _fMaximumY)
     {
     	if (this.fMinimumX==_fMinimumX && this.fMaximumX==_fMaximumX 
     			&& this.fMinimumY==_fMinimumY && this.fMaximumY==_fMaximumY)
@@ -742,10 +743,11 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
 			iStepCounter++;
 		}
 
-		/** Calculate an interim step between the current zoom and the destination zoom.
+		/**
+		 * Calculate an interim step between the current zoom and the destination zoom.
 		 * This calculation creates a zoom that starts fast and ends slow.
 		 */
-		private float interim(float start, float end)
+		private double interim(double start, double end)
 		{
 			return start + ((end-start)/2f);
 		}

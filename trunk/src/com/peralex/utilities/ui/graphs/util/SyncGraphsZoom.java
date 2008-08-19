@@ -67,11 +67,11 @@ public final class SyncGraphsZoom implements IZoomListener
 		me.addZoomListener(this);
 	}
 
-	public void graphZoomChanged(float minimumX, float maximumX, float minimumY, float maximumY)
+	public void graphZoomChanged(double minimumX, double maximumX, double minimumY, double maximumY)
 	{
 	}
 
-	public void zoomAnimationStart(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+	public void zoomAnimationStart(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
 	{
 		for (ZoomDrawSurface graph : relatedGraphs)
 		{

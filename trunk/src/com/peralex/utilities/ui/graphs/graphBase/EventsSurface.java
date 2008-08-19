@@ -246,7 +246,7 @@ public abstract class EventsSurface extends DrawSurface implements MouseListener
   /**
    * This fires all the MouseCoordinates Listeners.
    */
-	protected final void fireMouseCoordinatesListeners(float fXValue, float fYValue)
+	protected final void fireMouseCoordinatesListeners(double fXValue, double fYValue)
   {
     for (IGraphBaseListener listener : oGraphBaseListeners)
     {

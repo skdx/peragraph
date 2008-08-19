@@ -239,7 +239,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 
   private final IGraphBaseListener graphListener = new IGraphBaseListener()
 	{
-		public void mouseCoordinatesChanged(final float fXValue, final float fYValue)
+		public void mouseCoordinatesChanged(final double fXValue, final double fYValue)
 		{
 			if (oCoordinatesPanel!=null)
 			{

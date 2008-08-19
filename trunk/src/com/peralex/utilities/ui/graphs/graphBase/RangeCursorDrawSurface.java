@@ -178,7 +178,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
   /**
    * This method adds a RangeCursor to the graph
    */
-	public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, float fWidth)
+	public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, double fWidth)
   {    
 		addRangeCursor(sRangeCursorID, oColor, fResolution, fWidth, (long)getMinimumX());
   }
@@ -186,7 +186,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
   /**
    * This method adds a RangeCursor to the graph
    */
-  public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, float fWidth, float fValue)
+  public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, double fWidth, double fValue)
   {    
 		addRangeCursor(sRangeCursorID, new RangeCursor(sRangeCursorID, oColor, fResolution, fWidth, fValue));
   }
@@ -194,7 +194,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
   /**
    * This method adds a RangeCursor to the graph
    */
-  public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, float fWidth, float fValue, boolean bEnabled)
+  public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, double fWidth, double fValue, boolean bEnabled)
   {    
 		addRangeCursor(sRangeCursorID, new RangeCursor(sRangeCursorID, oColor, fResolution, fWidth, fValue));
 		getRangeCursor(sRangeCursorID).setRangeCursorEnabled(bEnabled);
@@ -313,7 +313,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
    * This methods sets the maximum and minimum on the Axis.
    */
 	@Override
-  public void setGridMinMax(float fMinimumX, float fMaximumX, float fMinimumY, float fMaximumY)
+  public void setGridMinMax(double fMinimumX, double fMaximumX, double fMinimumY, double fMaximumY)
   {
     super.setGridMinMax(fMinimumX, fMaximumX, fMinimumY, fMaximumY);
 		
@@ -324,7 +324,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
    * This methods sets the maximum and minimum on the X Axis.
    */
 	@Override
-  public void setGridXMinMax(float fMinimumX, float fMaximumX)
+  public void setGridXMinMax(double fMinimumX, double fMaximumX)
   {		
 		super.setGridXMinMax(fMinimumX, fMaximumX);
 		calculateRangeCursors();
@@ -334,7 +334,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
    * This methods sets the maximum and minimum on the Y Axis.
    */
 	@Override
-  public void setGridYMinMax(float fMinimumY, float fMaximumY)
+  public void setGridYMinMax(double fMinimumY, double fMaximumY)
   {
 		super.setGridYMinMax(fMinimumY, fMaximumY);
 		calculateRangeCursors();
