@@ -111,7 +111,7 @@ public class Cursor
 		this.dYValue = dYValue;
     
     snapToResolution(this.dXValue, this.dYValue);
-		oCursorDrawSurface.calculateCursors();
+		oCursorDrawSurface.invalidateCursors();
 	}
   
   public final void setXValue(double dXValue)
@@ -119,7 +119,7 @@ public class Cursor
 		this.dXValue = dXValue;
     
     snapToResolution(this.dXValue, this.dYValue);
-		oCursorDrawSurface.calculateCursors();
+		oCursorDrawSurface.invalidateCursors();
   }
   
   public final void setYValue(double dYValue)
@@ -127,7 +127,7 @@ public class Cursor
 		this.dYValue = dYValue;
     
     snapToResolution(this.dXValue, this.dYValue);
-		oCursorDrawSurface.calculateCursors();
+		oCursorDrawSurface.invalidateCursors();
   }
   
   /**
@@ -202,7 +202,7 @@ public class Cursor
   {
     this.sXLabel = sXLabel;
 		this.sYLabel = sYLabel;		
-		oCursorDrawSurface.calculateCursors();
+		oCursorDrawSurface.invalidateCursors();
   }
 	
   /**
@@ -211,7 +211,7 @@ public class Cursor
   public void setXLabel(String sXLabel)
   {
     this.sXLabel = sXLabel;
-		oCursorDrawSurface.calculateCursors();
+		oCursorDrawSurface.invalidateCursors();
   }
 
   /**
@@ -228,7 +228,7 @@ public class Cursor
   public void setYLabel(String sYLabel)
 	{		
     this.sYLabel = sYLabel;
-		oCursorDrawSurface.calculateCursors();
+		oCursorDrawSurface.invalidateCursors();
   }
 
   /**

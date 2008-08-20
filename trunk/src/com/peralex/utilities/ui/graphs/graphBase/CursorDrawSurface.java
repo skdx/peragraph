@@ -23,7 +23,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
    */
   private final Map<String, Cursor> oCursorsMap = new LinkedHashMap<String, Cursor>();
   
-  private boolean bNeedToCalculateCursors = true;
+  private boolean bCursorsChanged = true;
   
   /**
    * This list stores the list of current CursorListeners.
@@ -86,7 +86,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
 
 		synchronized (oCursorsMap)
 		{
-			if (bNeedToCalculateCursors)
+			if (bCursorsChanged)
 			{
 				doCalculateCursors();
 			}
@@ -131,15 +131,16 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
    * 
 	 * Note: the position of the labels interacts with the position of the range cursor labels.
 	 */
-  protected final void calculateCursors()
+  protected final void invalidateCursors()
   {
   	// check for null because we get called by a superclass constructor
   	if (oCursorsMap==null) return;
   	
 		synchronized (oCursorsMap)
 		{
-			bNeedToCalculateCursors = true;
+			bCursorsChanged = true;
 		}
+		
 		repaint();
   }
 
@@ -240,7 +241,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
 				}
 			}
 			
-			bNeedToCalculateCursors = false;
+			bCursorsChanged = false;
 		}
   } 
   
@@ -248,11 +249,11 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
 	 * This will calculate the coordinates of the cursors and their labels.
 	 */
   @Override
-	void calculateRangeCursors()
+	void invalidateRangeCursors()
 	{
-		super.calculateRangeCursors();
+		super.invalidateRangeCursors();
 		// when range cursors are re-calculated, we need to re-calculate the position of labels.
-		calculateCursors();
+		invalidateCursors();
 	}
     
    
@@ -289,7 +290,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
 		{
 			oCursorsMap.put(sCursorID, oCursor);
 		}
-		calculateCursors();
+		invalidateCursors();
   }	
   
   /**
@@ -519,7 +520,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
   {
     super.setGridMinMax(fMinimumX, fMaximumX, fMinimumY, fMaximumY);
 		
-		calculateCursors();
+    invalidateCursors();
   }
 	
   /**
@@ -530,7 +531,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
   {
 		super.setGridXMinMax(fMinimumX, fMaximumX);
 		
-		calculateCursors();
+		invalidateCursors();
   }
 	
   /**
@@ -541,7 +542,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
   {
 		super.setGridYMinMax(fMinimumY, fMaximumY);
 		
-		calculateCursors();
+		invalidateCursors();
   }	
   
   /**
@@ -552,7 +553,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
   {
     super.componentResized(e);
     
-    calculateCursors();
+    invalidateCursors();
   }
 	
 	/**
