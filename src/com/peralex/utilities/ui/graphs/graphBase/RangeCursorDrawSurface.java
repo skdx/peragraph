@@ -217,7 +217,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
 	public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, double fWidth,
 			double fValue)
 	{
-		addRangeCursor(sRangeCursorID, new RangeCursor(sRangeCursorID, oColor, fResolution, fWidth,
+		addRangeCursor(new RangeCursor(sRangeCursorID, oColor, fResolution, fWidth,
 				fValue));
 	}
 
@@ -227,7 +227,7 @@ public class RangeCursorDrawSurface extends GridDrawSurface
 	public void addRangeCursor(String sRangeCursorID, Color oColor, float fResolution, double fWidth,
 			double fValue, boolean bEnabled)
 	{
-		addRangeCursor(sRangeCursorID, new RangeCursor(sRangeCursorID, oColor, fResolution, fWidth,
+		addRangeCursor(new RangeCursor(sRangeCursorID, oColor, fResolution, fWidth,
 				fValue));
 		getRangeCursor(sRangeCursorID).setRangeCursorEnabled(bEnabled);
 	}
@@ -235,12 +235,16 @@ public class RangeCursorDrawSurface extends GridDrawSurface
 	/**
 	 * Add a RangeCursor to the graph
 	 */
-	public void addRangeCursor(String sRangeCursorID, RangeCursor oRangeCursor)
+	public void addRangeCursor(RangeCursor oRangeCursor)
 	{
 		oRangeCursor.setRangeCursorDrawSurface(this);
 		synchronized (oRangeCursorsMap)
 		{
-			oRangeCursorsMap.put(sRangeCursorID, oRangeCursor);
+			final String rangeCursorID = oRangeCursor.getRangeCursorID();
+			if (oRangeCursorsMap.containsKey(rangeCursorID)) {
+				throw new IllegalStateException("already contains range cursor with ID " + rangeCursorID);
+			}
+			oRangeCursorsMap.put(rangeCursorID, oRangeCursor);
 		}
 		invalidateRangeCursors();
 	}
@@ -302,7 +306,10 @@ public class RangeCursorDrawSurface extends GridDrawSurface
 	 */
 	public RangeCursor getRangeCursor(String sRangeCursorID)
 	{
-		return oRangeCursorsMap.get(sRangeCursorID);
+		synchronized (oRangeCursorsMap)
+		{
+			return oRangeCursorsMap.get(sRangeCursorID);
+		}
 	}
 
 	/**

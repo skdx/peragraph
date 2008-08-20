@@ -91,9 +91,6 @@ public class RangeCursor
 		}
 	}
 	
-	/**
-	 * Getter for property iRangeCursorID.
-	 */
 	public String getRangeCursorID()
 	{
 		return sRangeCursorID;
