@@ -3,11 +3,8 @@ package com.peralex.utilities.ui.graphs.graphBase;
 import java.awt.Color;
 
 /**
- * FIXME This class should probably not be exposed. It should probably be an internal implementation class, 
- *  with a bunch of setter and getter methods on cRangeCursorDrawSurface, which would allow to trigger repaints
- *  properly when values change.
  *
- * @author  Andre
+ * @author Andre
  */
 public class RangeCursor
 {
@@ -110,7 +107,7 @@ public class RangeCursor
 		this.fValue = fValue;
 		
 		snapToResolution();
-		oRangeCursorDrawSurface.calculateRangeCursors();
+		oRangeCursorDrawSurface.invalidateRangeCursors();
 	}
 	
 	/**
@@ -124,6 +121,7 @@ public class RangeCursor
 	public void setWidth(double fWidth)
 	{
 		this.fWidth = fWidth;
+		oRangeCursorDrawSurface.invalidateRangeCursors();
 	}
 	
 	public double getWidth()
@@ -137,7 +135,7 @@ public class RangeCursor
 	public void setLabel(String sLabel)
 	{
 		this.sLabel = sLabel;
-		oRangeCursorDrawSurface.calculateRangeCursors();
+		oRangeCursorDrawSurface.invalidateRangeCursors();
 	}
 	
 	/**
@@ -154,6 +152,7 @@ public class RangeCursor
 	public void setColor(Color oColor)
 	{
 		this.oColor = oColor;
+		oRangeCursorDrawSurface.repaint();
 	}
 	
 	/**
@@ -167,6 +166,8 @@ public class RangeCursor
 	public void setResolution(float fResolution)
 	{
 		this.fResolution = fResolution;
+		snapToResolution();
+		oRangeCursorDrawSurface.invalidateRangeCursors();
 	}
 	
 	public float getResolution()
@@ -174,7 +175,11 @@ public class RangeCursor
 		return fResolution;
 	}
 	
-	public void setCoordinate(int iCoordinate)
+	/**
+	 * package-protected because setting it from outside this package is useless - RangeCursorDrawSurface
+	 * will reset it anyway.
+	 */
+	void setCoordinate(int iCoordinate)
 	{
 		this.iCoordinate = iCoordinate;
 	}
@@ -183,8 +188,12 @@ public class RangeCursor
 	{
 		return iCoordinate;
 	}
-	
-	public void setPixelWidth(int iPixelWidth)
+
+	/**
+	 * package-protected because setting it from outside this package is useless - RangeCursorDrawSurface
+	 * will reset it anyway.
+	 */
+	void setPixelWidth(int iPixelWidth)
 	{
 		if (iPixelWidth == 0)
 		{
@@ -201,7 +210,11 @@ public class RangeCursor
 		return iPixelWidth;
 	}
 	
-	public void setCursorLabelCoordinates(int iCursorLabelXCoordinate, int iCursorLabelYCoordinate)
+	/**
+	 * package-protected because setting it from outside this package is useless - RangeCursorDrawSurface
+	 * will reset it anyway.
+	 */
+	void setCursorLabelCoordinates(int iCursorLabelXCoordinate, int iCursorLabelYCoordinate)
 	{
 		this.iCursorLabelXCoordinate = iCursorLabelXCoordinate;
 		this.iCursorLabelYCoordinate = iCursorLabelYCoordinate;
