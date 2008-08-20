@@ -1,0 +1,23 @@
+<project name="peragraph">
+  <description> Ant build file for peragraph.</description>
+  
+  <target name="clean">
+    <delete dir="build" />
+  </target>
+  
+  <target name="compile">
+    <mkdir dir="build/classes" />
+    <javac srcdir="src" destdir="build/classes" />
+    <copy todir="build/classes">
+      <fileset dir="src">
+        <exclude name="**/*.java" />
+        <exclude name="**/*.form" />
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="jar" depends="compile">
+    <mkdir dir="build/jar" />
+    <jar destfile="build/jar/peragraph.jar" basedir="build/classes" />
+  </target>
+</project>
