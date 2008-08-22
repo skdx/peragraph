@@ -577,7 +577,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 
 	private void updateCoordinatesPanelSuffixes()
 	{
-		if (oGraph!=null)
+		if (oGraph!=null && oCoordinatesPanel!=null)
 		{
 			final String sXSuffix = oGraph.getXScaleUnit() + (sXAxisUnit==null ? "" : sXAxisUnit);
 			final String sYSuffix = oGraph.getYScaleUnit() + (sYAxisUnit==null ? "" : sYAxisUnit);
