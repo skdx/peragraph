@@ -37,7 +37,7 @@ public class EventQueueWatchdog extends EventQueue
 
 	private final Object eventChangeLock = new Object();
 
-	private volatile long eventDispatchingStart = -1;
+	private volatile long eventDispatchingStart_nanos = -1;
 
 	private volatile AWTEvent event = null;
 
@@ -105,7 +105,7 @@ public class EventQueueWatchdog extends EventQueue
 		synchronized (eventChangeLock)
 		{
 			event = anEvent;
-			eventDispatchingStart = System.currentTimeMillis();
+			eventDispatchingStart_nanos = System.nanoTime();
 			if (eventDispatchThread == null)
 			{
 				eventDispatchThread = Thread.currentThread();
@@ -117,7 +117,7 @@ public class EventQueueWatchdog extends EventQueue
 		synchronized (eventChangeLock)
 		{
 			event = null;
-			eventDispatchingStart = -1;
+			eventDispatchingStart_nanos = -1;
 		}
 	}
 
@@ -128,7 +128,7 @@ public class EventQueueWatchdog extends EventQueue
 	private class Watchdog extends TimerTask
 	{
 		// Settings
-		private final long maxProcessingTime;
+		private final long maxProcessingTime_ms;
 
 		private final IWatchdogListener listener;
 
@@ -143,33 +143,35 @@ public class EventQueueWatchdog extends EventQueue
 		 * @param maxProcessingTime maximum event processing time before listener is notified.
 		 * @param listener listener to notify.
 		 */
-		public Watchdog(long maxProcessingTime, IWatchdogListener listener)
+		public Watchdog(long maxProcessingTime_ms, IWatchdogListener listener)
 		{
 			if (listener == null)
 				throw new IllegalArgumentException("Listener cannot be null.");
-			if (maxProcessingTime < 0)
+			if (maxProcessingTime_ms < 0)
 				throw new IllegalArgumentException("Max locking period should be greater than zero");
-			this.maxProcessingTime = maxProcessingTime;
+			this.maxProcessingTime_ms = maxProcessingTime_ms;
 			this.listener = listener;
 		}
 
 		@Override
 		public void run()
 		{
-			final long time;
+			final long time_nanos;
 			final AWTEvent currentEvent;
 
 			// Get current event requisites
 			synchronized (eventChangeLock)
 			{
-				time = eventDispatchingStart;
+				time_nanos = eventDispatchingStart_nanos;
 				currentEvent = event;
 			}
 
-			long currentTime = System.currentTimeMillis();
+			long currentTime_nanos = System.nanoTime();
 
 			// Check if event is being processed longer than allowed
-			if (time != -1 && (currentTime - time > maxProcessingTime) && (currentEvent != lastReportedEvent))
+			if (time_nanos==-1) return;
+			final long delta_ms = (currentTime_nanos - time_nanos) / 1000;
+			if ((delta_ms > maxProcessingTime_ms) && (currentEvent != lastReportedEvent))
 			{
 				final String stacktrace = toString(eventDispatchThread.getStackTrace());
 				listener.watchdog(stacktrace);
