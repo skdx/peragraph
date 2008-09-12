@@ -98,9 +98,9 @@ public class XYScrollingLineGraph extends AbstractLineGraph implements ILocaleLi
             final LineState state = lineMap.get(key);
 
             // ensure data ordering.
-            if (!state.data.isEmpty() && state.data.getFirst().x <= xValue) {
+            if (!state.data.isEmpty() && xValue <= state.data.getFirst().x) {
               throw new IllegalStateException("cannot add an X value <= than the previous X value " 
-              		+ state.data.getFirst().x  + "<="  + xValue);
+              		+ xValue + "<=" + state.data.getFirst().x);
             }
 
             state.data.addFirst(new Point2D.Double(xValue, yValue));            
