@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.peralex.utilities.ui.graphs.lineGraph.GeneratedLineData;
 import com.peralex.utilities.ui.graphs.scrollingline.ScrollingLineGraph;
 
 /**
@@ -19,8 +18,6 @@ public class GraphWithScrollingLines extends javax.swing.JPanel {
 	
 	private final com.peralex.utilities.ui.graphs.graphBase.GraphWrapper graphWrapper;
   private final ScrollingLineGraph lineGraph;
-  private final GeneratedLineData line1Data;
-  private final GeneratedLineData line2Data;
   
   /** Creates new form GraphWithMultipleLines */
   public GraphWithScrollingLines() {
@@ -43,16 +40,6 @@ public class GraphWithScrollingLines extends javax.swing.JPanel {
 		lineGraph.setLineColor(LINE_2, Color.GREEN);
 		line2ColorComboBox.setSelectedItem("Green");
     
-		line1Data = new GeneratedLineData(0, 0, 0, new float[0]);
-		line1Data.setXValues(0, 100, 100);
-		final float [] yValues1 = new float[100];
-		line1Data.setYValues(yValues1);
-    
-		line2Data = new GeneratedLineData(0, 0, 0, new float[0]);
-		line2Data.setXValues(0, 100, 100);
-		final float [] yValues2 = new float[100];
-		line2Data.setYValues(yValues2);
-		
     new javax.swing.Timer(50, new ActionListener() {
     	public void actionPerformed(ActionEvent e)
     	{
