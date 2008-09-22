@@ -494,6 +494,8 @@ public class MultiLineGraph extends AbstractLineGraph
 	}
 	
 	/**
+	 * FIXME move this into a better location, maybe create a GraphDefaults class.
+	 * 
 	 * allocate a color from the array. If the index is larger than
 	 * the array of colors it is wrapped around.
 	 */
