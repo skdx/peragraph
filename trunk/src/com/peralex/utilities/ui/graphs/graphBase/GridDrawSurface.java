@@ -97,7 +97,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	public GridDrawSurface()
 	{
     // Add the Show grid item to the PopUpMenu.
-    oShowGridItem = new JCheckBoxMenuItem(textRes.getString("Show_grid"), true);
+    oShowGridItem = new JCheckBoxMenuItem(textRes.getString("GridDrawSurface.Show_grid"), true);
     oPopupMenu.add(oShowGridItem);
     oShowGridItem.addActionListener(new ActionListener()
     {
@@ -700,6 +700,6 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   protected void localeChanged()
   {
   	super.localeChanged();
-    oShowGridItem.setText(textRes.getString("Show_grid"));
+    oShowGridItem.setText(textRes.getString("GridDrawSurface.Show_grid"));
   }
 }

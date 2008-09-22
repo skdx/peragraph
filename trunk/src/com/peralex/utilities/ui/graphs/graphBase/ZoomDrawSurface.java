@@ -103,7 +103,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
     oPopupMenu.addSeparator();
 
     // Add the Reset zoom item to the PopUpMenu.
-    oResetZoomItem = new JMenuItem(textRes.getString("Reset_zoom"));
+    oResetZoomItem = new JMenuItem(textRes.getString("ZoomDrawSurface.Reset_zoom"));
     oPopupMenu.add(oResetZoomItem);  
     oResetZoomItem.addActionListener(new ActionListener()
     {
@@ -661,7 +661,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   protected void localeChanged()
   {
   	super.localeChanged();
-    oResetZoomItem.setText(textRes.getString("Reset_zoom"));
+    oResetZoomItem.setText(textRes.getString("ZoomDrawSurface.Reset_zoom"));
   }
 
   /**
