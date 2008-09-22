@@ -73,7 +73,7 @@ public class HopperHistogramGraph extends JPanel implements ILocaleListener
       oHistogram = new HistogramSingleChannel();
       
       setYAxisRange(0, 3);
-      setYAxisText(textRes.getString("Probability_factor"));
+      setYAxisText(textRes.getString("HopperHistogram.Probability_factor"));
     }
     
     add((JPanel)oHistogram, BorderLayout.CENTER);
@@ -97,7 +97,7 @@ public class HopperHistogramGraph extends JPanel implements ILocaleListener
 
     oJPanel.setLayout(new java.awt.GridBagLayout());
 
-    oEnableHistogramCheckBox.setText(textRes.getString("Enable_Hopper_Histogram"));
+    oEnableHistogramCheckBox.setText(textRes.getString("HopperHistogram.Enable_Hopper_Histogram"));
     oEnableHistogramCheckBox.addItemListener(new java.awt.event.ItemListener()
     {
       public void itemStateChanged(java.awt.event.ItemEvent evt)
@@ -329,9 +329,9 @@ public class HopperHistogramGraph extends JPanel implements ILocaleListener
 		
 		if (iNumberOfChannels == SINGLE_CHANNEL)
 		{
-			setYAxisText(textRes.getString("Probability_factor"));
+			setYAxisText(textRes.getString("HopperHistogram.Probability_factor"));
 		}
-		oEnableHistogramCheckBox.setText(textRes.getString("Enable_Hopper_Histogram"));
+		oEnableHistogramCheckBox.setText(textRes.getString("HopperHistogram.Enable_Hopper_Histogram"));
 		repaint();
 	}
   

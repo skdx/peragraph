@@ -190,7 +190,7 @@ public class HistogramSingleChannel extends JPanel implements IHopperHistogram, 
     oTopPanel.add(jPanel2, gridBagConstraints);
 
     oTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    oTitleLabel.setText(textRes.getString("Hopper_Histogram"));
+    oTitleLabel.setText(textRes.getString("HopperHistogram.Title"));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 0;
@@ -524,7 +524,7 @@ public class HistogramSingleChannel extends JPanel implements IHopperHistogram, 
 		
 		if (!bTitleSet)
 		{
-			oTitleLabel.setText(textRes.getString("Hopper_Histogram"));
+			oTitleLabel.setText(textRes.getString("HopperHistogram.Title"));
 		}
 		if (!bXAxisTextSet)
 		{

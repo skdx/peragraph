@@ -105,7 +105,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="com/peralex/utilities/resources/textRes.properties" key="Hopper_Histogram" replaceFormat="textRes.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="com/peralex/utilities/resources/textRes.properties" key="HopperHistogram.Title" replaceFormat="textRes.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Constraints>

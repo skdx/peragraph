@@ -178,7 +178,7 @@ public class HistogramDualChannel extends JPanel implements IHopperHistogram, IL
     oTopPanel.add(jPanel2, gridBagConstraints);
 
     oTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    oTitleLabel.setText(textRes.getString("Hopper_Histogram"));
+    oTitleLabel.setText(textRes.getString("HopperHistogram.Title"));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 0;
@@ -241,7 +241,7 @@ public class HistogramDualChannel extends JPanel implements IHopperHistogram, IL
 
     jPanel1.setLayout(new java.awt.GridBagLayout());
 
-    yAxisLabel1.setText(textRes.getString("Probability_factor"));
+    yAxisLabel1.setText(textRes.getString("HopperHistogram.Probability_factor"));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
@@ -540,7 +540,7 @@ public class HistogramDualChannel extends JPanel implements IHopperHistogram, IL
 		
 		if (!bTitleSet)
 		{
-			oTitleLabel.setText(textRes.getString("Hopper_Histogram"));
+			oTitleLabel.setText(textRes.getString("HopperHistogram.Title"));
 		}
 		if (!bXAxisTextSet)
 		{
@@ -550,7 +550,7 @@ public class HistogramDualChannel extends JPanel implements IHopperHistogram, IL
 		{
 			yAxisLabel.setText(textRes.getString("Y-Axis"));
 		}
-		yAxisLabel1.setText(textRes.getString("Probability_factor"));
+		yAxisLabel1.setText(textRes.getString("HopperHistogram.Probability_factor"));
 		repaint();
 	}
   

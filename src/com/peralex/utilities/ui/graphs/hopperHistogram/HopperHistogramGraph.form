@@ -19,7 +19,7 @@
         <Component class="javax.swing.JCheckBox" name="oEnableHistogramCheckBox">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="com/peralex/utilities/resources/textRes.properties" key="Enable_Hopper_Histogram" replaceFormat="textRes.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="com/peralex/utilities/resources/textRes.properties" key="HopperHistogram.Enable_Hopper_Histogram" replaceFormat="textRes.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Events>
