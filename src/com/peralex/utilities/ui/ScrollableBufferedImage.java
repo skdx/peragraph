@@ -17,10 +17,13 @@ import java.awt.image.ImageObserver;
  * bottom.
  * 
  * Typical usage of this class is something like:
+ * <code>
  *   obj.scrollUp();
  *   obj.drawPixelBottom(0);
  *   ...
  *   obj.drawImageTo(graphics2D);
+ * </code>
+ *  
  * @author Noel Grandin
  */
 public class ScrollableBufferedImage
@@ -64,7 +67,7 @@ public class ScrollableBufferedImage
 	/**
 	 * Draw the image to a graphics context, scaling it horizontally.
 	 * We don't scale in the vertical axis because that sometimes results in very weird results when we
-	 * go from a very image to a large image.
+	 * go from a very small image to a large image.
 	 */
 	private synchronized void drawImageTo(Graphics g, int width, int height, ImageObserver observer)
 	{
@@ -77,7 +80,7 @@ public class ScrollableBufferedImage
 		/* Set the x, y coordinates such that the old image is copied to line up with the BOTTOM edge
 		 * of the new image. */
 		final int x = 0;
-		final int 	y = height - oImage.getHeight();
+		final int y = height - oImage.getHeight();
 		
 		if (iImageIndex == 0)
 		{
