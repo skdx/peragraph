@@ -23,8 +23,8 @@ public class TableLib
 	}
 
 	/**
-	 * Set the visible no of rows for a JTable (i.e. the number of rows before it starts scrolling).
-   * This is very useful to prevent tables in JScrollPanes from demanding excessive amounts of vertical space.
+	 * Set the visible no of rows for a JTable (i.e. the number of rows before it starts scrolling). This is very useful
+	 * to prevent tables in JScrollPanes from demanding excessive amounts of vertical space.
 	 * 
 	 * Note: Kudos to Santhosh Kumar for this method.
 	 */
@@ -36,7 +36,8 @@ public class TableLib
 			height += table.getRowHeight(row);
 		}
 
-		table.setPreferredScrollableViewportSize(new Dimension(table.getPreferredScrollableViewportSize().width, height));
+		table.setPreferredScrollableViewportSize(new Dimension(table
+				.getPreferredScrollableViewportSize().width, height));
 	}
 
 	/**
@@ -62,7 +63,8 @@ public class TableLib
 
 	public static void configurePreferredScrollableViewportSize(JTable table, int visibleRowCount)
 	{
-		table.setPreferredScrollableViewportSize(getPreferredScrollableViewportSize(table, visibleRowCount));
+		table.setPreferredScrollableViewportSize(getPreferredScrollableViewportSize(table,
+				visibleRowCount));
 	}
 
 	public static Dimension getPreferredScrollableViewportSize(JTable table, int visibleRowCount)
@@ -73,6 +75,16 @@ public class TableLib
 		final Dimension minimalSize = new Dimension(width, height * visibleRowCount);
 
 		return minimalSize;
+	}
+
+	/**
+	 * lock the width of a column by setting the min, max, and preferred sizes
+	 */
+	public static void lockColumnWidth(JTable oUnitsTable, int columnIdx, int width_px)
+	{
+		oUnitsTable.getColumnModel().getColumn(columnIdx).setPreferredWidth(width_px);
+		oUnitsTable.getColumnModel().getColumn(columnIdx).setMinWidth(width_px);
+		oUnitsTable.getColumnModel().getColumn(columnIdx).setMaxWidth(width_px);
 	}
 
 	/**
@@ -93,7 +105,8 @@ public class TableLib
 		final int[] maxColumnWidth = TableWidthFinder.computeMaxColumnWidth(table);
 		for (int i = 0, len = maxColumnWidth.length; i < len; ++i)
 		{
-			final int preferredWidth = preferredMaxWidth == null ? Integer.MAX_VALUE : preferredMaxWidth[i];
+			final int preferredWidth = preferredMaxWidth == null ? Integer.MAX_VALUE
+					: preferredMaxWidth[i];
 			final int maxContentWidth = maxColumnWidth[i] + padding;
 			columns.getColumn(i).setPreferredWidth(Math.min(maxContentWidth, preferredWidth));
 		}
@@ -125,7 +138,8 @@ public class TableLib
 					renderer = defaultHeaderRenderer;
 				}
 
-				Component c = renderer.getTableCellRendererComponent(table, value, false, false, -1, columnId);
+				Component c = renderer.getTableCellRendererComponent(table, value, false, false, -1,
+						columnId);
 
 				headerWidth[columnId] = (int) c.getPreferredSize().getWidth();
 			}
