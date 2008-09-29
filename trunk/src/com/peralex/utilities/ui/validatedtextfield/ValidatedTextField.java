@@ -180,11 +180,13 @@ public class ValidatedTextField extends JComponent {
 	
 	private void setBackgroundError()
 	{
+		fireValidChanged(false);
 		textField.setBackground(Color.YELLOW);
 	}
 
 	private void setBackgroundNormal()
 	{
+		fireValidChanged(true);
 		textField.setBackground(defaultBackground);
 	}
 
@@ -314,6 +316,22 @@ public class ValidatedTextField extends JComponent {
 		}
 	}
 
+	public void addValidationListener(IValidListener l) {
+    listenerList.add(IValidListener.class, l);
+	}
+	
+	public void removeValidationListener(IValidListener l) {
+    listenerList.remove(IValidListener.class, l);
+	}
+	
+	private void fireValidChanged(boolean valid)
+	{
+		IValidListener [] listeners = listenerList.getListeners(IValidListener.class);
+		for (IValidListener l : listeners) {
+			l.validChanged(valid);
+		}
+	}
+	
 	/**
 	 * get the text field that this component wraps.
 	 */
