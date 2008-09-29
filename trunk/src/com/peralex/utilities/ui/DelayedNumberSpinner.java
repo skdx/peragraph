@@ -1,5 +1,6 @@
 package com.peralex.utilities.ui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,13 +16,13 @@ import javax.swing.UIManager;
 import com.peralex.sharedlibs.dsphostl.ParameterRangeShort;
 
 /**
- * A TimedSpinner that provides the kind of basic editing we need for numbers.
- * It performs validation on the text entry.
+ * A TimedSpinner that provides the kind of basic editing we need for numbers. It performs validation on the text entry.
  * 
  * @author Noel Grandin
  */
 public class DelayedNumberSpinner extends DelayedSpinner
 {
+	private Color defaultBackground;
 
 	public DelayedNumberSpinner()
 	{
@@ -39,42 +40,44 @@ public class DelayedNumberSpinner extends DelayedSpinner
 	 */
 	public void setRange(ParameterRangeShort oParamRange)
 	{
-    setModel(new SpinnerNumberModel(oParamRange.getMin(),
-        oParamRange.getMin(),
-        oParamRange.getMax(),
-        oParamRange.getIncrement()));
+		setModel(new SpinnerNumberModel(oParamRange.getMin(), oParamRange.getMin(), oParamRange
+				.getMax(), oParamRange.getIncrement()));
 	}
-	
+
 	private void initEditor()
 	{
+		defaultBackground = ((JSpinner.NumberEditor) getEditor()).getTextField().getBackground();
+
 		((JSpinner.NumberEditor) getEditor()).getFormat().setGroupingSize(0);
-		
+
 		// a key listener to ensure that no invalid text can be entered
-		((JSpinner.NumberEditor)getEditor()).getTextField().addKeyListener(new java.awt.event.KeyAdapter()
-		{
-			private KeyEvent keyEvent;
-			@Override
-			public void keyReleased(java.awt.event.KeyEvent evt)
-			{
-				keyEvent = evt;
-				oKeyReleasedTimer.stop();
-				oKeyReleasedTimer.start();
-			}
-			// this ensures that the key listener give the user enough time to enter text
-			private final Timer oKeyReleasedTimer = new Timer(500, new ActionListener()
-			{
-				public void actionPerformed(ActionEvent evt)
+		((JSpinner.NumberEditor) getEditor()).getTextField().addKeyListener(
+				new java.awt.event.KeyAdapter()
 				{
-					oKeyReleasedTimer.stop();
-					spinnerKeyReleased(keyEvent);
-				}
-			});
-		});
+					private KeyEvent keyEvent;
+
+					@Override
+					public void keyReleased(java.awt.event.KeyEvent evt)
+					{
+						keyEvent = evt;
+						oKeyReleasedTimer.stop();
+						oKeyReleasedTimer.start();
+					}
+
+					// this ensures that the key listener give the user enough time to enter text
+					private final Timer oKeyReleasedTimer = new Timer(500, new ActionListener()
+					{
+						public void actionPerformed(ActionEvent evt)
+						{
+							oKeyReleasedTimer.stop();
+							spinnerKeyReleased(keyEvent);
+						}
+					});
+				});
 	}
 
 	/**
-	 * Override setModel() and redo the editor initialisation
-	 * because changing the model also changes the editor.
+	 * Override setModel() and redo the editor initialisation because changing the model also changes the editor.
 	 */
 	@Override
 	public void setModel(SpinnerModel model)
@@ -101,7 +104,8 @@ public class DelayedNumberSpinner extends DelayedSpinner
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void validateNumber(final JFormattedTextField textField, final SpinnerNumberModel model)
+	private void validateNumber(final JFormattedTextField textField,
+			final SpinnerNumberModel model)
 	{
 		final Comparable textValue;
 
@@ -130,43 +134,54 @@ public class DelayedNumberSpinner extends DelayedSpinner
 		}
 		catch (NumberFormatException nfe)
 		{
-			// if not a valid value, reset the editor to the model's value
-			textField.setText(model.getValue().toString());
-			model.setValue(model.getValue());
+			// if not a valid value, set error indication
+			setBackgroundError();
 			return;
 		}
 
 		// if value less than minimum
-		if (textValue.compareTo(model.getMaximum())==1)
+		if (textValue.compareTo(model.getMaximum()) == 1)
 		{
-			textField.setText(model.getValue().toString());
-			model.setValue(model.getMaximum());
+			setBackgroundError();
 			return;
 		}
 		// if value greater than maximum
-		if (textValue.compareTo(model.getMinimum())==-1)
+		if (textValue.compareTo(model.getMinimum()) == -1)
 		{
-			textField.setText(model.getValue().toString());
-			model.setValue(model.getMinimum());
+			setBackgroundError();
 			return;
 		}
+		setBackgroundNormal();
 	}
-	
-  public static void main(String[] args)
-  {
+
+	private void setBackgroundError()
+	{
+		((JSpinner.NumberEditor) getEditor()).getTextField().setBackground(Color.YELLOW);
+	}
+
+	private void setBackgroundNormal()
+	{
+		((JSpinner.NumberEditor) getEditor()).getTextField().setBackground(defaultBackground);
+	}
+
+	public static void main(String[] args)
+	{
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    }
-		catch (Exception ignoreEx) {}
-		
-    final DelayedNumberSpinner blockControl = new DelayedNumberSpinner(new SpinnerNumberModel(10, -100, 100, 1));
-    
-    final JFrame frame = new JFrame("cDelayedNumberSpinner Test Frame");
-    frame.getContentPane().add(blockControl);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.pack();
-    frame.setSize(400, 300);
-    frame.setVisible(true);
-  }
+		}
+		catch (Exception ignoreEx)
+		{
+		}
+
+		final DelayedNumberSpinner blockControl = new DelayedNumberSpinner(new SpinnerNumberModel(10,
+				-100, 100, 1));
+
+		final JFrame frame = new JFrame("cDelayedNumberSpinner Test Frame");
+		frame.getContentPane().add(blockControl);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setSize(400, 300);
+		frame.setVisible(true);
+	}
 }
