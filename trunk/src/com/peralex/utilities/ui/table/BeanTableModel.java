@@ -88,6 +88,10 @@ public class BeanTableModel<T> extends AbstractTableModel
 			}
 
 			this.columnNames = new String[this.beanFieldNames.length];
+			for (int i=0; i<columnBeanFields.length; i++)
+			{
+				this.columnNames[i] = defaultColumnName(columnBeanFields[i]);
+			}
 
 			this.isColumnEditable = new boolean[this.beanFieldNames.length];
 			Arrays.fill(isColumnEditable, false);
@@ -148,6 +152,27 @@ public class BeanTableModel<T> extends AbstractTableModel
 			throw new RuntimeException(ex);
 		}
 
+	}
+
+	/**
+	 * convert a fieldname into a reasonably natural string
+	 * e.g. "codePointAt" converts to "Code Point At" 
+	 */
+	private static String defaultColumnName(String fieldName)
+	{
+		StringBuilder buf = new StringBuilder();
+		buf.append(Character.toUpperCase(fieldName.charAt(0)));
+		for (int i=1; i<fieldName.length(); i++)
+		{
+			char ch = fieldName.charAt(i);
+			if (Character.isLowerCase(ch)) {
+				buf.append(ch);
+			} else {
+				buf.append(" ");
+				buf.append(ch);
+			}
+		}
+		return buf.toString();
 	}
 
 	protected void setColumnName(String beanFieldName, String columnName)
