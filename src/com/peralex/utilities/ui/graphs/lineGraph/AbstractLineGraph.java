@@ -37,7 +37,7 @@ public abstract class AbstractLineGraph extends GraphBase
   protected AbstractLineGraph()
 	{
     // Add the Reset zoom item to the PopUpMenu.
-    oAutoScaleMenuItem = new JMenuItem(textRes.getString("Auto_scale"));
+    oAutoScaleMenuItem = new JMenuItem(textRes.getString("AbstractLineGraph.Auto_scale"));
     oPopupMenu.add(oAutoScaleMenuItem);  
     oAutoScaleMenuItem.addActionListener(new ActionListener()
     {

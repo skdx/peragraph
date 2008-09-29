@@ -105,7 +105,7 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 		oWaterfallOnOffButton.setSelectedIcon(IconManager.getSizedFor("/com/peralex/utilities/ui/images/colour_waterfall.png", this, 1.2f));
 		oWaterfallOnOffButton.setFocusPainted(false);
 		oWaterfallOnOffButton.setMargin(new Insets(0,0,0,0));
-		oWaterfallOnOffButton.setToolTipText(PeralexLibsBundle.getString("Colour_scale"));
+		oWaterfallOnOffButton.setToolTipText(PeralexLibsBundle.getString("IntensityAxis.Colour_scale"));
 		oWaterfallOnOffButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -151,7 +151,7 @@ public class IntensityAxis extends JPanel implements ILocaleListener
     });
     
     // Add the Show grid item to the PopUpMenu.
-    oColorScaleMenuItem = new JCheckBoxMenuItem(PeralexLibsBundle.getString("Colour_scale"), false);
+    oColorScaleMenuItem = new JCheckBoxMenuItem(PeralexLibsBundle.getString("IntensityAxis.Colour_scale"), false);
     oPopupMenu.add(oColorScaleMenuItem);
     oColorScaleMenuItem.addActionListener(new ActionListener()
     {
@@ -161,7 +161,7 @@ public class IntensityAxis extends JPanel implements ILocaleListener
       }
     });
     
-    oResetScaleMenuItem = new JMenuItem(PeralexLibsBundle.getString("Reset_scale"));
+    oResetScaleMenuItem = new JMenuItem(PeralexLibsBundle.getString("IntensityAxis.Reset_scale"));
     oPopupMenu.add(oResetScaleMenuItem);
     oResetScaleMenuItem.addActionListener(new ActionListener()
     {
