@@ -1,9 +1,12 @@
 package com.peralex.utilities.ui.table;
 
 import java.awt.Component;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
@@ -18,6 +21,31 @@ public class LongTextCellRenderer extends JTextArea implements TableCellRenderer
 {
 	private final DefaultTableCellRenderer adaptee = new DefaultTableCellRenderer();
 
+	public LongTextCellRenderer(final JTable table)
+	{
+		setLineWrap(true);
+		setWrapStyleWord(true);
+
+		// if the table width changes, we need to recalculate row height
+		table.addComponentListener(new ComponentAdapter() {
+			private int width = -1;
+			@Override
+			public void componentResized(ComponentEvent e)
+			{
+				// I need to only fire on width changes otherwise I trigger a loop of events
+				if (table.getWidth()==width) return;
+				this.width = table.getWidth();
+				// force the table to recalculate row heights, without recreating columns
+				table.tableChanged(new TableModelEvent(table.getModel(), 1, Integer.MAX_VALUE, 
+						TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
+			}
+		});
+	}
+
+	/**
+	 * @deprecated use the LongTextCellRenderer(JTable) constructor
+	 */
+	@Deprecated
 	public LongTextCellRenderer()
 	{
 		setLineWrap(true);
