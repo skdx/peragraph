@@ -88,21 +88,32 @@ public final class GraphObjectPool
 			super(referent);
 			hashCode = referent.hashCode();
 		}
-		
+
 		@Override
 		public int hashCode()
 		{
-			return hashCode;
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + hashCode;
+			return result;
 		}
-		
+
 		@Override
 		public boolean equals(Object obj)
 		{
-			final MyWeakReference other = (MyWeakReference) obj;
-			if (other==null) return false;
-			if (other.hashCode()!=this.hashCode) {
+			if (this == obj)
+				return true;
+			if (obj == null)
 				return false;
-			}
+			if (getClass() != obj.getClass())
+				return false;
+			
+			MyWeakReference other = (MyWeakReference) obj;
+			if (hashCode != other.hashCode)
+				return false;
+			
+			if (get()==other.get()) 
+				return true;
 			if (other.get()==null) {
 				return false;
 			}

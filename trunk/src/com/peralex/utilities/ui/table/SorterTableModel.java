@@ -157,7 +157,6 @@ public class SorterTableModel extends AbstractTableModel
 	/**
 	 * allows us to override the comparators by column index
 	 */
-	@SuppressWarnings("unchecked")
 	private final Map<Integer, Object> columnComparatorsByIndex = new HashMap<Integer, Object>();
 	
 	private final List<Directive> sortingColumns = new ArrayList<Directive>();
@@ -362,7 +361,6 @@ public class SorterTableModel extends AbstractTableModel
 	/**
 	 * this method can return either a Comparator or a ITableRowComparator
 	 */
-	@SuppressWarnings("unchecked")
 	private Object getComparator(int column)
 	{
 		// first check for column-specific overrides
