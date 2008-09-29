@@ -306,7 +306,6 @@ public class PolarDirectionGraph extends JComponent
 		stringBounds = g.getFontMetrics(font).getStringBounds("90", g);
 		g.drawString("90", (float) (directionRadius - stringBounds.getWidth()), 0);
 
-		stringBounds = g.getFontMetrics(font).getStringBounds("270", g);
 		g.drawString("270", (float) (-directionRadius), 0);
 		
 		if (directionLabelsVisible)

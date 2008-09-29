@@ -40,7 +40,7 @@ public final class EDT_ViolationChecker extends RepaintManager
 		super.addDirtyRegion(jComponent, i, i1, i2, i3);
 	}
 
-	private void checkThreadViolation(JComponent c)
+	private static void checkThreadViolation(JComponent c)
 	{
 		if (SwingUtilities.isEventDispatchThread())
 		{
@@ -74,7 +74,7 @@ public final class EDT_ViolationChecker extends RepaintManager
 		dumpMessage(c);
 	}
 
-	private void dumpMessage(JComponent c)
+	private static void dumpMessage(JComponent c)
 	{
 		System.out.println("----------Wrong Thread START");
 		System.out.println(getStracktraceAsString(new Exception()));
