@@ -1,7 +1,8 @@
-package com.peralex.utilities.ui;
+package com.peralex.utilities.ui.titlebar;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+
 
 /**
  * Simple version of the cTitleBar class without any buttons.
