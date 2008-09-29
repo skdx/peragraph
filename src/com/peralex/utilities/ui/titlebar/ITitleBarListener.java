@@ -1,4 +1,4 @@
-package com.peralex.utilities.ui;
+package com.peralex.utilities.ui.titlebar;
 
 /**
  *

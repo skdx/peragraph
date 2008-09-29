@@ -1,4 +1,4 @@
-package com.peralex.utilities.ui;
+package com.peralex.utilities.ui.titlebar;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import com.peralex.utilities.ui.images.CloseIcon;
 import com.peralex.utilities.ui.images.IconManager;
 
 /**
@@ -33,7 +34,6 @@ public class TitleBar extends javax.swing.JPanel
   private final Color backgroundColor1;
   private final Color backgroundColor2;
 	
-	private static final String oCloseIconURL = "/com/peralex/utilities/ui/images/close_28x28.gif";
 	private static final String oCollapseIconURL = "/com/peralex/utilities/ui/images/collapse.png";
 	private static final String oExpandIconURL = "/com/peralex/utilities/ui/images/expand.png";
 	private static final String oLockClosedIconURL = "/com/peralex/utilities/ui/images/lock_closed.gif";
@@ -82,7 +82,7 @@ public class TitleBar extends javax.swing.JPanel
 	private void setIcons()
 	{
 		final float scalingFactor = 0.7f;
-		oCloseButton.setIcon(IconManager.getSizedFor(oCloseIconURL, oTitleLabel, scalingFactor));
+		oCloseButton.setIcon(IconManager.getSizedFor(CloseIcon.INSTANCE, oTitleLabel, scalingFactor));
 		oLockToggleButton.setIcon(IconManager.getSizedFor(oLockOpenIconURL, oTitleLabel, scalingFactor));
 		oLockToggleButton.setSelectedIcon(IconManager.getSizedFor(oLockClosedIconURL, oTitleLabel, scalingFactor));
 		oMinimizeToggleButton.setIcon(IconManager.getSizedFor(oCollapseIconURL, oTitleLabel, scalingFactor));
