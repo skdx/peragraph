@@ -393,7 +393,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   public void zoomAlongX(int xCoord)
   {
     final double fXval = pixelToUnitX(xCoord);
-    final double fWidth = (oAnimationTimer.fMinimumX - oAnimationTimer.fMaximumX) / 4;
+    final double fWidth = (oAnimationTimer.fMaximumX - oAnimationTimer.fMinimumX) / 4;
 
     zoomXRange(fXval - fWidth, fXval + fWidth);
   }
