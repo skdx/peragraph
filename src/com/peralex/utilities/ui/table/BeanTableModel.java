@@ -304,6 +304,9 @@ public class BeanTableModel<T> extends AbstractTableModel
 		return row;
 	}
 
+	/**
+	 * Remove a group of rows. More efficient and more safe than coding it yourself.
+	 */
 	public void removeRows(int... rowIndices)
 	{
 		// remove in reverse order, otherwise the indexes will be wrong after the first one.
