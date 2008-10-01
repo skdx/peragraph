@@ -465,32 +465,36 @@ public class MultiLineGraph extends AbstractLineGraph
 	@Override
 	protected void autoScaleGraph()
 	{
-		if (aoLineData.isEmpty()) 
-		{
-			resetZoom();
-			return;
-		}
 		double minX = Double.MAX_VALUE;
 		double maxX = -Double.MAX_VALUE;
-		float minY = Float.MAX_VALUE;
-		float maxY = -Float.MAX_VALUE;
+		double minY = Double.MAX_VALUE;
+		double maxY = -Double.MAX_VALUE;
+		boolean foundOne = false;
 		for (LineState lineState : aoLineData.values())
 		{
+			if (!lineState.visible) continue;
 			final AbstractLineData oLineData = lineState.data; 
 			final int numPoints = oLineData.getNumberOfPoints();
 			if (numPoints>0)
 			{
+				foundOne = true;
 				minX = Math.min(minX, oLineData.getXValue(0));
 				maxX = Math.max(maxX, oLineData.getXValue(oLineData.getNumberOfPoints()-1));
 				for (int j=0; j<numPoints; j++)
 				{
-					minY = Math.min(minY, oLineData.getYValue(j));
-					maxY = Math.max(maxY, oLineData.getYValue(j));
+					minY = Math.min(minY, oLineData.getYValueDouble(j));
+					maxY = Math.max(maxY, oLineData.getYValueDouble(j));
 				}
 			}
 		}
-		
-    zoomIn(minX, maxX, minY, maxY);
+		if (foundOne) 
+		{
+	    zoomIn(minX, maxX, minY, maxY);
+		}
+		else
+		{
+			resetZoom();
+		}
 	}
 	
 	/**
