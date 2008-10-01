@@ -1,5 +1,6 @@
 package com.peralex.utilities.ui.table;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -116,9 +117,9 @@ public class SorterBeanTableModel<T> extends SorterTableModel
 	}
 	
 	/**
-	 * clears existing data and copies from parameter
+	 * clears existing data and copies new data from parameter
 	 */
-	public void setData(List<T> data)
+	public void setData(Collection<T> data)
 	{
 		beanModel.setData(data);
 	}

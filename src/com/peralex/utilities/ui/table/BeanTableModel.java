@@ -324,9 +324,9 @@ public class BeanTableModel<T> extends AbstractTableModel
 	}
 
 	/**
-	 * clears existing data and copies from parameter
+	 * clears existing data and copies new data from parameter
 	 */
-	public void setData(List<T> data)
+	public void setData(Collection<T> data)
 	{
 		this.list.clear();
 		this.list.addAll(data);
