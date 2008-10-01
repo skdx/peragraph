@@ -103,7 +103,7 @@ public class TableLib
 		final TableColumnModel columns = table.getColumnModel();
 
 		final int[] maxColumnWidth = TableWidthFinder.computeMaxColumnWidth(table);
-		for (int i = 0, len = maxColumnWidth.length; i < len; ++i)
+		for (int i = 0; i < maxColumnWidth.length; i++)
 		{
 			final int preferredWidth = preferredMaxWidth == null ? Integer.MAX_VALUE
 					: preferredMaxWidth[i];
@@ -128,7 +128,7 @@ public class TableLib
 			final int columnCount = columns.getColumnCount();
 			final int[] headerWidth = new int[columnCount];
 
-			for (int columnId = 0; columnId < columnCount; ++columnId)
+			for (int columnId = 0; columnId < columnCount; columnId++)
 			{
 				TableColumn column = columns.getColumn(columnId);
 				final Object value = column.getHeaderValue();
@@ -150,7 +150,7 @@ public class TableLib
 		private static int[] updateMaxWidthTable(JTable table, int[] colWidth)
 		{
 			TableModel data = table.getModel();
-			for (int row = 0, len = data.getRowCount(); row < len; ++row)
+			for (int row = 0; row < data.getRowCount(); row++)
 			{
 				updateMaxWidthTable(table, data, row, colWidth);
 			}
@@ -160,7 +160,7 @@ public class TableLib
 
 		private static void updateMaxWidthTable(JTable table, TableModel data, int row, int[] colWidth)
 		{
-			for (int col = 0, len = data.getColumnCount(); col < len; ++col)
+			for (int col = 0; col < data.getColumnCount(); col++)
 			{
 				final TableCellRenderer cellRenderer = table.getCellRenderer(row, col);
 				final Component c = table.prepareRenderer(cellRenderer, row, col);
