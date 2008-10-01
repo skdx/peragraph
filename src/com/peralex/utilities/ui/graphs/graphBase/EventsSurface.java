@@ -10,8 +10,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -28,7 +28,7 @@ public abstract class EventsSurface extends DrawSurface implements MouseListener
    * Stores all the GraphBase Listeners.
    * FIXME (Noel) this listener list should be pushed down into cGraphBase.
    */
-  private final List<IGraphBaseListener> oGraphBaseListeners = new ArrayList<IGraphBaseListener>();
+  private final List<IGraphBaseListener> oGraphBaseListeners = new CopyOnWriteArrayList<IGraphBaseListener>();
 	
   /**
    * This stores the X position of where the mouse was pressed.

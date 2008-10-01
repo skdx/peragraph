@@ -6,10 +6,10 @@ import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -28,7 +28,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
   /**
    * This list stores the list of current CursorListeners.
    */
-  private final List<ICursorListener> oCursorListeners = new ArrayList<ICursorListener>();  
+  private final List<ICursorListener> oCursorListeners = new CopyOnWriteArrayList<ICursorListener>();  
   
   /**
    * Stores the KeyCode of the key that is currently down.

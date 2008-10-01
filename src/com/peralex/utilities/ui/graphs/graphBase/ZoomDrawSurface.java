@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JMenuItem;
 
@@ -27,7 +27,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
   /**
    * Stores all the Zoom Listeners.
    */
-  private final List<IZoomListener> oZoomListeners = new ArrayList<IZoomListener>();
+  private final List<IZoomListener> oZoomListeners = new CopyOnWriteArrayList<IZoomListener>();
 	
 	/** 
    * Default unit range values for the X Axis.
