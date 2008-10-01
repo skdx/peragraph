@@ -94,11 +94,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 			this.isColumnEditable = new boolean[this.beanFieldNames.length];
 			Arrays.fill(isColumnEditable, false);
 
-			this.beanFieldReaderWriters = new IBeanReaderWriter[this.beanFieldNames.length];
-			for (int i = 0; i < beanFieldReaderWriters.length; i++)
-			{
-				this.beanFieldReaderWriters[i] = createBeanReadWrite(beanClass, beanFieldNames[i]);
-			}
+			this.beanFieldReaderWriters = initBeanReaderWriter(beanClass, beanFieldNames);
 
 			// determine the column classes
 			this.columnClasses = new Class[this.beanFieldNames.length];
@@ -138,11 +134,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 			this.isColumnEditable = new boolean[this.beanFieldNames.length];
 			Arrays.fill(isColumnEditable, false);
 
-			this.beanFieldReaderWriters = new IBeanReaderWriter[this.beanFieldNames.length];
-			for (int i = 0; i < beanFieldReaderWriters.length; i++)
-			{
-				this.beanFieldReaderWriters[i] = createBeanReadWrite(beanClass, beanFieldNames[i]);
-			}
+			this.beanFieldReaderWriters = initBeanReaderWriter(beanClass, beanFieldNames);
 
 			// determine the column classes
 			this.columnClasses = new Class[this.beanFieldNames.length];
@@ -189,7 +181,8 @@ public class BeanTableModel<T> extends AbstractTableModel
 				columnClass = beanClass.getField(this.beanFieldNames[i]).getType();
 			}
 
-			// as far as the rest of the code is concerned, we always wrap primitives in the relevant primitive wrapper classes
+			// as far as the rest of the code is concerned, we always wrap primitives in the relevant primitive wrapper
+			// classes
 			if (columnClass == Float.TYPE)
 			{
 				columnClass = Float.class;
@@ -222,11 +215,12 @@ public class BeanTableModel<T> extends AbstractTableModel
 			{
 				columnClass = Character.class;
 			}
-			
-			if (columnClass==null) {
+
+			if (columnClass == null)
+			{
 				throw new IllegalStateException("could not get class for column " + this.beanFieldNames[i]);
 			}
-				
+
 			this.columnClasses[i] = columnClass;
 		}
 	}
@@ -311,9 +305,11 @@ public class BeanTableModel<T> extends AbstractTableModel
 	 */
 	public void removeRows(int... rowIndices)
 	{
-		if (rowIndices==null) return;
-		if (rowIndices.length==0) return;
-		
+		if (rowIndices == null)
+			return;
+		if (rowIndices.length == 0)
+			return;
+
 		// remove in reverse order, otherwise the indexes will be wrong after the first one.
 		// the coding is a little long-winded, because of the sanity checking.
 		int i = rowIndices.length - 1;
@@ -323,8 +319,12 @@ public class BeanTableModel<T> extends AbstractTableModel
 		for (; i >= 0; i--)
 		{
 			// make sure no-one sends me duplicates or an unsorted array, otherwise stuff will break in weird ways
-			if (previousVal == rowIndices[i]) throw new IllegalStateException("duplicate values at index " + i + " in " + Arrays.toString(rowIndices));
-			if (previousVal < rowIndices[i]) throw new IllegalStateException("unsorted values at index " + i + " in " + Arrays.toString(rowIndices));
+			if (previousVal == rowIndices[i])
+				throw new IllegalStateException("duplicate values at index " + i + " in "
+						+ Arrays.toString(rowIndices));
+			if (previousVal < rowIndices[i])
+				throw new IllegalStateException("unsorted values at index " + i + " in "
+						+ Arrays.toString(rowIndices));
 			removeRow(rowIndices[i]);
 		}
 	}
@@ -480,80 +480,94 @@ public class BeanTableModel<T> extends AbstractTableModel
 		return beanFieldNames.toArray(new String[beanFieldNames.size()]);
 	}
 
-	private static <T> IBeanReaderWriter createBeanReadWrite(Class<T> beanClass,
-			final String fieldName)
+	private static <T> IBeanReaderWriter[] initBeanReaderWriter(Class<T> beanClass,
+			String[] beanFieldNames)
 	{
+		// call the introspector only once, because it's expensive
+		PropertyDescriptor[] descriptors = null;
 		try
 		{
-			final PropertyDescriptor[] descriptors = Introspector.getBeanInfo(beanClass)
-					.getPropertyDescriptors();
-			for (PropertyDescriptor pd : descriptors)
-			{
-				if (fieldName.equals(pd.getName()))
-				{
-					final Method readMethod = pd.getReadMethod();
-					final Method writeMethod = pd.getWriteMethod();
-					if (readMethod == null)
-					{
-						throw new RuntimeException(
-								new IllegalArgumentException(
-										"field "
-												+ fieldName
-												+ " looks like a normal javabean method to the Introspector, has no method for reading the field."));
-					}
-					return new IBeanReaderWriter()
-					{
-						public Object read(Object bean)
-						{
-							try
-							{
-								return readMethod.invoke(bean, new Object[0]);
-							}
-							catch (IllegalArgumentException ex)
-							{
-								throw new RuntimeException(ex);
-							}
-							catch (IllegalAccessException ex)
-							{
-								throw new RuntimeException(ex);
-							}
-							catch (InvocationTargetException ex)
-							{
-								throw new RuntimeException(ex);
-							}
-						}
-
-						public void write(Object bean, Object value)
-						{
-							if (writeMethod == null)
-							{
-								throw new RuntimeException(new IllegalArgumentException("field " + fieldName
-										+ "  has no method for writing the field."));
-							}
-							try
-							{
-								writeMethod.invoke(bean, new Object[] { value });
-							}
-							catch (IllegalArgumentException ex)
-							{
-								throw new RuntimeException(ex);
-							}
-							catch (IllegalAccessException ex)
-							{
-								throw new RuntimeException(ex);
-							}
-							catch (InvocationTargetException ex)
-							{
-								throw new RuntimeException(ex);
-							}
-						}
-					};
-				}
-			}
+			descriptors = Introspector.getBeanInfo(beanClass).getPropertyDescriptors();
 		}
 		catch (IntrospectionException ex)
 		{
 			// ignore
+			descriptors = new PropertyDescriptor[0];
+		}
+
+		IBeanReaderWriter[] beanFieldReaderWriters = new IBeanReaderWriter[beanFieldNames.length];
+		for (int i = 0; i < beanFieldReaderWriters.length; i++)
+		{
+			beanFieldReaderWriters[i] = createBeanReadWrite(descriptors, beanClass, beanFieldNames[i]);
+		}
+		return beanFieldReaderWriters;
+	}
+
+	private static <T> IBeanReaderWriter createBeanReadWrite(PropertyDescriptor[] descriptors,
+			Class<T> beanClass, final String fieldName)
+	{
+		for (PropertyDescriptor pd : descriptors)
+		{
+			if (fieldName.equals(pd.getName()))
+			{
+				final Method readMethod = pd.getReadMethod();
+				final Method writeMethod = pd.getWriteMethod();
+				if (readMethod == null)
+				{
+					throw new RuntimeException(
+							new IllegalArgumentException(
+									"field "
+											+ fieldName
+											+ " looks like a normal javabean method to the Introspector, has no method for reading the field."));
+				}
+				return new IBeanReaderWriter()
+				{
+					public Object read(Object bean)
+					{
+						try
+						{
+							return readMethod.invoke(bean, new Object[0]);
+						}
+						catch (IllegalArgumentException ex)
+						{
+							throw new RuntimeException(ex);
+						}
+						catch (IllegalAccessException ex)
+						{
+							throw new RuntimeException(ex);
+						}
+						catch (InvocationTargetException ex)
+						{
+							throw new RuntimeException(ex);
+						}
+					}
+
+					public void write(Object bean, Object value)
+					{
+						if (writeMethod == null)
+						{
+							throw new RuntimeException(new IllegalArgumentException("field " + fieldName
+									+ "  has no method for writing the field."));
+						}
+						try
+						{
+							writeMethod.invoke(bean, new Object[] { value });
+						}
+						catch (IllegalArgumentException ex)
+						{
+							throw new RuntimeException(ex);
+						}
+						catch (IllegalAccessException ex)
+						{
+							throw new RuntimeException(ex);
+						}
+						catch (InvocationTargetException ex)
+						{
+							throw new RuntimeException(ex);
+						}
+					}
+				};
+			}
 		}
 
 		// try accessing it as a "naked" bean i.e. one with public fields and no accessor methods.
