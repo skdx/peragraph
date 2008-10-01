@@ -88,9 +88,13 @@ public class SorterBeanTableModel<T> extends SorterTableModel
 
 	/**
 	 * Remove a group of rows. More efficient and more safe than coding it yourself.
+	 * 
+	 * @param rowIndices array of row indices - this array must be sorted, and must not contain duplicates
 	 */
 	public void removeRows(int ...rowIndices)
 	{
+		if (rowIndices==null) return;
+		
 		int [] modelIndices = new int[rowIndices.length];
 		for (int i=0; i<rowIndices.length; i++) {
 			modelIndices[i] = modelIndex(rowIndices[i]);
