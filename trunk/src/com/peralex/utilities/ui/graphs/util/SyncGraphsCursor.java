@@ -9,6 +9,7 @@ import com.peralex.utilities.ui.graphs.graphBase.Cursor;
 import com.peralex.utilities.ui.graphs.graphBase.CursorDrawSurface;
 
 /**
+ * Used for synchronized cursor positions across multiple graphs.
  * 
  * @author Noel Grandin
  */
