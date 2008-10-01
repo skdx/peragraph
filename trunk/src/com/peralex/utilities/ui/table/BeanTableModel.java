@@ -306,12 +306,25 @@ public class BeanTableModel<T> extends AbstractTableModel
 
 	/**
 	 * Remove a group of rows. More efficient and more safe than coding it yourself.
+	 * 
+	 * @param rowIndices array of row indices - this array must be sorted, and must not contain duplicates
 	 */
 	public void removeRows(int... rowIndices)
 	{
+		if (rowIndices==null) return;
+		if (rowIndices.length==0) return;
+		
 		// remove in reverse order, otherwise the indexes will be wrong after the first one.
-		for (int i = rowIndices.length - 1; i >= 0; --i)
+		// the coding is a little long-winded, because of the sanity checking.
+		int i = rowIndices.length - 1;
+		removeRow(rowIndices[i]);
+		int previousVal = rowIndices[i];
+		i--;
+		for (; i >= 0; i--)
 		{
+			// make sure no-one sends me duplicates or an unsorted array, otherwise stuff will break in weird ways
+			if (previousVal == rowIndices[i]) throw new IllegalStateException("duplicate values at index " + i + " in " + Arrays.toString(rowIndices));
+			if (previousVal < rowIndices[i]) throw new IllegalStateException("unsorted values at index " + i + " in " + Arrays.toString(rowIndices));
 			removeRow(rowIndices[i]);
 		}
 	}
