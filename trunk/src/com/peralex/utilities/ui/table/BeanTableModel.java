@@ -23,8 +23,7 @@ import javax.swing.table.AbstractTableModel;
  * Provides a table model that maps columns onto fields of JavaBeans.
  * 
  * Note that you can be lazy and define your JavaBeans without accessor methods - useful for GUI coding when you have
- * lots of tables and the JavaBean class is only being used to model a row of table data. e.g. 
- * <code>
+ * lots of tables and the JavaBean class is only being used to model a row of table data. e.g. <code>
  *   public class MyTableRow {
  *      public String name;
  *      public String surname;
@@ -87,7 +86,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 			}
 
 			this.columnNames = new String[this.beanFieldNames.length];
-			for (int i=0; i<columnNames.length; i++)
+			for (int i = 0; i < columnNames.length; i++)
 			{
 				this.columnNames[i] = defaultColumnName(beanFieldNames[i]);
 			}
@@ -114,7 +113,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 			throw new RuntimeException(ex);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param beanClass this is here so we can check the field names and fail early if there is a mistake.
@@ -131,7 +130,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 			}
 
 			this.columnNames = new String[this.beanFieldNames.length];
-			for (int i=0; i<columnBeanFields.length; i++)
+			for (int i = 0; i < columnBeanFields.length; i++)
 			{
 				this.columnNames[i] = defaultColumnName(columnBeanFields[i]);
 			}
@@ -163,8 +162,34 @@ public class BeanTableModel<T> extends AbstractTableModel
 	{
 		for (int i = 0; i < columnClasses.length; i++)
 		{
-			Class<?> columnClass = beanClass.getField(this.beanFieldNames[i]).getType();
-			// as far as the rest of the code is concerned, we always wrap stuff in the primitive wrapper classes
+			Class<?> columnClass = null;
+
+			// first try accessing it as a bean
+			try
+			{
+				final PropertyDescriptor[] descriptors = Introspector.getBeanInfo(beanClass)
+						.getPropertyDescriptors();
+				for (PropertyDescriptor pd : descriptors)
+				{
+					if (this.beanFieldNames[i].equals(pd.getName()))
+					{
+						columnClass = pd.getPropertyType();
+						break;
+					}
+				}
+			}
+			catch (IntrospectionException ex)
+			{
+				// ignore
+			}
+
+			// then try as a naked field
+			if (columnClass == null)
+			{
+				columnClass = beanClass.getField(this.beanFieldNames[i]).getType();
+			}
+
+			// as far as the rest of the code is concerned, we always wrap primitives in the relevant primitive wrapper classes
 			if (columnClass == Float.TYPE)
 			{
 				columnClass = Float.class;
@@ -197,29 +222,43 @@ public class BeanTableModel<T> extends AbstractTableModel
 			{
 				columnClass = Character.class;
 			}
+			
+			if (columnClass==null) {
+				throw new IllegalStateException("could not get class for column " + this.beanFieldNames[i]);
+			}
+				
 			this.columnClasses[i] = columnClass;
 		}
 	}
 
 	/**
-	 * convert a fieldname into a reasonably natural string
-	 * e.g. "codePointAt" converts to "Code Point At" 
+	 * convert a fieldname into a reasonably natural string e.g. "codePointAt" converts to "Code Point At"
 	 */
 	private static String defaultColumnName(String fieldName)
 	{
 		StringBuilder buf = new StringBuilder();
 		buf.append(Character.toUpperCase(fieldName.charAt(0)));
-		for (int i=1; i<fieldName.length(); i++)
+		for (int i = 1; i < fieldName.length(); i++)
 		{
 			char ch = fieldName.charAt(i);
-			if (Character.isLowerCase(ch)) {
+			if (Character.isLowerCase(ch))
+			{
 				buf.append(ch);
-			} else {
+			}
+			else
+			{
 				buf.append(" ");
 				buf.append(ch);
 			}
 		}
 		return buf.toString();
+	}
+
+	public void setColumnName(int columnIndex, String columnName)
+	{
+		this.columnNames[columnIndex] = columnName;
+
+		fireTableStructureChanged();
 	}
 
 	protected void setColumnName(String beanFieldName, String columnName)
@@ -296,8 +335,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 		return beanFieldNames.length;
 	}
 
-	public void resetColumnNames(@SuppressWarnings("unused")
-	ResourceBundle textRes)
+	public void resetColumnNames(@SuppressWarnings("unused") ResourceBundle textRes)
 	{
 	}
 
@@ -388,42 +426,46 @@ public class BeanTableModel<T> extends AbstractTableModel
 	{
 		return this.list.indexOf(row);
 	}
-	
-	private static <T> String [] createBeanFieldNames(Class<T> beanClass)
+
+	private static <T> String[] createBeanFieldNames(Class<T> beanClass)
 	{
 		final List<String> beanFieldNames = new ArrayList<String>();
-		
+
 		try
 		{
-			final PropertyDescriptor[] descriptors = Introspector.getBeanInfo(beanClass).getPropertyDescriptors();
+			final PropertyDescriptor[] descriptors = Introspector.getBeanInfo(beanClass)
+					.getPropertyDescriptors();
 			for (PropertyDescriptor pd : descriptors)
 			{
-				if (pd.getReadMethod()!=null && pd.getWriteMethod()!=null)
+				if (pd.getReadMethod() != null && pd.getWriteMethod() != null)
 				{
 					beanFieldNames.add(pd.getName());
 				}
 			}
-		} catch (IntrospectionException ex) {
+		}
+		catch (IntrospectionException ex)
+		{
 			// ignore
 		}
-		
+
 		// try accessing it as a "naked" bean i.e. one with public fields and no accessor methods.
-		
+
 		if (!Modifier.isPublic(beanClass.getModifiers()))
 		{
 			throw new IllegalStateException("bean class " + beanClass + " must be public");
 		}
-		
-		final Field [] fields = beanClass.getDeclaredFields();
+
+		final Field[] fields = beanClass.getDeclaredFields();
 		for (Field field : fields)
 		{
 			beanFieldNames.add(field.getName());
 		}
-		
+
 		return beanFieldNames.toArray(new String[beanFieldNames.size()]);
 	}
 
-	private static <T> IBeanReaderWriter createBeanReadWrite(Class<T> beanClass, String fieldName)
+	private static <T> IBeanReaderWriter createBeanReadWrite(Class<T> beanClass,
+			final String fieldName)
 	{
 		try
 		{
@@ -442,14 +484,6 @@ public class BeanTableModel<T> extends AbstractTableModel
 										"field "
 												+ fieldName
 												+ " looks like a normal javabean method to the Introspector, has no method for reading the field."));
-					}
-					if (writeMethod == null)
-					{
-						throw new RuntimeException(
-								new IllegalArgumentException(
-										"field "
-												+ fieldName
-												+ " looks like a normal javabean method to the Introspector, has no method for writing the field."));
 					}
 					return new IBeanReaderWriter()
 					{
@@ -475,6 +509,11 @@ public class BeanTableModel<T> extends AbstractTableModel
 
 						public void write(Object bean, Object value)
 						{
+							if (writeMethod == null)
+							{
+								throw new RuntimeException(new IllegalArgumentException("field " + fieldName
+										+ "  has no method for writing the field."));
+							}
 							try
 							{
 								writeMethod.invoke(bean, new Object[] { value });
@@ -502,12 +541,12 @@ public class BeanTableModel<T> extends AbstractTableModel
 		}
 
 		// try accessing it as a "naked" bean i.e. one with public fields and no accessor methods.
-		
+
 		if (!Modifier.isPublic(beanClass.getModifiers()))
 		{
 			throw new IllegalStateException("bean class " + beanClass + " must be public");
 		}
-		
+
 		try
 		{
 			final Field field = beanClass.getField(fieldName);
@@ -515,7 +554,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 			{
 				throw new RuntimeException(new NoSuchMethodException("cannot find field " + fieldName));
 			}
-			
+
 			return new IBeanReaderWriter()
 			{
 				public Object read(Object bean)

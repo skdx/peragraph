@@ -372,6 +372,9 @@ public class SorterTableModel extends AbstractTableModel
 		
 		// then check for type-specific overrides
 		Class<?> columnType = tableModel.getColumnClass(column);
+		if (columnType==null) {
+			throw new IllegalStateException("tableModel returned null for column class, column=" + column + " model=" + tableModel.getClass());
+		}
 		comparator = columnComparatorsByType.get(columnType);
 		if (comparator != null)
 		{
