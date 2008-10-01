@@ -67,6 +67,11 @@ public class SorterBeanTableModel<T> extends SorterTableModel
 		return beanModel.removeRow(modelIndex(rowIndex));
 	}
 
+	public T removeRowByModelIndex(int modelIndex)
+	{
+		return beanModel.removeRow(modelIndex);
+	}
+	
 	/**
 	 * Note: the row index is the "view" row index
 	 */
