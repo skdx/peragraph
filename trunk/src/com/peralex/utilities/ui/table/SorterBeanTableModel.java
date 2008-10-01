@@ -1,5 +1,6 @@
 package com.peralex.utilities.ui.table;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -85,6 +86,19 @@ public class SorterBeanTableModel<T> extends SorterTableModel
 		return beanModel.removeRow(modelIndex(rowIndex));
 	}
 
+	/**
+	 * Remove a group of rows. More efficient and more safe than coding it yourself.
+	 */
+	public void removeRows(int ...rowIndices)
+	{
+		int [] modelIndices = new int[rowIndices.length];
+		for (int i=0; i<rowIndices.length; i++) {
+			modelIndices[i] = modelIndex(rowIndices[i]);
+		}
+		Arrays.sort(modelIndices);
+		beanModel.removeRows(modelIndices);
+	}
+	
 	public T removeRowByModelIndex(int modelIndex)
 	{
 		return beanModel.removeRow(modelIndex);
