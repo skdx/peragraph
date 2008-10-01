@@ -17,6 +17,23 @@ public class SorterBeanTableModel<T> extends SorterTableModel
 	
 	/**
 	 * 
+	 * @param beanClass class for row objects, all fields in this class are added as columns
+	 */
+	public SorterBeanTableModel(JTable oTable, Class<T> beanClass)
+	{
+		beanModel = new BeanTableModel<T>(beanClass);
+		
+		final JTableHeader tableHeader = oTable.getTableHeader();
+		tableHeader.setResizingAllowed(true);
+		tableHeader.setReorderingAllowed(false);
+
+		setTableModel(beanModel);
+		setTableHeader(tableHeader);
+		oTable.setModel(this);
+	}
+	
+	/**
+	 * 
 	 * @param beanClass this is here so we can check the field names and fail early if there is a mistake.
 	 * @param columnBeanFields
 	 */

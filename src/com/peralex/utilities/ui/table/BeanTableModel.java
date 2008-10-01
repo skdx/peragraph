@@ -74,6 +74,49 @@ public class BeanTableModel<T> extends AbstractTableModel
 
 	/**
 	 * 
+	 * @param beanClass class for row objects, all fields in this class are added as columns
+	 */
+	public BeanTableModel(Class<T> beanClass)
+	{
+		try
+		{
+			this.beanFieldNames = createBeanFieldNames(beanClass);
+			for (int i = 0; i < beanFieldNames.length; i++)
+			{
+				fieldToColumnIndexMap.put(beanFieldNames[i], Integer.valueOf(i));
+			}
+
+			this.columnNames = new String[this.beanFieldNames.length];
+			for (int i=0; i<columnNames.length; i++)
+			{
+				this.columnNames[i] = defaultColumnName(beanFieldNames[i]);
+			}
+
+			this.isColumnEditable = new boolean[this.beanFieldNames.length];
+			Arrays.fill(isColumnEditable, false);
+
+			this.beanFieldReaderWriters = new IBeanReaderWriter[this.beanFieldNames.length];
+			for (int i = 0; i < beanFieldReaderWriters.length; i++)
+			{
+				this.beanFieldReaderWriters[i] = createBeanReadWrite(beanClass, beanFieldNames[i]);
+			}
+
+			// determine the column classes
+			this.columnClasses = new Class[this.beanFieldNames.length];
+			createColumnClasses(beanClass);
+		}
+		catch (SecurityException ex)
+		{
+			throw new RuntimeException(ex);
+		}
+		catch (NoSuchFieldException ex)
+		{
+			throw new RuntimeException(ex);
+		}
+	}
+	
+	/**
+	 * 
 	 * @param beanClass this is here so we can check the field names and fail early if there is a mistake.
 	 * @param columnBeanFields
 	 */
@@ -104,44 +147,7 @@ public class BeanTableModel<T> extends AbstractTableModel
 
 			// determine the column classes
 			this.columnClasses = new Class[this.beanFieldNames.length];
-			for (int i = 0; i < columnClasses.length; i++)
-			{
-				Class<?> columnClass = beanClass.getField(this.beanFieldNames[i]).getType();
-				// as far as the rest of the code is concerned, we always wrap stuff in the primitive wrapper classes
-				if (columnClass == Float.TYPE)
-				{
-					columnClass = Float.class;
-				}
-				else if (columnClass == Double.TYPE)
-				{
-					columnClass = Double.class;
-				}
-				else if (columnClass == Byte.TYPE)
-				{
-					columnClass = Byte.class;
-				}
-				else if (columnClass == Short.TYPE)
-				{
-					columnClass = Short.class;
-				}
-				else if (columnClass == Integer.TYPE)
-				{
-					columnClass = Integer.class;
-				}
-				else if (columnClass == Long.TYPE)
-				{
-					columnClass = Long.class;
-				}
-				else if (columnClass == Boolean.TYPE)
-				{
-					columnClass = Boolean.class;
-				}
-				else if (columnClass == Character.TYPE)
-				{
-					columnClass = Character.class;
-				}
-				this.columnClasses[i] = columnClass;
-			}
+			createColumnClasses(beanClass);
 		}
 		catch (SecurityException ex)
 		{
@@ -151,7 +157,48 @@ public class BeanTableModel<T> extends AbstractTableModel
 		{
 			throw new RuntimeException(ex);
 		}
+	}
 
+	private void createColumnClasses(Class<T> beanClass) throws NoSuchFieldException
+	{
+		for (int i = 0; i < columnClasses.length; i++)
+		{
+			Class<?> columnClass = beanClass.getField(this.beanFieldNames[i]).getType();
+			// as far as the rest of the code is concerned, we always wrap stuff in the primitive wrapper classes
+			if (columnClass == Float.TYPE)
+			{
+				columnClass = Float.class;
+			}
+			else if (columnClass == Double.TYPE)
+			{
+				columnClass = Double.class;
+			}
+			else if (columnClass == Byte.TYPE)
+			{
+				columnClass = Byte.class;
+			}
+			else if (columnClass == Short.TYPE)
+			{
+				columnClass = Short.class;
+			}
+			else if (columnClass == Integer.TYPE)
+			{
+				columnClass = Integer.class;
+			}
+			else if (columnClass == Long.TYPE)
+			{
+				columnClass = Long.class;
+			}
+			else if (columnClass == Boolean.TYPE)
+			{
+				columnClass = Boolean.class;
+			}
+			else if (columnClass == Character.TYPE)
+			{
+				columnClass = Character.class;
+			}
+			this.columnClasses[i] = columnClass;
+		}
 	}
 
 	/**
@@ -340,6 +387,40 @@ public class BeanTableModel<T> extends AbstractTableModel
 	public int indexOf(T row)
 	{
 		return this.list.indexOf(row);
+	}
+	
+	private static <T> String [] createBeanFieldNames(Class<T> beanClass)
+	{
+		final List<String> beanFieldNames = new ArrayList<String>();
+		
+		try
+		{
+			final PropertyDescriptor[] descriptors = Introspector.getBeanInfo(beanClass).getPropertyDescriptors();
+			for (PropertyDescriptor pd : descriptors)
+			{
+				if (pd.getReadMethod()!=null && pd.getWriteMethod()!=null)
+				{
+					beanFieldNames.add(pd.getName());
+				}
+			}
+		} catch (IntrospectionException ex) {
+			// ignore
+		}
+		
+		// try accessing it as a "naked" bean i.e. one with public fields and no accessor methods.
+		
+		if (!Modifier.isPublic(beanClass.getModifiers()))
+		{
+			throw new IllegalStateException("bean class " + beanClass + " must be public");
+		}
+		
+		final Field [] fields = beanClass.getDeclaredFields();
+		for (Field field : fields)
+		{
+			beanFieldNames.add(field.getName());
+		}
+		
+		return beanFieldNames.toArray(new String[beanFieldNames.size()]);
 	}
 
 	private static <T> IBeanReaderWriter createBeanReadWrite(Class<T> beanClass, String fieldName)
