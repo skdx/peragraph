@@ -170,7 +170,7 @@ public class EventQueueWatchdog extends EventQueue
 
 			// Check if event is being processed longer than allowed
 			if (time_nanos==-1) return;
-			final long delta_ms = (currentTime_nanos - time_nanos) / 1000;
+			final long delta_ms = (currentTime_nanos - time_nanos) / 1000 / 1000;
 			if ((delta_ms > maxProcessingTime_ms) && (currentEvent != lastReportedEvent))
 			{
 				final String stacktrace = toString(eventDispatchThread.getStackTrace());
