@@ -18,7 +18,7 @@ public abstract class GraphDrawSurface extends RangeCursorDrawSurface
   }
   
 	@Override
-	protected void paint(Graphics g, int iDrawSurfaceID)
+	protected void paint(Graphics g, Object iDrawSurfaceID)
   {
 		if (GRAPH_DRAWSURFACE == iDrawSurfaceID)
 		{

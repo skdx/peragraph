@@ -11,13 +11,13 @@ import com.peralex.utilities.ui.graphs.lineGraph.MultiLineGraph;
  */
 public class GraphWithCustomDrawSurface extends MultiLineGraph
 {
-	private static final int OVERVIEW_DRAWSURFACE = 100;
+	private static final Object OVERVIEW_DRAWSURFACE = new Object();
 	
 	public GraphWithCustomDrawSurface()
 	{
 		super();
 		
-		setDrawingOrder(new int [] {
+		setDrawingOrder(new Object [] {
 			OVERVIEW_DRAWSURFACE,
 			RANGE_CURSOR_DRAWSURFACE,
 			GRID_DRAWSURFACE,
@@ -26,7 +26,7 @@ public class GraphWithCustomDrawSurface extends MultiLineGraph
 	}
 
 	@Override
-	public void paint(Graphics g, int iDrawSurfaceID)
+	public void paint(Graphics g, Object iDrawSurfaceID)
 	{
 		if (iDrawSurfaceID!=OVERVIEW_DRAWSURFACE)
 		{

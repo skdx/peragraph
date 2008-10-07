@@ -71,7 +71,7 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
    * Paints all the cursors.
    */
 	@Override
-  protected void paint(Graphics g, int iDrawSurfaceID)
+  protected void paint(Graphics g, Object iDrawSurfaceID)
 	{
 		if (CURSOR_DRAWSURFACE != iDrawSurfaceID)
 		{
