@@ -40,7 +40,7 @@ public class VerticalBarGraph extends GraphBase
    */
 	public VerticalBarGraph()
 	{
-		setDrawingOrder(new int [] {GRAPH_DRAWSURFACE});
+		setDrawingOrder(new Object [] {GRAPH_DRAWSURFACE});
 		setZoomEnabled(false);
 		setPopupMenuEnabled(false);
 

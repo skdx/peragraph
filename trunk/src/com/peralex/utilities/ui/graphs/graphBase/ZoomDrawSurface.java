@@ -154,7 +154,7 @@ public abstract class ZoomDrawSurface extends CursorDrawSurface
    * This paints the rectangle.
    */
 	@Override
-	protected void paint(Graphics g, int iDrawSurfaceID)
+	protected void paint(Graphics g, Object iDrawSurfaceID)
   {
     if (ZOOM_DRAWSURFACE != iDrawSurfaceID)
 		{

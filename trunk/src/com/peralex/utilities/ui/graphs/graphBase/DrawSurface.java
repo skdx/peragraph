@@ -23,23 +23,23 @@ public abstract class DrawSurface extends JComponent implements ILocaleListener
 	 * These are the static variables that identifies each of the DrawSurfaces. 
 	 * FIXME: these should be of type Object rather than type int, to prevent accidental collisions.
 	 */
-	public static final int ZOOM_DRAWSURFACE = 4;
-	public static final int CURSOR_DRAWSURFACE = 3;
-	public static final int GRAPH_DRAWSURFACE = 2;	
-	public static final int GRID_DRAWSURFACE = 1;
-	public static final int RANGE_CURSOR_DRAWSURFACE = 0;	
+	public static final Object ZOOM_DRAWSURFACE = new Object();
+	public static final Object CURSOR_DRAWSURFACE = new Object();
+	public static final Object GRAPH_DRAWSURFACE = new Object();	
+	public static final Object GRID_DRAWSURFACE = new Object();
+	public static final Object RANGE_CURSOR_DRAWSURFACE = new Object();	
 	
 	/**
 	 * This array stores the current drawing order of the DrawSurfaces.
 	 */
-	private int[] aiDrawingOrder;
+	private Object[] aiDrawingOrder;
 	
 	/** 
 	 * Creates a new instance of DrawSurface 
 	 */
 	protected DrawSurface()
 	{
-		aiDrawingOrder = new int[] {
+		aiDrawingOrder = new Object[] {
 			RANGE_CURSOR_DRAWSURFACE,
 			GRID_DRAWSURFACE,
 			GRAPH_DRAWSURFACE,
@@ -69,7 +69,7 @@ public abstract class DrawSurface extends JComponent implements ILocaleListener
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		// Draw each of the DrawSurfaces in the correct order.
-		for (int element : aiDrawingOrder)
+		for (Object element : aiDrawingOrder)
 		{
 			paint(g, element);
 		}
@@ -78,12 +78,12 @@ public abstract class DrawSurface extends JComponent implements ILocaleListener
 	/**
 	 * This will draw the DrawSurface with the given ID.
 	 */
-	protected abstract void paint(Graphics g, int iDrawSurfaceID);
+	protected abstract void paint(Graphics g, Object iDrawSurfaceID);
 
 	/**
 	 * This method will set the Drawing order of the graph.
 	 */
-	public void setDrawingOrder(int... aiDrawingOrder)
+	public void setDrawingOrder(Object... aiDrawingOrder)
 	{
 		this.aiDrawingOrder = aiDrawingOrder;
 	}

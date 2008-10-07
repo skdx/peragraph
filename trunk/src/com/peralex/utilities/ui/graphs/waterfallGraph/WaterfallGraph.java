@@ -57,7 +57,7 @@ public class WaterfallGraph extends GraphBase
 		this.oLabelFont = getFont().deriveFont(Font.BOLD);
 		this.iTimestampLabelGap_px = getFontMetrics(oLabelFont).getHeight() * 3;
 		
-		setDrawingOrder(new int[] { GRAPH_DRAWSURFACE, CURSOR_DRAWSURFACE });
+		setDrawingOrder(new Object[] { GRAPH_DRAWSURFACE, CURSOR_DRAWSURFACE });
 		
 		// By default, zoom is off. Normally if client code turns this on, it also links the zoom
 		// on the waterfall with the zoom on a line graph.
