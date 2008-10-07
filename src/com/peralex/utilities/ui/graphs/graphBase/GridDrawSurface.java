@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JCheckBoxMenuItem;
 
@@ -22,6 +24,8 @@ import com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale;
 public class GridDrawSurface extends PopupMenuDrawSurface
 {
 	
+  private final List<IGridListener> gridListeners = new CopyOnWriteArrayList<IGridListener>();
+  
 	/** 
    * Maintains a handle on the X Axis 
    */
@@ -702,4 +706,31 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   	super.localeChanged();
     oShowGridItem.setText(textRes.getString("GridDrawSurface.Show_grid"));
   }
+  
+  /**
+   * Adds a GraphBase Listener.
+   */
+  public final void addGridListener(IGridListener oGraphBaseListener)
+  {
+  	gridListeners.add(oGraphBaseListener);
+  }
+  
+  /**
+   * Removes a GraphBase Listener.
+   */
+  public final void removeGridListener(IGridListener oGraphBaseListener)
+  {
+  	gridListeners.remove(oGraphBaseListener);
+  }
+	
+  /**
+   * This is called every time the ScalingFactor of the graph has changed.
+   */
+	private void fireScalingFactorListeners(long lXScalingFactor, String sXScaleUnit, long lYScalingFactor, String sYScaleUnit)	
+  {
+    for (IGridListener listener : gridListeners)
+    {
+    	listener.scalingFactorChanged(this, lXScalingFactor, sXScaleUnit, lYScalingFactor, sYScaleUnit);
+    }   
+  }	
 }

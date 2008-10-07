@@ -10,8 +10,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -24,12 +22,6 @@ public abstract class EventsSurface extends DrawSurface implements MouseListener
                                                       ComponentListener
 {
   
-  /**
-   * Stores all the GraphBase Listeners.
-   * FIXME (Noel) this listener list should be pushed down into cGraphBase.
-   */
-  private final List<IGraphBaseListener> oGraphBaseListeners = new CopyOnWriteArrayList<IGraphBaseListener>();
-	
   /**
    * This stores the X position of where the mouse was pressed.
    */
@@ -227,41 +219,4 @@ public abstract class EventsSurface extends DrawSurface implements MouseListener
   {
   }
 	
-  /**
-   * Adds a GraphBase Listener.
-   */
-  public void addGraphBaseListener(IGraphBaseListener oGraphBaseListener)
-  {
-    oGraphBaseListeners.add(oGraphBaseListener);
-  }
-  
-  /**
-   * Removes a GraphBase Listener.
-   */
-  public void removeGraphBaseListener(IGraphBaseListener oGraphBaseListener)
-  {
-    oGraphBaseListeners.remove(oGraphBaseListener);
-  }
-	
-  /**
-   * This fires all the MouseCoordinates Listeners.
-   */
-	protected final void fireMouseCoordinatesListeners(double fXValue, double fYValue)
-  {
-    for (IGraphBaseListener listener : oGraphBaseListeners)
-    {
-    	listener.mouseCoordinatesChanged(fXValue, fYValue);
-    }   
-  }	
-
-  /**
-   * This is called every time the ScalingFactor of the graph has changed.
-   */
-	protected final void fireScalingFactorListeners(long lXScalingFactor, String sXScaleUnit, long lYScalingFactor, String sYScaleUnit)	
-  {
-    for (IGraphBaseListener listener : oGraphBaseListeners)
-    {
-    	listener.scalingFactorChanged(lXScalingFactor, sXScaleUnit, lYScalingFactor, sYScaleUnit);
-    }   
-  }	
 }

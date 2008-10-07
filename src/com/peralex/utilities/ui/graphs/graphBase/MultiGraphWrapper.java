@@ -260,37 +260,35 @@ public class MultiGraphWrapper implements ILocaleListener
     parent.add(oXAxisExtraPanel, gridBagConstraints);
   }
 
-  private final IGraphBaseListener graphListener = new IGraphBaseListener()
+  private class MyGraphListener implements IGraphBaseListener, IGridListener
 	{
-		public void mouseCoordinatesChanged(final double fXValue, final double fYValue)
+		public void mouseCoordinatesChanged(GraphBase graphBase, final double fXValue,
+				final double fYValue)
 		{
-      getInternalCoordinatesPanel().setCoordinates(fXValue / oGraph.getXScalingFactor(), fYValue / oGraph.getYScalingFactor());
+			getInternalCoordinatesPanel().setCoordinates(fXValue / oGraph.getXScalingFactor(),
+					fYValue / oGraph.getYScalingFactor());
 		}
-    
-    public void scalingFactorChanged(long lXScalingFactor, String sXScaleUnit,
-				long lYScalingFactor, String sYScaleUnit)
+
+		public void scalingFactorChanged(GridDrawSurface surface, long lXScalingFactor,
+				String sXScaleUnit, long lYScalingFactor, String sYScaleUnit)
 		{
 			updateSuffixesInCoordinateLables();
 			if (!sXAxisUnit.equals(""))
 			{
-        String text = String.format( "%s (%s%s)",
-                                     sXAxisTitle,
-                                     sXScaleUnit,
-                                     sXAxisUnit );
+				String text = String.format("%s (%s%s)", sXAxisTitle, sXScaleUnit, sXAxisUnit);
 
-				oXAxisLabel.setText( text );
+				oXAxisLabel.setText(text);
 			}
 			if (!sYAxisUnit.equals(""))
 			{
-        String text = String.format( "%s (%s%s)",
-                                     sYAxisTitle,
-                                     sYScaleUnit,
-                                     sYAxisUnit );
-        
-				oYAxisLabel.setText( text);
+				String text = String.format("%s (%s%s)", sYAxisTitle, sYScaleUnit, sYAxisUnit);
+
+				oYAxisLabel.setText(text);
 			}
 		}
-	};
+	}
+
+	private final MyGraphListener graphListener = new MyGraphListener();
   
 	public com.peralex.utilities.ui.graphs.graphBase.CoordinatesPanel getCoordinatesPanel()
   {
@@ -319,6 +317,7 @@ public class MultiGraphWrapper implements ILocaleListener
 	{
 		this.oGraph = _oGraph;
 		oGraph.addGraphBaseListener(graphListener);
+		oGraph.addGridListener(graphListener);
 		oGraphContainerPanel.add(oGraph);
 		oXAxisContainerPanel.add(oGraph.getXAxisScale());
 		oGraph.getXAxisScale().setOffsetFirstLabel(true);
