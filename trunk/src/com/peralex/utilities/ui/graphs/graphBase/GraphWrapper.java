@@ -237,17 +237,20 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 
   }// </editor-fold>//GEN-END:initComponents
 
-  private final IGraphBaseListener graphListener = new IGraphBaseListener()
+  private class MyGraphListener implements IGraphBaseListener, IGridListener
 	{
-		public void mouseCoordinatesChanged(final double fXValue, final double fYValue)
+		public void mouseCoordinatesChanged(GraphBase graphBase, final double fXValue,
+				final double fYValue)
 		{
-			if (oCoordinatesPanel!=null)
+			if (oCoordinatesPanel != null)
 			{
-			  oCoordinatesPanel.setCoordinates(fXValue / oGraph.getXScalingFactor(), fYValue / oGraph.getYScalingFactor());
-			 }
+				oCoordinatesPanel.setCoordinates(fXValue / oGraph.getXScalingFactor(), fYValue
+						/ oGraph.getYScalingFactor());
+			}
 		}
-		public void scalingFactorChanged(long lXScalingFactor, String sXScaleUnit,
-				long lYScalingFactor, String sYScaleUnit)
+
+		public void scalingFactorChanged(GridDrawSurface surface, long lXScalingFactor,
+				String sXScaleUnit, long lYScalingFactor, String sYScaleUnit)
 		{
 			updateCoordinatesPanelSuffixes();
 			if (!sXAxisUnit.equals(""))
@@ -259,7 +262,8 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 				oYAxisLabel.setText(sYAxisTitle + " (" + sYScaleUnit + sYAxisUnit + ")");
 			}
 		}
-	};
+	}
+  private final MyGraphListener graphListener = new MyGraphListener();
 
 	/**
    * This will add the graph to the Wrapper.
@@ -268,6 +272,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	{
 		this.oGraph = _oGraph;
 		oGraph.addGraphBaseListener(graphListener);
+		oGraph.addGridListener(graphListener);
 		oGraphContainerPanel.add(oGraph);
 		oXAxisContainerPanel.add(oGraph.getXAxisScale());
 		oGraph.getXAxisScale().setOffsetFirstLabel(true);

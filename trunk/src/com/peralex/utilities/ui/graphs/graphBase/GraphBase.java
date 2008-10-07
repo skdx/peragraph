@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Sets up cursors and fire mouse coordinate listeners.
@@ -19,6 +21,11 @@ import java.awt.image.BufferedImage;
  */
 public abstract class GraphBase extends ZoomDrawSurface
 {
+	
+  /**
+   * Stores all the GraphBase Listeners.
+   */
+  private final List<IGraphBaseListener> oGraphBaseListeners = new CopyOnWriteArrayList<IGraphBaseListener>();
 	
 	/**
 	 * This is the cursor used when the mouse entered the graph area.
@@ -111,4 +118,29 @@ public abstract class GraphBase extends ZoomDrawSurface
 	{
 		return oCursor;
 	}
+	
+  /**
+   * Adds a GraphBase Listener.
+   */
+  public final void addGraphBaseListener(IGraphBaseListener oGraphBaseListener)
+  {
+    oGraphBaseListeners.add(oGraphBaseListener);
+  }
+  
+  /**
+   * Removes a GraphBase Listener.
+   */
+  public final void removeGraphBaseListener(IGraphBaseListener oGraphBaseListener)
+  {
+    oGraphBaseListeners.remove(oGraphBaseListener);
+  }
+	
+	private void fireMouseCoordinatesListeners(double fXValue, double fYValue)
+  {
+    for (IGraphBaseListener listener : oGraphBaseListeners)
+    {
+    	listener.mouseCoordinatesChanged(this, fXValue, fYValue);
+    }   
+  }	
+
 }
