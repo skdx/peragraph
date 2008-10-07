@@ -11,11 +11,6 @@ import java.util.Map;
  * 
  * FIXME paint() should be using font-relative values and not hard-coded pixel offsets.
  * 
- * FIXME: I should be using strings as labels, and letting the clients worry about formatting.
- * 
- * FIXME: switch to using a double value between 0 and 1 as the position value, so that clients
- *  don't know or worry about insets/borders/component_pixel_width/etc.
- *  
  * @author Roy Emmerich, Noel Grandin
  */
 public abstract class AbstractDefaultAxisScale extends AbstractAxisScale
@@ -131,7 +126,7 @@ public abstract class AbstractDefaultAxisScale extends AbstractAxisScale
 						g.drawString(sLabel, iXCoord, iPosition+4);
 					}
 				}
-				else
+				else // x-axis orientation
 				{
 					if (iPosition >= 0 && iPosition <= getWidth())
 					{
