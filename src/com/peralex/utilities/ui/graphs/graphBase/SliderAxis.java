@@ -362,7 +362,6 @@ public class SliderAxis extends JComponent
 		}
 		
 		calculateLabels();
-		axis.repaint();
 	}
 
 	private void calculateLabels()

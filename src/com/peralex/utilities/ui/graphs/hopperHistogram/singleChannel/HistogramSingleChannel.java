@@ -534,7 +534,6 @@ public class HistogramSingleChannel extends JPanel implements IHopperHistogram, 
 		{
 			yAxisLabel.setText(textRes.getString("Y-Axis"));
 		}
-		repaint();
 	}
   
   // Variables declaration - do not modify//GEN-BEGIN:variables

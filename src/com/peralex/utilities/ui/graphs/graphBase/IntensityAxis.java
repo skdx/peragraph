@@ -431,7 +431,6 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 		iMaxCompPositionY = PixelUnitConverter.unitToPixel(false, fMaxThresholdValue, 0, iComponentHeight-1, fMinThresholdLimit, fMaxThresholdLimit);
 		
 		calculateLabels();
-		axis.repaint();
 	}
 
 	private void calculateLabels()

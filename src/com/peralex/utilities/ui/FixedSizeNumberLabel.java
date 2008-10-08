@@ -34,8 +34,6 @@ public class FixedSizeNumberLabel extends FixedSizeLabel
 		this.oFormat = new DecimalFormat(pattern);
 		this.pattern = pattern;
 		updateSamplePattern();
-		revalidate();
-		repaint();
 	}
 	
 	private void updateSamplePattern()
@@ -79,8 +77,6 @@ public class FixedSizeNumberLabel extends FixedSizeLabel
     if (oSuffix == null || oldValue == null || !oSuffix.equals(oldValue))
     {
   		updateSamplePattern();
-    	revalidate();
-    	repaint();
     }
 	}
 }

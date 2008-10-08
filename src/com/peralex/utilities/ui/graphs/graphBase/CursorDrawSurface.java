@@ -392,32 +392,37 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
    */     
 	@Override
   public void mouseReleased(MouseEvent e)
-  {
-    super.mouseReleased(e);
-    
-    if (e.getButton() == MouseEvent.BUTTON1 && Math.abs(iMousePressedX - iMouseReleasedX) < 4 && Math.abs(iMousePressedY - iMouseReleasedY) < 4)
-		{
-      // Fire the event of the Cursor that has just been moved
-			synchronized(oCursorsMap)
-			{
-				for (Cursor oCursor : oCursorsMap.values()) 
-				{
-					if (oCursor.getKeyBinding() == iCurrentKeyDown 
-							&& (oCursor.isHorizontalCursorEnabled() || oCursor.isVerticalCursorEnabled()))
-					{
-						final double fXValue = pixelToUnitX(iMouseReleasedX);
-						final double fYValue = pixelToUnitY(iMouseReleasedY);
-						oCursor.setValue(fXValue, fYValue);
+	{
+		super.mouseReleased(e);
 
-						doCalculateCursors();
-						fireCursorListener(oCursor.getCursorID(), oCursor.getXValue(), oCursor.getYValue());
-						repaint();          
-						break;
-					}
+		if (e.getButton() != MouseEvent.BUTTON1)
+			return;
+
+		// ignore dragging clicks
+		if (Math.abs(iMousePressedX - iMouseReleasedX) >= 4
+				|| Math.abs(iMousePressedY - iMouseReleasedY) >= 4)
+			return;
+
+		// Fire the event of the Cursor that has just been moved
+		synchronized (oCursorsMap)
+		{
+			for (Cursor oCursor : oCursorsMap.values())
+			{
+				if (oCursor.getKeyBinding() == iCurrentKeyDown
+						&& (oCursor.isHorizontalCursorEnabled() || oCursor.isVerticalCursorEnabled()))
+				{
+					final double fXValue = pixelToUnitX(iMouseReleasedX);
+					final double fYValue = pixelToUnitY(iMouseReleasedY);
+					// set value will trigger a repaint
+					oCursor.setValue(fXValue, fYValue);
+
+					doCalculateCursors();
+					fireCursorListener(oCursor.getCursorID(), oCursor.getXValue(), oCursor.getYValue());
+					break;
 				}
 			}
-    }
-  }
+		}
+	}
   
   /**
    * Event for keyPressed.
@@ -427,21 +432,24 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
   {
     super.keyPressed(e);
 
+    // this could be either a modifier keypress to select a cursor, or a cursor movement key
+
+    // if it's not a movement key, store the modifier and return
 		final int iKeyPressed = e.getKeyCode();		
 		if (iKeyPressed != KeyEvent.VK_UP && iKeyPressed != KeyEvent.VK_DOWN && iKeyPressed != KeyEvent.VK_LEFT && iKeyPressed != KeyEvent.VK_RIGHT)
 		{
 			iCurrentKeyDown = iKeyPressed;
 			return;
 		}		
-    // Get the cursor which key is currently pressed
-		synchronized(oCursorsMap)
+		
+		// Move a cursor with the arrow keys
+		synchronized (oCursorsMap)
 		{
 			for (Cursor oCursor : oCursorsMap.values()) 
 			{
 				if (oCursor.getKeyBinding() == iCurrentKeyDown 
 						&& (oCursor.isHorizontalCursorEnabled() || oCursor.isVerticalCursorEnabled()))
 				{
-					// Move the Cursors with the arrow keys
 					switch (iKeyPressed)
 					{
 						case KeyEvent.VK_UP:
@@ -460,7 +468,6 @@ public abstract class CursorDrawSurface extends GraphDrawSurface
 
 					doCalculateCursors();
 					fireCursorListener(oCursor.getCursorID(), oCursor.getXValue(), oCursor.getYValue());
-					repaint();          
 					break;
 				}
 			}
