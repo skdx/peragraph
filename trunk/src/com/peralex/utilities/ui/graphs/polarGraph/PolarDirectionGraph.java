@@ -449,7 +449,6 @@ public class PolarDirectionGraph extends JComponent
 		// Since we use CopyOnAddArrayList, we can 'safely' remove the content even if the event thread is painting.
 		blockRegions.clear();
 		blockRegions.addAll(newBlockRegions);
-		paintWheelImage();
 		repaint();
 	}
 	

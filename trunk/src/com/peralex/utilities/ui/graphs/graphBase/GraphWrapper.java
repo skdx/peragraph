@@ -746,7 +746,6 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
     textRes = PeralexLibsBundle.getResource();
     
     oXAxisLabel.setText(textRes.getString("X-Axis"));
-		repaint();
 	}
 	
   // Variables declaration - do not modify//GEN-BEGIN:variables

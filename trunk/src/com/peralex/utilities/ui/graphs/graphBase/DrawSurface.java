@@ -97,7 +97,6 @@ public abstract class DrawSurface extends JComponent implements ILocaleListener
     textRes = PeralexLibsBundle.getResource();
     
 		localeChanged();
-		repaint();
 	}
 
 	/**

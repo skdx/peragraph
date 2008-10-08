@@ -551,7 +551,6 @@ public class HistogramDualChannel extends JPanel implements IHopperHistogram, IL
 			yAxisLabel.setText(textRes.getString("Y-Axis"));
 		}
 		yAxisLabel1.setText(textRes.getString("HopperHistogram.Probability_factor"));
-		repaint();
 	}
   
   // Variables declaration - do not modify//GEN-BEGIN:variables

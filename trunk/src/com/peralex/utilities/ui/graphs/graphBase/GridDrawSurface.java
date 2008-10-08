@@ -521,7 +521,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   public void setXAxisScale(AbstractAxisScale scale)
   {
     this.oXAxis = scale;
-    repaint();
+    calculateHorizontalGridAndAxis();
   }
 
   /**
@@ -535,7 +535,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
   public void setYAxisScale(AbstractAxisScale scale)
   {
     this.oYAxis = scale;
-    repaint();
+    calculateVerticalGridAndAxis();
   }
   
   /**
@@ -548,7 +548,6 @@ public class GridDrawSurface extends PopupMenuDrawSurface
     
     calculateHorizontalGridAndAxis();
     calculateVerticalGridAndAxis();
-    repaint();
   }  
 	
 	/**
@@ -638,13 +637,12 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	}
 	
 	/**
-	 * Should the display show K°(engineering) or 1000's°(decimal).
+	 * Should the display show K(engineering) or 1000's(decimal).
 	 */
 	public void setXDecimalUnitLabels(boolean bXDecimalUnitLabels)
 	{
 		this.bXDecimalUnitLabels = bXDecimalUnitLabels;
 		calculateXAxisScalingFactor();
-    repaint();
 	}
 	
 	public boolean isXDecimalUnitLabels()
@@ -653,13 +651,12 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	}
 	
 	/**
-	 * Should the display show K°(engineering) or 1000's°(decimal).
+	 * Should the display show K(engineering) or 1000's(decimal).
 	 */
 	public void setYDecimalUnitLabels(boolean bYDecimalUnitLabels)
 	{
 		this.bYDecimalUnitLabels = bYDecimalUnitLabels;
 		calculateYAxisScalingFactor();
-    repaint();
 	}
 
 	public boolean isYDecimalUnitLabels()

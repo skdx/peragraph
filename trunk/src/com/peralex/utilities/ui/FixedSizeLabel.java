@@ -32,6 +32,7 @@ public class FixedSizeLabel extends JLabel
 	public void setSamplePattern(String samplePattern)
 	{
 		this.samplePatterns = new String [] {samplePattern};
+		revalidate();
 	}
 	
 	public void setSamplePatterns(String [] samplePatterns)

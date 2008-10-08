@@ -324,7 +324,6 @@ public class RangeCursorDrawSurface extends GridDrawSurface
 				oRangeCursor.setRangeCursorEnabled(bRangeCursorsEnabled);
 			}
 		}
-		repaint();
 	}
 
 	public void setRangeCursorToFront(RangeCursor oFrontRangeCursor)

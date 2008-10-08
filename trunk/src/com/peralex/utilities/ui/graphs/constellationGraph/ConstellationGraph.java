@@ -87,8 +87,6 @@ public class ConstellationGraph extends GraphBase
 	{
 		setGridSpacing(getWidth() / 4, getHeight() / 4);
 		super.componentResized(e);
-
-		repaint();
 	}
 
 	/**

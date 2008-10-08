@@ -363,8 +363,6 @@ public class MultiGraphWrapper implements ILocaleListener
 	{
 		setXAxisLabelVisible(bVisible);
 		setYAxisLabelVisible(bVisible);
-		parent.revalidate();
-		parent.repaint();
 	}
 
 	/**
@@ -802,7 +800,6 @@ public class MultiGraphWrapper implements ILocaleListener
     textRes = PeralexLibsBundle.getResource();
     
     oXAxisLabel.setText(textRes.getString("X-Axis"));
-		parent.repaint();
 	}
 	
 	public void setVisible(boolean bVisible)
