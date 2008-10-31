@@ -267,9 +267,9 @@ public class MultiGraphWrapper implements ILocaleListener
     parent.add(oXAxisExtraPanel, gridBagConstraints);
   }
 
-  private class MyGraphListener implements IGraphBaseListener, IGridListener
+  private class MyGridListener implements IGridListener
 	{
-		public void mouseCoordinatesChanged(GraphBase graphBase, final double fXValue,
+		public void mouseCoordinatesChanged(GridDrawSurface surface, final double fXValue,
 				final double fYValue)
 		{
 			getInternalCoordinatesPanel().setCoordinates(fXValue / oGraph.getXScalingFactor(),
@@ -298,7 +298,7 @@ public class MultiGraphWrapper implements ILocaleListener
 		}
 	}
 
-	private final MyGraphListener graphListener = new MyGraphListener();
+	private final MyGridListener gridListener = new MyGridListener();
   
 	public com.peralex.utilities.ui.graphs.graphBase.CoordinatesPanel getCoordinatesPanel()
   {
@@ -315,9 +315,9 @@ public class MultiGraphWrapper implements ILocaleListener
     return this.genericCoordinatePanel;
   }
   
-  public IGraphBaseListener getGraphListener()
+  public IGridListener getGraphListener()
   {
-    return this.graphListener;
+    return this.gridListener;
   }
 
   /**
@@ -329,8 +329,7 @@ public class MultiGraphWrapper implements ILocaleListener
 		oXAxisScale.linkToX(this.oGraph);
 		oYAxisScale.linkToY(this.oGraph);
 		
-		oGraph.addGraphBaseListener(graphListener);
-		oGraph.addGridListener(graphListener);
+		oGraph.addGridListener(gridListener);
 		oGraphContainerPanel.add(oGraph);
 		oXAxisContainerPanel.add(oXAxisScale);
 		oXAxisScale.setOffsetFirstLabel(true);
@@ -352,7 +351,7 @@ public class MultiGraphWrapper implements ILocaleListener
 	
 	public final void removeGraph()
 	{
-		oGraph.removeGraphBaseListener(graphListener);
+		oGraph.removeGridListener(gridListener);
 		oGraphContainerPanel.remove(oGraph);
 		oXAxisContainerPanel.remove(oXAxisScale);
 		oYAxisContainerPanel.remove(oYAxisScale);

@@ -135,7 +135,7 @@ public class HopperHistogramGraph extends JPanel implements ILocaleListener
 	{
 		for (IHistogramDataActiveListener listener : oHistogramDataActiveListeners)
 		{
-			listener.histogramDataActiveChanged(bActive);
+			listener.histogramDataActiveChanged(this, bActive);
 		}
 	}
   
@@ -340,15 +340,12 @@ public class HopperHistogramGraph extends JPanel implements ILocaleListener
   private javax.swing.JPanel oJPanel;
   // End of variables declaration//GEN-END:variables
 
-  /**
-   * FIXME (Noel) add cHopperHistogramGraph parameters to the listener methods
-   */
   public interface IHistogramDataActiveListener
   {
     
     /**
      * Sets the Histogram DataActive status.
      */
-    void histogramDataActiveChanged(boolean bActive);
+    void histogramDataActiveChanged(HopperHistogramGraph graph, boolean bActive);
   }
 }
