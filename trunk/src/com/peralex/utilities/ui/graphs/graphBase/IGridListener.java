@@ -11,6 +11,11 @@ public interface IGridListener
   /**
    * @param axisType 0 for x, 1 for y
    */
-	void gridChanged(int axisType, double fMinimum, double fMaximum, long lScalingFactor,
-			boolean bProportional, double[] afGridValues, int[] aiGridCoordinates);
+	void gridChanged(int axisType, double dMinimum, double dMaximum, long lScalingFactor,
+			boolean bProportional, double[] adGridValues, int[] aiGridCoordinates);
+	
+  /**
+   * This is called every time the coordinates of the mouse has changed.
+   */
+  void mouseCoordinatesChanged(GridDrawSurface surface, double dXValue, double dYValue);
 }

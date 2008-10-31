@@ -495,16 +495,13 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 	//////////////////////////////////////////////////////////////////////////////
 	// Intensity Axis Action Listener, notifier methods and Interface
 	//////////////////////////////////////////////////////////////////////////////
-	/**
-   * FIXME (Noel) add a cIntensityAxis parameter to the listener
-	 * 
-	 */
+	
 	public interface IIntensityAxisListener
 	{
 		/**
 		 * Called every time the Intensity threshold changed.
 		 */
-		void intensityThresholdChanged(float fMinThreshold, float fMaxThreshold);
+		void intensityThresholdChanged(IntensityAxis source, float fMinThreshold, float fMaxThreshold);
 	}
 	
 	public void addIntensityAxisListener(IIntensityAxisListener oIntensityAxisListener)
@@ -521,7 +518,7 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 	{
 		for (IIntensityAxisListener listener : oIntensityAxisListeners)
 		{
-			listener.intensityThresholdChanged(fMinThreshold, fMaxThreshold);
+			listener.intensityThresholdChanged(this, fMinThreshold, fMaxThreshold);
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////
@@ -728,7 +725,7 @@ public class IntensityAxis extends JPanel implements ILocaleListener
 		//oIAxis.setLabelFont(new Font("Arial", Font.BOLD, 10));
 		oIAxis.addIntensityAxisListener(new IIntensityAxisListener()
 		{
-			public void intensityThresholdChanged(float fMinThreshold, float fMaxThreshold)
+			public void intensityThresholdChanged(IntensityAxis axis, float fMinThreshold, float fMaxThreshold)
 			{
 				System.out.println("fMinThreshold: "+fMinThreshold + ", fMaxThreshold: "+fMaxThreshold);
 			}

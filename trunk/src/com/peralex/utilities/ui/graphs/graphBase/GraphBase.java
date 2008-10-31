@@ -5,10 +5,7 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Sets up cursors and fire mouse coordinate listeners.
@@ -21,11 +18,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public abstract class GraphBase extends ZoomDrawSurface
 {
-	
-  /**
-   * Stores all the GraphBase Listeners.
-   */
-  private final List<IGraphBaseListener> oGraphBaseListeners = new CopyOnWriteArrayList<IGraphBaseListener>();
 	
 	/**
 	 * This is the cursor used when the mouse entered the graph area.
@@ -64,32 +56,6 @@ public abstract class GraphBase extends ZoomDrawSurface
 		return crossHairCursor;
 	}
 
-  /**
-   * Event for mouseDragged.
-   */  
-  @Override
-  public void mouseDragged(MouseEvent e)
-  {
-    super.mouseDragged(e);
-    
-    final double fMouseXValue = pixelToUnitX(e.getX());
-    final double fMouseYValue = pixelToUnitY(e.getY());
-    fireMouseCoordinatesListeners(fMouseXValue, fMouseYValue);
-  }
-  
-  /**
-   * Event for mouseMoved.
-   */  
-  @Override
-  public void mouseMoved(MouseEvent e)
-  {
-    super.mouseMoved(e);
-    
-    final double fMouseXValue = pixelToUnitX(e.getX());
-    final double fMouseYValue = pixelToUnitY(e.getY());
-    fireMouseCoordinatesListeners(fMouseXValue, fMouseYValue);
-  }
-
   public void setGraphCursorColor(Color oColor)
   {
   	this.oCursor = createCursor(oColor);
@@ -118,29 +84,5 @@ public abstract class GraphBase extends ZoomDrawSurface
 	{
 		return oCursor;
 	}
-	
-  /**
-   * Adds a GraphBase Listener.
-   */
-  public final void addGraphBaseListener(IGraphBaseListener oGraphBaseListener)
-  {
-    oGraphBaseListeners.add(oGraphBaseListener);
-  }
-  
-  /**
-   * Removes a GraphBase Listener.
-   */
-  public final void removeGraphBaseListener(IGraphBaseListener oGraphBaseListener)
-  {
-    oGraphBaseListeners.remove(oGraphBaseListener);
-  }
-	
-	private void fireMouseCoordinatesListeners(double fXValue, double fYValue)
-  {
-    for (IGraphBaseListener listener : oGraphBaseListeners)
-    {
-    	listener.mouseCoordinatesChanged(this, fXValue, fYValue);
-    }   
-  }	
 
 }

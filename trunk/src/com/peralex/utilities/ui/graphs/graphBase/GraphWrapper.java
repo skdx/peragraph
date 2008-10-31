@@ -243,9 +243,9 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 
   }// </editor-fold>//GEN-END:initComponents
 
-  private class MyGraphListener implements IGraphBaseListener, IGridListener
+  private class MyGridListener implements IGridListener
 	{
-		public void mouseCoordinatesChanged(GraphBase graphBase, final double fXValue,
+		public void mouseCoordinatesChanged(GridDrawSurface surface, final double fXValue,
 				final double fYValue)
 		{
 			if (oCoordinatesPanel != null)
@@ -272,7 +272,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 				boolean proportional, double[] afGridValues, int[] aiGridCoordinates) {
 		}
 	}
-  private final MyGraphListener graphListener = new MyGraphListener();
+  private final MyGridListener gridListener = new MyGridListener();
 
 	/**
    * This will add the graph to the Wrapper.
@@ -283,8 +283,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 		oXAxisScale.linkToX(this.oGraph);
 		oYAxisScale.linkToY(this.oGraph);
 		
-		oGraph.addGraphBaseListener(graphListener);
-		oGraph.addGridListener(graphListener);
+		oGraph.addGridListener(gridListener);
 		oGraphContainerPanel.add(oGraph);
 		oXAxisContainerPanel.add(oXAxisScale);
 		oXAxisScale.setOffsetFirstLabel(true);
@@ -309,7 +308,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	 */
 	public final void removeGraph()
 	{
-		oGraph.removeGraphBaseListener(graphListener);
+		oGraph.removeGridListener(gridListener);
 		oGraphContainerPanel.remove(oGraph);
 		oXAxisContainerPanel.remove(oXAxisScale);
 		oYAxisContainerPanel.remove(oYAxisScale);

@@ -258,7 +258,10 @@ public abstract class AbstractDefaultAxisScale extends AbstractAxisScale
 		public void scalingFactorChanged(GridDrawSurface surface, long scalingFactor, String scaleUnit,
 				long scalingFactor2, String scaleUnit2) {}
 
-		public void gridChanged(int axisType, double fMinimum, double fMaximum, long lScalingFactor,
+	  public void mouseCoordinatesChanged(GridDrawSurface surface, double dXValue, double dYValue) {
+		}
+		
+		public void gridChanged(int axisType, double dMinimum, double dMaximum, long lScalingFactor,
 				boolean bProportional, double[] afGridValues, int[] aiGridCoordinates) {
 			if (this.axisType != axisType)
 				return;
@@ -276,12 +279,12 @@ public abstract class AbstractDefaultAxisScale extends AbstractAxisScale
 				 */
 				addLabel(aiGridCoordinates[0], afGridValues[0] / lScalingFactor);
 				if (bProportional) {
-					addLabel(0, fMinimum / lScalingFactor);
-					addLabelAtEnd(fMaximum / lScalingFactor);
+					addLabel(0, dMinimum / lScalingFactor);
+					addLabelAtEnd(dMaximum / lScalingFactor);
 				}
 				else {
-					addLabel(0, fMaximum / lScalingFactor);
-					addLabelAtEnd(fMinimum / lScalingFactor);
+					addLabel(0, dMaximum / lScalingFactor);
+					addLabelAtEnd(dMinimum / lScalingFactor);
 				}
 			}
 			else
@@ -291,12 +294,12 @@ public abstract class AbstractDefaultAxisScale extends AbstractAxisScale
 				 * Put a label at the beginning and at the end.
 				 */
 				if (bProportional) {
-					addLabel(0, fMinimum / lScalingFactor);
-					addLabelAtEnd(fMaximum / lScalingFactor);
+					addLabel(0, dMinimum / lScalingFactor);
+					addLabelAtEnd(dMaximum / lScalingFactor);
 				}
 				else {
-					addLabel(0, fMaximum / lScalingFactor);
-					addLabelAtEnd(fMinimum / lScalingFactor);
+					addLabel(0, dMaximum / lScalingFactor);
+					addLabelAtEnd(dMinimum / lScalingFactor);
 				}
 			}
 			repaint();

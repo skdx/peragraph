@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JCheckBoxMenuItem;
 
@@ -622,6 +623,32 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 		super.localeChanged();
 		oShowGridItem.setText(textRes.getString("GridDrawSurface.Show_grid"));
 	}
+
+  /**
+   * Event for mouseDragged.
+   */  
+  @Override
+  public void mouseDragged(MouseEvent e)
+  {
+    super.mouseDragged(e);
+    
+    final double fMouseXValue = pixelToUnitX(e.getX());
+    final double fMouseYValue = pixelToUnitY(e.getY());
+    gridListeners.fire().mouseCoordinatesChanged(this, fMouseXValue, fMouseYValue);
+  }
+  
+  /**
+   * Event for mouseMoved.
+   */  
+  @Override
+  public void mouseMoved(MouseEvent e)
+  {
+    super.mouseMoved(e);
+    
+    final double fMouseXValue = pixelToUnitX(e.getX());
+    final double fMouseYValue = pixelToUnitY(e.getY());
+    gridListeners.fire().mouseCoordinatesChanged(this, fMouseXValue, fMouseYValue);
+  }
 
 	/**
 	 * Adds a GraphBase Listener.
