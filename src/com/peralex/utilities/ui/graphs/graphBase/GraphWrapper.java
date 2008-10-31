@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import com.peralex.utilities.locale.ILocaleListener;
 import com.peralex.utilities.locale.PeralexLibsBundle;
 import com.peralex.utilities.ui.SwingLib;
+import com.peralex.utilities.ui.graphs.axisscale.AbstractAxisScale;
+import com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale;
+import com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale;
 
 /**
  * This wraps the graph proper and provides titles, x-axis and y-axis labels, and a co-ordinate panel.
@@ -21,16 +24,13 @@ import com.peralex.utilities.ui.SwingLib;
  * gracefully scale with resizing windows. It uses the default system font
  * settings.
  * 
- * FIXME: we should remove x- and y-axis from the cGraphBase class and move it here.
- *    X and Y axes should be linked to the cGraphBase code using listeners.
- *    
  * FIXME: we have the names of some methods confused. e.g. setXAxisVisible() should be called setXAxisScaleVisible()
  *   and setXAxisScaleVisible() should be called setXAxisPanelVisible().
  *   
  * FIXME: de-couple the relationship between this and cGraphBase by using an interface.
  *    Gives me more options when creating new kinds of graphs.
  *    
- * FIXME rename the cursor panel to something like MouseCursorPanel to distinguish it from line-cursors.
+ * FIXME rename the coordinates panel to something like MouseCoordinatesPanel to distinguish it from line-cursors.
  * 
  * @author Andre 
  * @author Noel Grandin
@@ -53,6 +53,10 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	private String sXAxisTitle = "", sXAxisUnit = "", sYAxisTitle = "",
 			sYAxisUnit = "";
 
+	private AbstractAxisScale oXAxisScale = new NumberAxisScale(AbstractDefaultAxisScale.X_AXIS);
+
+	private AbstractAxisScale oYAxisScale = new NumberAxisScale(AbstractDefaultAxisScale.Y_AXIS);
+	
 	/**
    * Creates new form cGraphWrapper
    */
@@ -264,6 +268,9 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 				oYAxisLabel.setText(sYAxisTitle + " (" + sYScaleUnit + sYAxisUnit + ")");
 			}
 		}
+		public void gridChanged(int axis, double minimum, double maximum, long scalingFactor,
+				boolean proportional, double[] afGridValues, int[] aiGridCoordinates) {
+		}
 	}
   private final MyGraphListener graphListener = new MyGraphListener();
 
@@ -273,12 +280,15 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	public final void setGraph(final GraphBase _oGraph)
 	{
 		this.oGraph = _oGraph;
+		oXAxisScale.linkToX(this.oGraph);
+		oYAxisScale.linkToY(this.oGraph);
+		
 		oGraph.addGraphBaseListener(graphListener);
 		oGraph.addGridListener(graphListener);
 		oGraphContainerPanel.add(oGraph);
-		oXAxisContainerPanel.add(oGraph.getXAxisScale());
-		oGraph.getXAxisScale().setOffsetFirstLabel(true);
-		oYAxisContainerPanel.add(oGraph.getYAxisScale());
+		oXAxisContainerPanel.add(oXAxisScale);
+		oXAxisScale.setOffsetFirstLabel(true);
+		oYAxisContainerPanel.add(oYAxisScale);
 		updateCoordinatesPanelSuffixes();
 	}
 
@@ -301,8 +311,8 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	{
 		oGraph.removeGraphBaseListener(graphListener);
 		oGraphContainerPanel.remove(oGraph);
-		oXAxisContainerPanel.remove(oGraph.getXAxisScale());
-		oYAxisContainerPanel.remove(oGraph.getYAxisScale());
+		oXAxisContainerPanel.remove(oXAxisScale);
+		oYAxisContainerPanel.remove(oYAxisScale);
 		this.oGraph = null;
 	}
 
@@ -311,12 +321,12 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	 */
 	public void setXAxisVisible(boolean bVisible)
 	{
-		oGraph.getXAxisScale().setVisible(bVisible);
+		oXAxisScale.setVisible(bVisible);
 	}
 	
 	public boolean isXAxisVisible()
 	{
-		return oGraph.getXAxisScale().isVisible();
+		return oXAxisScale.isVisible();
 	}
 	
 	/**
@@ -324,12 +334,12 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	 */
 	public void setYAxisVisible(boolean bVisible)
 	{
-		oGraph.getYAxisScale().setVisible(bVisible);
+		oYAxisScale.setVisible(bVisible);
 	}
 	
 	public boolean isYAxisVisible()
 	{
-		return oGraph.getYAxisScale().isVisible();
+		return oYAxisScale.isVisible();
 	}
 	
 	/**
