@@ -29,6 +29,8 @@ import com.peralex.utilities.ui.SwingLib;
  *   
  * FIXME: de-couple the relationship between this and cGraphBase by using an interface.
  *    Gives me more options when creating new kinds of graphs.
+ *    
+ * FIXME rename the cursor panel to something like MouseCursorPanel to distinguish it from line-cursors.
  * 
  * @author Andre 
  * @author Noel Grandin

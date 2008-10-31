@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- *
+ * FIXME rename this to something like LineCursorDrawSurface to distinguish it from the mouse-cursor.
+ * 
  * @author Andre
  */
 public abstract class CursorDrawSurface extends GraphDrawSurface
