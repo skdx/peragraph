@@ -6,7 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- * This is similar to cCoordinatesPanel, except that the x and y values are arrange vertically, rather than horizontally.
+ * This is similar to CoordinatesPanel, except that the x and y values are arrange vertically, rather than horizontally.
+ * 
+ * FIXME make this simply a layout option of CoordinatesPanel.
  * 
  * @author David Lee
  */
