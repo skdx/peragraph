@@ -140,7 +140,7 @@ public class EventQueueWatchdog extends EventQueue
 		/**
 		 * Creates timer.
 		 * 
-		 * @param maxProcessingTime maximum event processing time before listener is notified.
+		 * @param maxProcessingTime_ms maximum event processing time before listener is notified.
 		 * @param listener listener to notify.
 		 */
 		public Watchdog(long maxProcessingTime_ms, IWatchdogListener listener)

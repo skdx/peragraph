@@ -181,7 +181,7 @@ public class TitleBar extends javax.swing.JPanel
 
   }// </editor-fold>//GEN-END:initComponents
 
-	private void oMinimizeToggleButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_oMinimizeToggleButtonActionPerformed
+	private void oMinimizeToggleButtonActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt)//GEN-FIRST:event_oMinimizeToggleButtonActionPerformed
 	{//GEN-HEADEREND:event_oMinimizeToggleButtonActionPerformed
 		if (bMinimizeable)
 		{
@@ -196,7 +196,7 @@ public class TitleBar extends javax.swing.JPanel
 		}
 	}//GEN-LAST:event_oMinimizeToggleButtonActionPerformed
 
-	private void oLockToggleButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_oLockToggleButtonActionPerformed
+	private void oLockToggleButtonActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt)//GEN-FIRST:event_oLockToggleButtonActionPerformed
 	{//GEN-HEADEREND:event_oLockToggleButtonActionPerformed
 		if (bLockable)
 		{
@@ -211,7 +211,7 @@ public class TitleBar extends javax.swing.JPanel
 		}
 	}//GEN-LAST:event_oLockToggleButtonActionPerformed
 
-	private void oCloseButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_oCloseButtonActionPerformed
+	private void oCloseButtonActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt)//GEN-FIRST:event_oCloseButtonActionPerformed
 	{//GEN-HEADEREND:event_oCloseButtonActionPerformed
 		if (bCloseable)
 		{
