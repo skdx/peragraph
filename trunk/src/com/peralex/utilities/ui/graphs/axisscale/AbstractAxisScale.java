@@ -2,6 +2,8 @@ package com.peralex.utilities.ui.graphs.axisscale;
 
 import javax.swing.JPanel;
 
+import com.peralex.utilities.ui.graphs.graphBase.GridDrawSurface;
+
 /**
  * API that GridDrawSurface needs from an axis component.
  * 
@@ -41,4 +43,8 @@ public abstract class AbstractAxisScale extends JPanel
 	 * It normally only applies to the x-axis.
 	 */
 	public abstract void setOffsetFirstLabel(boolean b);
+	
+	public abstract void linkToX(GridDrawSurface surface);
+
+	public abstract void linkToY(GridDrawSurface surface);
 }

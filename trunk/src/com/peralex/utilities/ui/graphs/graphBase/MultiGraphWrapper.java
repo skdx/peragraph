@@ -14,6 +14,9 @@ import javax.swing.SwingUtilities;
 import com.peralex.utilities.locale.ILocaleListener;
 import com.peralex.utilities.locale.PeralexLibsBundle;
 import com.peralex.utilities.ui.ComponentDisabler;
+import com.peralex.utilities.ui.graphs.axisscale.AbstractAxisScale;
+import com.peralex.utilities.ui.graphs.axisscale.AbstractDefaultAxisScale;
+import com.peralex.utilities.ui.graphs.axisscale.NumberAxisScale;
 
 /**
  * This wraps the graph proper and provides titles, x-axis and y-axis labels, and a co-ordinate panel.
@@ -51,6 +54,10 @@ public class MultiGraphWrapper implements ILocaleListener
   // it's easier to let this dummy panel handle everything (even when nothing is sent to screen.)
   private final com.peralex.utilities.ui.graphs.graphBase.CoordinatesPanel oDummyCoordinatesPanel = new CoordinatesPanel();
   
+	private AbstractAxisScale oXAxisScale = new NumberAxisScale(AbstractDefaultAxisScale.X_AXIS);
+
+	private AbstractAxisScale oYAxisScale = new NumberAxisScale(AbstractDefaultAxisScale.Y_AXIS);
+	
 	/**
    * Creates new form cMultiGraphWrapper
    */
@@ -286,6 +293,9 @@ public class MultiGraphWrapper implements ILocaleListener
 				oYAxisLabel.setText(text);
 			}
 		}
+		public void gridChanged(int axis, double minimum, double maximum, long scalingFactor,
+				boolean proportional, double[] afGridValues, int[] aiGridCoordinates) {
+		}
 	}
 
 	private final MyGraphListener graphListener = new MyGraphListener();
@@ -316,12 +326,15 @@ public class MultiGraphWrapper implements ILocaleListener
 	public final void addGraph(final GraphBase _oGraph)
 	{
 		this.oGraph = _oGraph;
+		oXAxisScale.linkToX(this.oGraph);
+		oYAxisScale.linkToY(this.oGraph);
+		
 		oGraph.addGraphBaseListener(graphListener);
 		oGraph.addGridListener(graphListener);
 		oGraphContainerPanel.add(oGraph);
-		oXAxisContainerPanel.add(oGraph.getXAxisScale());
-		oGraph.getXAxisScale().setOffsetFirstLabel(true);
-		oYAxisContainerPanel.add(oGraph.getYAxisScale());
+		oXAxisContainerPanel.add(oXAxisScale);
+		oXAxisScale.setOffsetFirstLabel(true);
+		oYAxisContainerPanel.add(oYAxisScale);
 		updateSuffixesInCoordinateLables();
 	}
 
@@ -341,19 +354,19 @@ public class MultiGraphWrapper implements ILocaleListener
 	{
 		oGraph.removeGraphBaseListener(graphListener);
 		oGraphContainerPanel.remove(oGraph);
-		oXAxisContainerPanel.remove(oGraph.getXAxisScale());
-		oYAxisContainerPanel.remove(oGraph.getYAxisScale());
+		oXAxisContainerPanel.remove(oXAxisScale);
+		oYAxisContainerPanel.remove(oYAxisScale);
 		this.oGraph = null;
 	}
 	
 	public void setXAxisVisible(boolean bVisible)
 	{
-		oGraph.getXAxisScale().setVisible(bVisible);
+		oXAxisScale.setVisible(bVisible);
 	}
 	
 	public void setYAxisVisible(boolean bVisible)
 	{
-		oGraph.getYAxisScale().setVisible(bVisible);
+		oYAxisScale.setVisible(bVisible);
 	}
 	
 	/**
@@ -420,7 +433,7 @@ public class MultiGraphWrapper implements ILocaleListener
    */
 	public void setXAxisScaleEnabled(boolean bEnabled)
 	{
-		oGraph.getXAxisScale().setVisible(bEnabled);
+		oXAxisScale.setVisible(bEnabled);
 	}
 
 	/**
@@ -428,7 +441,7 @@ public class MultiGraphWrapper implements ILocaleListener
    */
 	public void setYAxisScaleEnabled(boolean bEnabled)
 	{
-		oGraph.getYAxisScale().setVisible(bEnabled);
+		oYAxisScale.setVisible(bEnabled);
 	}
 
 	/**
