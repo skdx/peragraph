@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 import com.peralex.utilities.ValueFormatter;
 import com.peralex.utilities.ui.graphs.graphBase.ICursorListener;
 import com.peralex.utilities.ui.graphs.graphBase.Cursor;
-import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.graphBase.ZoomDrawSurface;
 import com.peralex.utilities.ui.graphs.lineGraph.AbstractLineGraph;
 
 /**
@@ -41,14 +41,14 @@ public class MeasureCursors
 	private double fCurrentCursorTwoFreq_Hz = Double.MIN_VALUE;
 	private double fCurrentCursorTwoAmpl_dBm = Double.MIN_VALUE;
 	
-	private final GraphBase oWaterfallGraph;
+	private final ZoomDrawSurface oWaterfallGraph;
 	private final AbstractLineGraph oLineGraph;
 	
   private final List<ICursorListener> oCursorListeners = new ArrayList<ICursorListener>();  
   
   private boolean bWaterfallHorizontalCursorEnabled = false;
   
-	public MeasureCursors(GraphBase oWaterfallGraph, AbstractLineGraph oLineGraph)
+	public MeasureCursors(ZoomDrawSurface oWaterfallGraph, AbstractLineGraph oLineGraph)
 	{
 		this.oWaterfallGraph = oWaterfallGraph;
 		this.oLineGraph = oLineGraph;

@@ -5,14 +5,14 @@ import java.awt.Graphics2D;
 import java.util.Arrays;
 
 import com.peralex.utilities.ui.graphs.graphBase.PixelUnitConverter;
-import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.graphBase.ZoomDrawSurface;
 
 /**
  * FIXME (Noel) This does not need to extend cGraphBase at all. Rather just extend JComponent.
  * 
  * @author Andre
  */
-public class VerticalBarGraph extends GraphBase
+public class VerticalBarGraph extends ZoomDrawSurface
 {
 
 	/**

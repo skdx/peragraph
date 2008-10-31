@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.peralex.utilities.locale.ILocaleListener;
 import com.peralex.utilities.objectpool.GraphObjectPool;
-import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.graphBase.ZoomDrawSurface;
 import com.peralex.utilities.ui.graphs.lineGraph.AbstractLineGraph;
 import com.peralex.utilities.ui.graphs.lineGraph.MultiLineGraph;
 
@@ -56,7 +56,7 @@ public class ScrollingLineGraph extends AbstractLineGraph implements ILocaleList
 		}
 	}
 
-	static void paintLine(GraphBase comp, Graphics2D g, final int currentHeight_pixels, final double yPlotRatio, LineState state)
+	static void paintLine(ZoomDrawSurface comp, Graphics2D g, final int currentHeight_pixels, final double yPlotRatio, LineState state)
 	{
 		if (state.visible)
 		{

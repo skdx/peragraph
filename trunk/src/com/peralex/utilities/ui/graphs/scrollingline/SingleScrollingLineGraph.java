@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.peralex.utilities.locale.ILocaleListener;
-import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.graphBase.ZoomDrawSurface;
 
 /**
  * A left-to-right scrolling line graph that only handles one line.
@@ -12,7 +12,7 @@ import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
  * @author Roy Emmerich
  * @author Noel Grandin
  */
-public class SingleScrollingLineGraph extends GraphBase implements ILocaleListener
+public class SingleScrollingLineGraph extends ZoomDrawSurface implements ILocaleListener
 {
 
 	private final ScrollingLineGraph.LineState lineState = new ScrollingLineGraph.LineState();

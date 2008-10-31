@@ -36,7 +36,7 @@ public class MultiGraphWrapper implements ILocaleListener
 	/**
    * Stores the reference to the Graph that is added.
    */
-	private GraphBase oGraph;
+	private ZoomDrawSurface oGraph;
 
 	private final MultiGraphWrapperContainer parent;
 	
@@ -108,7 +108,7 @@ public class MultiGraphWrapper implements ILocaleListener
 	/**
    * Creates new form cGraphWrapper
    */
-	public MultiGraphWrapper(MultiGraphWrapperContainer container, GraphBase oGraph)
+	public MultiGraphWrapper(MultiGraphWrapperContainer container, ZoomDrawSurface oGraph)
 	{
 		this(container);
 		addGraph(oGraph);
@@ -323,7 +323,7 @@ public class MultiGraphWrapper implements ILocaleListener
   /**
    * This will add the graph to the Wrapper.
    */
-	public final void addGraph(final GraphBase _oGraph)
+	public final void addGraph(final ZoomDrawSurface _oGraph)
 	{
 		this.oGraph = _oGraph;
 		oXAxisScale.linkToX(this.oGraph);
