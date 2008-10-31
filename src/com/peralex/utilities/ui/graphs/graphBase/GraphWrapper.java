@@ -45,7 +45,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
    * 
    * Note: this can be null if we operating purely as a layout class.
    */
-	private GraphBase oGraph;
+	private ZoomDrawSurface oGraph;
 
 	/**
    * These store the Titles and Units of the Axis'.
@@ -79,7 +79,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	/**
    * Creates new form cGraphWrapper
    */
-	public GraphWrapper(GraphBase oGraph)
+	public GraphWrapper(ZoomDrawSurface oGraph)
 	{
 		this();
 		setGraph(oGraph);
@@ -277,7 +277,7 @@ public class GraphWrapper extends javax.swing.JPanel implements ILocaleListener
 	/**
    * This will add the graph to the Wrapper.
    */
-	public final void setGraph(final GraphBase _oGraph)
+	public final void setGraph(final ZoomDrawSurface _oGraph)
 	{
 		this.oGraph = _oGraph;
 		oXAxisScale.linkToX(this.oGraph);

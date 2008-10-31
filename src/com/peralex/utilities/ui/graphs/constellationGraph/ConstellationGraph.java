@@ -5,13 +5,13 @@ import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 
 import com.peralex.utilities.ui.graphs.graphBase.PixelUnitConverter;
-import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.graphBase.ZoomDrawSurface;
 
 /**
  * 
  * @author Andre
  */
-public class ConstellationGraph extends GraphBase
+public class ConstellationGraph extends ZoomDrawSurface
 {
 
 	/**

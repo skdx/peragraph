@@ -190,9 +190,9 @@ public class AmplitudeWaterfallGraph extends AmplitudeDetectionWaterfallGraph
 		{
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
-		else if (!getCursor().equals(getGraphCursor()) && bTimeCursorsEnabled)
+		else if (!getCursor().equals(getDefaultCrossHairCursor()) && bTimeCursorsEnabled)
 		{
-			setCursor(getGraphCursor());
+			setCursor(getDefaultCrossHairCursor());
 		}
 		super.mouseMoved(e);
   }

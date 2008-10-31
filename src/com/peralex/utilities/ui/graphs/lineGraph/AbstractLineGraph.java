@@ -6,14 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.Timer;
 
-import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.graphBase.ZoomDrawSurface;
 
 /**
  * Contains code common to the line-graph subclasses.
  * 
  * @author Noel Grandin
  */
-public abstract class AbstractLineGraph extends GraphBase
+public abstract class AbstractLineGraph extends ZoomDrawSurface
 {
 	/**
 	 * A Timer that will limit the repainting of this graph

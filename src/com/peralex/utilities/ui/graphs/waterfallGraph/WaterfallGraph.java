@@ -11,14 +11,14 @@ import com.peralex.sharedlibs.dsphostl.TimeStamp;
 import com.peralex.utilities.ValueFormatter;
 import com.peralex.utilities.ui.ScrollableBufferedImage;
 import com.peralex.utilities.ui.graphs.graphBase.Cursor;
-import com.peralex.utilities.ui.graphs.graphBase.GraphBase;
+import com.peralex.utilities.ui.graphs.graphBase.ZoomDrawSurface;
 
 /**
  * A base waterfall graph that uses a ScrollableBufferedImage for display.
  * 
  * @author Noel Grandin
  */
-public class WaterfallGraph extends GraphBase
+public class WaterfallGraph extends ZoomDrawSurface
 { 
 	
 	public static enum TimeDisplayPrecision {

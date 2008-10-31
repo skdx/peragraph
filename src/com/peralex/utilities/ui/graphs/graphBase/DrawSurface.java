@@ -1,7 +1,12 @@
 package com.peralex.utilities.ui.graphs.graphBase;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.util.ResourceBundle;
 
 import javax.swing.JComponent;
@@ -15,6 +20,8 @@ import com.peralex.utilities.locale.PeralexLibsBundle;
  */
 public abstract class DrawSurface extends JComponent implements ILocaleListener
 {
+	
+	private static final Cursor DEFAULT_CROSSHAIR_CURSOR = createCrossHairCursor(Color.WHITE);
 	
 	/** The resource bundle used for multilingual support */
 	protected ResourceBundle textRes = PeralexLibsBundle.getResource();
@@ -56,7 +63,37 @@ public abstract class DrawSurface extends JComponent implements ILocaleListener
 		// give us the same default front as a JPanel
     setFont(UIManager.getFont("Panel.font"));
     
+  	/* We create our own cursor because the default cross-hair cursor has some weird display
+  	 * issues - it seems to fade into some waterfall graphs, and seems to interact with the
+  	 * green FFT line to produce red pixels. Weird.
+  	 */
+		setCursor(DEFAULT_CROSSHAIR_CURSOR);
+		
 		PeralexLibsBundle.addLocaleListener(this); //do after components have been initialised
+	}
+
+  public static Cursor getDefaultCrossHairCursor()
+  {
+  	return DEFAULT_CROSSHAIR_CURSOR;
+  }
+  
+  public static Cursor createCrossHairCursor(Color color)
+  {
+		BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = (Graphics2D) image.getGraphics();
+		graphics.setColor(color);
+		
+		graphics.drawLine(15, 6,15,12);
+		graphics.drawLine(15,15,15,15);
+		graphics.drawLine(15,18,15,24);
+		
+		graphics.drawLine( 6,15,12,15);
+		graphics.drawLine(18,15,24,15);
+		
+		// Create the new mouse Cursor.
+		Toolkit oToolkit = Toolkit.getDefaultToolkit();
+		Cursor crossHairCursor = oToolkit.createCustomCursor(image, new Point(15, 15), "Cross");
+		return crossHairCursor;
 	}
 
   /**
