@@ -201,8 +201,8 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 			axis.aiGridSteps = new int[1];
 			adGridValues = new double[1];
 			adGridValues[0] = (axis.fMinimum + axis.fMaximum) / 2;
-			axis.aiGridSteps[0] = PixelUnitConverter.unitToPixel(bProportional, adGridValues[0], 0, iAxisLength_px,
-					axis.fMinimum, axis.fMaximum);
+			axis.aiGridSteps[0] = PixelUnitConverter.unitToPixel(bProportional, adGridValues[0], 0,
+					iAxisLength_px, axis.fMinimum, axis.fMaximum);
 		}
 		else {
 			/*
@@ -436,8 +436,8 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	 * This method will calculate the Scaling Factor for an axis.
 	 */
 	private void calculateAxisScalingFactor(AxisValues axis) {
-		final double fUnitDivisor = Math.pow(10,
-				(Math.floor(Math.floor((Math.log10(axis.fMaximum)) / 3)) * 3));
+		final double fUnitDivisor = Math.pow(10, (Math.floor(Math
+				.floor((Math.log10(axis.fMaximum)) / 3)) * 3));
 		axis.sScaleUnit = computeUnitPrefix(axis.bDecimalUnitLabels, fUnitDivisor);
 		axis.lScalingFactor = (long) fUnitDivisor;
 		if (axis.lScalingFactor < 1) {
@@ -446,7 +446,7 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 
 		fireScalingFactorListeners();
 	}
-	
+
 // /**
 // * This will return the X Axis.
 // */
@@ -624,31 +624,29 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 		oShowGridItem.setText(textRes.getString("GridDrawSurface.Show_grid"));
 	}
 
-  /**
-   * Event for mouseDragged.
-   */  
-  @Override
-  public void mouseDragged(MouseEvent e)
-  {
-    super.mouseDragged(e);
-    
-    final double fMouseXValue = pixelToUnitX(e.getX());
-    final double fMouseYValue = pixelToUnitY(e.getY());
-    gridListeners.fire().mouseCoordinatesChanged(this, fMouseXValue, fMouseYValue);
-  }
-  
-  /**
-   * Event for mouseMoved.
-   */  
-  @Override
-  public void mouseMoved(MouseEvent e)
-  {
-    super.mouseMoved(e);
-    
-    final double fMouseXValue = pixelToUnitX(e.getX());
-    final double fMouseYValue = pixelToUnitY(e.getY());
-    gridListeners.fire().mouseCoordinatesChanged(this, fMouseXValue, fMouseYValue);
-  }
+	/**
+	 * Event for mouseDragged.
+	 */
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		super.mouseDragged(e);
+
+		final double fMouseXValue = pixelToUnitX(e.getX());
+		final double fMouseYValue = pixelToUnitY(e.getY());
+		gridListeners.fire().mouseCoordinatesChanged(this, fMouseXValue, fMouseYValue);
+	}
+
+	/**
+	 * Event for mouseMoved.
+	 */
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		super.mouseMoved(e);
+
+		final double fMouseXValue = pixelToUnitX(e.getX());
+		final double fMouseYValue = pixelToUnitY(e.getY());
+		gridListeners.fire().mouseCoordinatesChanged(this, fMouseXValue, fMouseYValue);
+	}
 
 	/**
 	 * Adds a GraphBase Listener.
@@ -668,6 +666,15 @@ public class GridDrawSurface extends PopupMenuDrawSurface
 	 * This is called every time the ScalingFactor of the graph has changed.
 	 */
 	private void fireScalingFactorListeners() {
-		gridListeners.fire().scalingFactorChanged(this, x.lScalingFactor, x.sScaleUnit, y.lScalingFactor, y.sScaleUnit);
+		gridListeners.fire().scalingFactorChanged(this, x.lScalingFactor, x.sScaleUnit,
+				y.lScalingFactor, y.sScaleUnit);
+	}
+
+	protected final PixelUnitConverter.UnitToPixel defaultXUnitToPixel() {
+		return new PixelUnitConverter.UnitToPixel(true, 0, getWidth(), getMinimumX(), getMaximumX());
+	}
+
+	protected final PixelUnitConverter.UnitToPixel defaultYUnitToPixel() {
+		return new PixelUnitConverter.UnitToPixel(true, 0, getHeight(), getMinimumY(), getMaximumY());
 	}
 }

@@ -127,8 +127,8 @@ public class MultiLineGraph extends AbstractLineGraph
 		/* Noel - this method performs the bulk of the work, so I optimised it a little */
 		
 		final int iHeight = getHeight();
-		final PixelUnitConverter.UnitToPixel xUnitToPixel = new PixelUnitConverter.UnitToPixel(true, 0, getWidth(), getMinimumX(), getMaximumX());
-		final PixelUnitConverter.UnitToPixel yUnitToPixel = new PixelUnitConverter.UnitToPixel(true, 0, getHeight(), getMinimumY(), getMaximumY());
+		final PixelUnitConverter.UnitToPixel xUnitToPixel = defaultXUnitToPixel();
+		final PixelUnitConverter.UnitToPixel yUnitToPixel = defaultYUnitToPixel();
 		
 		synchronized (aoLineData)
 		{
@@ -218,8 +218,8 @@ public class MultiLineGraph extends AbstractLineGraph
 	{
 		final int iHeight = getHeight();
 		final int iWidth = getWidth();
-		final PixelUnitConverter.UnitToPixel xUnitToPixel = new PixelUnitConverter.UnitToPixel(true, 0, iWidth, getMinimumX(), getMaximumX());
-		final PixelUnitConverter.UnitToPixel yUnitToPixel = new PixelUnitConverter.UnitToPixel(true, 0, iHeight, getMinimumY(), getMaximumY());
+		final PixelUnitConverter.UnitToPixel xUnitToPixel = defaultXUnitToPixel();
+		final PixelUnitConverter.UnitToPixel yUnitToPixel = defaultYUnitToPixel();
 		
 		boolean bCalculateX = false;
 		boolean bCalculateY = false;
