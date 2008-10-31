@@ -138,7 +138,7 @@ public class SingleLineGraph extends AbstractLineGraph
 		
 		if (bCalculateX)
 		{
-			final PixelUnitConverter.UnitToPixel xUnitToPixel = new PixelUnitConverter.UnitToPixel(true, 0, iWidth, getMinimumX(), getMaximumX());
+			final PixelUnitConverter.UnitToPixel xUnitToPixel = defaultXUnitToPixel();
 			if (aiCachedXCoordinates==null || aiCachedXCoordinates.length!=oLineData.getNumberOfPoints())
 			{
 				aiCachedXCoordinates = new int[oLineData.getNumberOfPoints()];
@@ -152,7 +152,7 @@ public class SingleLineGraph extends AbstractLineGraph
 			iCachedCnt = cnt;
 		}
 
-		final PixelUnitConverter.UnitToPixel yUnitToPixel = new PixelUnitConverter.UnitToPixel(true, 0, iHeight, getMinimumY(), getMaximumY());
+		final PixelUnitConverter.UnitToPixel yUnitToPixel = defaultYUnitToPixel();
 		final int [] aiYCoordinates = GraphObjectPool.checkOutIntArray(oLineData.getNumberOfPoints());
 		final float [] yValues = oLineData.getYValues();
 		int cnt = 0;

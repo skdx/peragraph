@@ -45,10 +45,8 @@ public class ConstellationGraph extends ZoomDrawSurface
 	{
 		if (afXValues != null && afYValues != null)
 		{
-			final PixelUnitConverter.UnitToPixel xUnitToPixel = new PixelUnitConverter.UnitToPixel(
-					true, 0, getWidth(), getMinimumX(), getMaximumX());
-			final PixelUnitConverter.UnitToPixel yUnitToPixel = new PixelUnitConverter.UnitToPixel(
-					true, 0, getHeight(), getMinimumY(), getMaximumY());
+			final PixelUnitConverter.UnitToPixel xUnitToPixel = defaultXUnitToPixel();
+			final PixelUnitConverter.UnitToPixel yUnitToPixel = defaultYUnitToPixel();
 			g.setColor(oPointColor);
 			for (int i = 0; i < afXValues.length; i++)
 			{
