@@ -269,36 +269,36 @@ public class GraphWithMultipleLines extends javax.swing.JPanel {
         add(controlPanel, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
-  private void gridVisibleCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gridVisibleCheckBoxActionPerformed
+  private void gridVisibleCheckBoxActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gridVisibleCheckBoxActionPerformed
 		lineGraph.setGridVisible(gridVisibleCheckBox.isSelected());
   }//GEN-LAST:event_gridVisibleCheckBoxActionPerformed
 
-  private void zoomEnabledCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomEnabledCheckBoxActionPerformed
+  private void zoomEnabledCheckBoxActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomEnabledCheckBoxActionPerformed
 		lineGraph.setZoomEnabled(zoomEnabledCheckBox.isSelected());
   }//GEN-LAST:event_zoomEnabledCheckBoxActionPerformed
 
-  private void frameRateLimitingCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frameRateLimitingCheckBoxActionPerformed
+  private void frameRateLimitingCheckBoxActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frameRateLimitingCheckBoxActionPerformed
 		lineGraph.setFrameLimitingEnabled(frameRateLimitingCheckBox.isSelected());
 		framePeriodSpinner.setEnabled(frameRateLimitingCheckBox.isSelected());
   }//GEN-LAST:event_frameRateLimitingCheckBoxActionPerformed
 
-  private void line1ColorComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_line1ColorComboBoxActionPerformed
+  private void line1ColorComboBoxActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt) {//GEN-FIRST:event_line1ColorComboBoxActionPerformed
 		lineGraph.setLineColor(LINE_1, toColor((String)line1ColorComboBox.getSelectedItem()));
   }//GEN-LAST:event_line1ColorComboBoxActionPerformed
 
-  private void line2ColorComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_line2ColorComboBoxActionPerformed
+  private void line2ColorComboBoxActionPerformed(@SuppressWarnings("unused") java.awt.event.ActionEvent evt) {//GEN-FIRST:event_line2ColorComboBoxActionPerformed
 		lineGraph.setLineColor(LINE_2, toColor((String)line2ColorComboBox.getSelectedItem()));
   }//GEN-LAST:event_line2ColorComboBoxActionPerformed
 
-	private void framePeriodSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_framePeriodSpinnerStateChanged
+	private void framePeriodSpinnerStateChanged(@SuppressWarnings("unused") javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_framePeriodSpinnerStateChanged
 		lineGraph.setFrameLimitingPeriod((Integer) framePeriodSpinner.getValue());
 	}//GEN-LAST:event_framePeriodSpinnerStateChanged
 
-	private void dataPeriodSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_dataPeriodSpinnerStateChanged
+	private void dataPeriodSpinnerStateChanged(@SuppressWarnings("unused") javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_dataPeriodSpinnerStateChanged
 		dataTimer.setDelay((Integer) dataPeriodSpinner.getValue());
 	}//GEN-LAST:event_dataPeriodSpinnerStateChanged
 
-	private void noXPointsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_noXPointsSpinnerStateChanged
+	private void noXPointsSpinnerStateChanged(@SuppressWarnings("unused") javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_noXPointsSpinnerStateChanged
 	}//GEN-LAST:event_noXPointsSpinnerStateChanged
   
   private final Color toColor(String s) {

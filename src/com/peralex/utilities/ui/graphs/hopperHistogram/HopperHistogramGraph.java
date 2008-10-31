@@ -116,7 +116,7 @@ public class HopperHistogramGraph extends JPanel implements ILocaleListener
 
   }//GEN-END:initComponents
 
-  private void oEnableHistogramCheckBoxItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_oEnableHistogramCheckBoxItemStateChanged
+  private void oEnableHistogramCheckBoxItemStateChanged(@SuppressWarnings("unused") java.awt.event.ItemEvent evt)//GEN-FIRST:event_oEnableHistogramCheckBoxItemStateChanged
   {//GEN-HEADEREND:event_oEnableHistogramCheckBoxItemStateChanged
     notifyHistogramDataActiveListeners(oEnableHistogramCheckBox.isSelected());
   }//GEN-LAST:event_oEnableHistogramCheckBoxItemStateChanged
