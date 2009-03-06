@@ -12,7 +12,7 @@ public interface ValidatedTextModel
 	/** Convert text to object. Will always be called with a valid text value. */
 	Object textToObject(String text);
 
-	/** Convert an object to text .*/
+	/** Convert an object to text. Throws some kind of RuntimeException if the value is invalid. */
 	String objectToText(Object obj);
 	
 	Object getValue();
